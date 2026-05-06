@@ -1,54 +1,38 @@
-import EventDetailsSection from "@/components/sections/EventDetailsSection";
 import HeroSection from "@/components/sections/HeroSection";
-import { Calendar } from "@/components/sections/Calendar";
-import { ContactSection } from "@/components/sections/ContactSection";
-import { Gallery } from "@/components/sections/Gallery";
+import { QuickFactsBand } from "@/components/sections/QuickFactsBand";
+import { InvitationNote } from "@/components/sections/InvitationNote";
 import ScheduleSection from "@/components/sections/ScheduleSection";
-import { Travel } from "@/components/sections/Travel";
-import { FaqSection } from "@/components/sections/faq";
-
-const venue = {
-  venueName: "Trung tâm Tiệc cưới White Palace",
-  addressLines: ["194 Hoàng Văn Thụ, Phường 9", "Quận Phú Nhuận, TP. Hồ Chí Minh"],
-  mapUrl:
-    "https://www.google.com/maps/search/?api=1&query=White+Palace+Phạm+Văn+Đồng",
-  note: "Bãi đậu xe tại chỗ có giới hạn, nên ưu tiên sử dụng dịch vụ gọi xe hoặc đi chung xe.",
-};
-
-const contactActions = [
-  {
-    label: "Gọi cho gia chủ",
-    hint: "+84 912 345 678",
-    href: "tel:+84912345678",
-    icon: "phone" as const,
-  },
-  {
-    label: "Email hỗ trợ",
-    hint: "hello@ourweddingday.com",
-    href: "mailto:hello@ourweddingday.com",
-    icon: "mail" as const,
-  },
-];
+import { VenueSection } from "@/components/sections/VenueSection";
+import { GalleryTeaserSection } from "@/components/sections/GalleryTeaserSection";
+import { TravelSection } from "@/components/sections/TravelSection";
+import { FaqSection } from "@/components/sections/FaqSection";
+import { RsvpBand } from "@/components/sections/RsvpBand";
+import { VENUE } from "@/lib/constants/event-data";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-[linear-gradient(180deg,#fffaf6_0%,#faf7f2_45%,#f5f1eb_100%)] text-stone-900">
-      <main className="mx-auto flex w-full max-w-5xl flex-col gap-8 px-4 py-6 sm:px-6 sm:py-10 lg:px-8">
-        <HeroSection />
-        <EventDetailsSection />
+    <div className="min-h-screen bg-white text-rose-950">
+      <HeroSection />
+      <QuickFactsBand />
+
+      <main className="mx-auto w-full max-w-6xl space-y-16 px-4 py-16 sm:space-y-20 sm:px-6 sm:py-20 lg:space-y-24 lg:px-8 lg:py-24">
+        <InvitationNote />
         <ScheduleSection />
         <VenueSection
-          venueName={venue.venueName}
-          addressLines={venue.addressLines}
-          mapUrl={venue.mapUrl}
-          note={venue.note}
+          venueName={VENUE.venueName}
+          addressLines={VENUE.addressLines}
+          mapUrl={VENUE.mapUrl}
+          note={VENUE.note}
         />
-        <ContactSection actions={contactActions} />
-        <Gallery />
-        <Travel />
-        <FaqSection />
-        <Calendar />
+        <GalleryTeaserSection />
+
+        <div className="grid gap-12 lg:grid-cols-2">
+          <TravelSection />
+          <FaqSection />
+        </div>
       </main>
+
+      <RsvpBand />
     </div>
   );
 }
