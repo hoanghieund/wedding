@@ -1,0 +1,24 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Initial core entity for RSVP data storage
+// Architecture: plural snake_case table names, snake_case column names
+model rsvp_submissions {
+  id                   Int       @id @default(autoincrement())
+  guest_name           String
+  attendance_status    String
+  attendee_count       Int       @default(1)
+  dietary_restrictions String?
+  guest_message        String?
+  created_at           DateTime  @default(now())
+  updated_at           DateTime  @updatedAt
+}
