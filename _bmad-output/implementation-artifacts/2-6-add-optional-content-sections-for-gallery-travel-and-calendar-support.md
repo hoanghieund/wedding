@@ -1,46 +1,29 @@
-# Story 2.6: Add Optional Content Sections for Gallery, Travel, and Calendar Support
+# Story 2-6: Add optional content sections for gallery, travel, and calendar support
 
-Status: ready-for-dev
+## Story Description
+As a guest, I want to access optional supporting content such as a gallery teaser, travel guidance, and calendar-related event information, so that I have a complete understanding of the event logistics and can experience the visual context.
 
-## Story
+## Requirements
+- Render a gallery teaser section using optimized images without blocking essential information.
+- Render travel or accommodation guidance using the same consistent visual system.
+- Provide calendar-related event information in a clear and actionable way, including an "Add to Calendar" interaction model mimicking premium restraint (no over-complex conflict detection needed).
+- Must adhere to the overall minimalist and responsive design system described in the UX spec (San Francisco-like typography hierarchy, subtle dividers, vertical clarity).
 
-As a guest,
-I want to access optional supporting content such as a gallery teaser, travel guidance, and calendar-related event information when included,
-So that I can prepare more easily for the wedding.
+## Technical Details
+- Follow Next.js 15 Server Components for basic UI rendering where state is not needed.
+- If interactivity ("Add to Calendar" button state) is needed, isolate it in a Client Component.
+- Use Next.js `next/image` component for gallery image optimization and lazy loading.
+- Place placeholder images or structural skeletons for the gallery in `public/images/gallery/` and `public/images/venue/` as appropriate.
+- Sections are optional; they should be easy to toggle or feed data into via static props or simple page composition.
 
 ## Acceptance Criteria
+1. The site renders a visually integrated gallery teaser section.
+2. The site renders travel/accommodation guidance section.
+3. The site renders calendar-related event information and "Add to Calendar" button/link placeholder.
+4. All UI conforms to the minimalist, responsive layout using the existing standard design system (Tailwind).
+5. Code passes tests and matches TDD principles (components exist and render without errors).
 
-**Given** optional content is included in release scope
-**When** a guest browses the wedding page
-**Then** the site can render a gallery teaser section without blocking essential information
-**And** the site can render travel or accommodation guidance in the same visual system
-**And** the site can expose calendar-related event information in a clear and actionable way
-**And** optional sections do not reduce clarity of the core guest journey
-
-## Tasks / Subtasks
-
-- [ ] Create optional gallery teaser section (AC: gallery teaser, essential info visible)
-  - [ ] Create `src/components/sections/gallery.tsx`
-  - [ ] Implement lazy-loading image grid
-  - [ ] Ensure section is conditionally rendered
-  - [ ] Keep gallery images under `public/images/gallery/`
-- [ ] Create optional travel/accommodation section (AC: travel guidance, same visual system)
-  - [ ] Create `src/components/sections/travel.tsx`
-  - [ ] Display hotel recommendations or accommodation info
-  - [ ] Style consistently with other sections
-- [ ] Create optional calendar/event info section (AC: calendar info, actionable)
-  - [ ] Create `src/components/sections/calendar.tsx`
-  - [ ] Add "Add to Calendar" buttons (Google, Apple, Outlook)
-  - [ ] Use ICS file or direct calendar links
-- [ ] Ensure sections do not block core journey (AC: clarity maintained)
-  - [ ] Place optional sections after core content
-  - [ ] Avoid making optional sections required for navigation
-  - [ ] Test page flow with all sections enabled
-
-## Technical Context
-
-- **Module**: `src/components/sections/`
-- **Dependencies**: Tailwind CSS v4, Lucide React (for icons)
-- **Related Stories**: 2-1 through 2-5 (all guest information sections)
-- **Files to Create**: `src/components/sections/gallery.tsx`, `src/components/sections/travel.tsx`, `src/components/sections/calendar.tsx`
-- **File to Edit**: `src/app/page.tsx`
+## Definition of Done
+- Development is complete and verified locally.
+- Story status changed to `done` in `sprint-status.yaml`.
+- Code review complete.

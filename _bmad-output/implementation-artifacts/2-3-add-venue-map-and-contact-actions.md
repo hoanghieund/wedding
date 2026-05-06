@@ -13,31 +13,33 @@ So that I can get help or directions with minimal effort.
 **Given** a guest views the venue and contact sections
 **When** they choose a venue or support action
 **Then** the venue section provides a one-tap map link
-**And** the contact section provides direct-action contact links
+**And** the contact section provides direct-action contact links (phone, email)
 **And** both actions are easy to identify on mobile
-**And** interactive controls meet the minimum touch target size requirements
+**And** interactive controls meet the minimum touch target size requirements (at least 44x44px)
 
 ## Tasks / Subtasks
 
-- [ ] Implement one-tap venue map link (AC: one-tap map link)
+- [ ] 1. Create component files and define specifications (AC: direct-action contact links, one-tap map link)
+  - [ ] Create `src/components/sections/VenueSection.tsx`
+  - [ ] Create `src/components/sections/ContactSection.tsx`
+  - [ ] Export both components from `src/components/sections/index.ts` if applicable
+- [ ] 2. Implement unit/component tests for Venue and Contact (TDD RED)
+  - [ ] Add tests ensuring map link is rendered correctly
+  - [ ] Add tests ensuring contact links (tel:, mailto:) are present
+- [ ] 3. Build VenueSection component (TDD GREEN & REFACTOR)
   - [ ] Add Google Maps or Apple Maps deep link
-  - [ ] Use `map.google.com` link with address params
   - [ ] Style as prominent action button
-- [ ] Create contact section with direct actions (AC: direct-action contact links)
-  - [ ] Create `src/components/sections/contact.tsx`
-  - [ ] Add `mailto:` and `tel:` links
-  - [ ] Integrate chat/messaging link if provided
-- [ ] Optimize for mobile identifying (AC: easy to identify on mobile)
-  - [ ] Use standard action icons
-  - [ ] Clear labeling for each action
-- [ ] Verify touch targets (AC: touch target size)
-  - [ ] Ensure buttons are at least 44x44px
-  - [ ] Check spacing between adjacent buttons
+- [ ] 4. Build ContactSection component (TDD GREEN & REFACTOR)
+  - [ ] Add `mailto:` and `tel:` links using Lucide React icons
+  - [ ] Verify touch targets are at least 44x44px (AC: touch target size)
+- [ ] 5. Integrate into homepage and optimize for mobile (AC: easy to identify on mobile)
+  - [ ] Update `src/app/page.tsx` (or a mock layout if hero isn't fully ready) to display the new sections
+  - [ ] Use standard action icons and clear labeling
 
 ## Technical Context
 
 - **Module**: `src/components/sections/`
-- **Dependencies**: Tailwind CSS v4, Lucide React (for icons)
-- **Related Stories**: 2-2 (event details above), 2-4 (FAQ below)
-- **File to Create**: `src/components/sections/contact.tsx`
-- **File to Edit**: `src/app/page.tsx`, `src/components/sections/event-details.tsx`
+- **Dependencies**: Tailwind CSS v4, Lucide React
+- **Related Stories**: 2-2 (event details), 2-4 (FAQ)
+- **File to Create**: `src/components/sections/VenueSection.tsx`, `src/components/sections/ContactSection.tsx`
+- **File to Edit**: `src/app/page.tsx`

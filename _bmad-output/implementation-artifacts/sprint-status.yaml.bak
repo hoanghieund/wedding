@@ -48,10 +48,10 @@ development_status:
   1-3-set-up-prisma-orm-with-vercel-postgres: done
   1-4-define-project-structure-and-module-boundaries: done
   epic-1-retrospective: optional
-  epic-2: done
+  epic-2: in-progress
   2-1-create-the-wedding-landing-page-shell: done
   2-2-add-event-details-and-schedule-sections: done
-  2-3-add-venue-map-and-contact-actions: done
+  2-3-add-venue-map-and-contact-actions: review
   2-4-add-faq-and-repeat-visit-clarity-support: done
   2-5-add-metadata-and-sharing-preview-support: done
   2-6-add-optional-content-sections-for-gallery-travel-and-calendar-support: done

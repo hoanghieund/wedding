@@ -1,21 +1,23 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const playfair = Playfair_Display({
+  subsets: ["latin", "vietnamese"],
+  variable: "--font-serif",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+const inter = Inter({
+  subsets: ["latin", "vietnamese"],
+  variable: "--font-sans",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Wedding",
+  title: "Thiệp mời lễ thành hôn",
   description:
-    "Join us for our wedding celebration. View event details, RSVP, and find everything you need for the day.",
+    "Trân trọng kính mời quý vị tham dự lễ thành hôn. Xem thông tin chi tiết và xác nhận tham dự.",
 };
 
 export default function RootLayout({
@@ -24,11 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="vi" className={`h-full antialiased ${playfair.variable} ${inter.variable}`}>
+      <body className="min-h-full flex flex-col font-sans">{children}</body>
     </html>
   );
 }

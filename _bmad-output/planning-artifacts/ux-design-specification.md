@@ -165,7 +165,7 @@ Three products were selected as primary inspiration sources based on their relev
 
 Single-page vertical scroll is the strongest pattern to adopt. This approach, seen in Apple invitations, works naturally for wedding content where information has an inherent sequence: introduction, event details, venue, schedule, RSVP, FAQ, contact. Guests can move through the content like reading a story rather than navigating a tool.
 
-Sticky call-to-action placement, borrowed from Airbnb, ensures the RSVP button remains accessible as guests scroll through content. This reduces friction for users who want to respond immediately after reading key details.
+**Implementation Note (2026-05-06):** Sticky CTA placement was **not implemented** in Epic 2. RSVP section and sticky CTA will be evaluated during Epic 3 integration based on actual form placement and mobile UX testing.
 
 Progressive disclosure, also from Airbnb, can be applied to secondary content like FAQ sections. Show overview information first, with details available on demand through expand/collapse interactions.
 
@@ -181,7 +181,7 @@ Auto-save indicators from Notion can be adapted if the RSVP form supports draft 
 
 **Visual Patterns:**
 
-Hero image with key information overlay, inspired by Airbnb, should be used for the opening section. A large couple photo with names and date overlaid establishes emotional context while immediately communicating the most important details.
+Hero section with key information, inspired by Airbnb's hierarchy, should be used for the opening section. **Implementation Note (2026-05-06):** The final design uses a **typography-first approach** with prominent couple names (`text-5xl sm:text-6xl lg:text-7xl`), gradient background, and decorative divider instead of a couple photo. This approach prioritizes privacy, performance, and elegant simplicity.
 
 Card-based section separation, also from Airbnb, creates clear visual boundaries between content blocks. Each major section (venue, schedule, FAQ) should feel distinct and easy to identify.
 
@@ -211,13 +211,13 @@ Dense information presentation should be avoided. Do not cram excessive text int
 
 **What to Adopt:**
 
-Airbnb's hero and hierarchy pattern should be adopted directly. Use a large hero image with couple names and date overlay, followed by clearly separated content sections.
+Airbnb's hierarchy pattern should be adopted for clearly separated content sections. **Implementation Note (2026-05-06):** The hero uses a **typography-led design** with gradient background instead of a large couple image, prioritizing privacy and performance while maintaining strong visual impact through scale and spacing.
 
 Notion's spacing philosophy should guide layout decisions. Generous whitespace, clear section separation, and comfortable line height should be applied throughout.
 
 Apple's typography approach should define the visual tone. Create a premium feel through font hierarchy and spacing rather than decoration.
 
-Airbnb's CTA prominence should be applied to the RSVP button. Make it visually clear, easy to find, and optionally sticky for persistent access.
+CTA prominence should be applied to primary actions. **Implementation Note (2026-05-06):** The hero CTA currently points to `#event-details` as a placeholder; RSVP prominence will be addressed when Epic 3 (RSVP form) is integrated into the page flow.
 
 Apple's one-tap action pattern should be applied to all key interactions. Add to Calendar, Open Map, and Contact actions should be instant and require minimal steps.
 
@@ -358,14 +358,16 @@ The color system should support a calm, elegant, and premium tone while maintain
 
 **Primary Palette:**
 
-The primary accent color should be a soft, warm tone such as muted rose, soft gold, or sage green. This color should be used sparingly for calls-to-action, highlights, and moments where wedding warmth is appropriate. The accent should feel elegant rather than bright or saturated.
+**Implementation Note (2026-05-06):** The final implementation uses a **pink blush palette** as the primary color scheme, diverging from the original warm-neutral direction. This decision was made to better convey romance, warmth, and formality appropriate for the wedding context.
 
-The neutral base should use an off-white background such as #FAFAFA or #F8F8F8 rather than pure white. This creates a softer, more refined feel that reduces visual harshness on screens.
+The primary accent color is **rose/pink** (Tailwind `rose-600` for CTAs, `rose-500` for links). This color is used for calls-to-action, interactive elements, and moments where wedding warmth is appropriate.
 
-Text colors should follow a three-tier hierarchy:
-- Primary text in near-black (#1A1A1A) for main content
-- Secondary text in medium gray (#6B6B6B) for metadata and labels
-- Tertiary text in light gray (#A0A0A0) for hints and placeholders
+The background uses a **soft pink gradient** (`#fff8fc` → `#fff1f7` → `#fde7f1`) rather than neutral off-white. This creates a warm, romantic feel while maintaining readability.
+
+Text colors follow a rose-tinted hierarchy:
+- Primary text in deep rose (`rose-950`, nearly black) for headings
+- Secondary text in warm rose (`rose-800/70` to `rose-800/80`) for body content
+- Tertiary text in medium rose (`rose-600`) for labels and accents
 
 **Semantic Colors:**
 
@@ -420,7 +422,12 @@ Mobile layouts should use a single-column approach with full-width sections and 
 
 **Visual Refinement:**
 
-Buttons and form inputs should use an 8px corner radius for a friendly, approachable feel. Cards and section containers should use a 12px corner radius for a softer, more elegant appearance. Small UI elements should use a 4px corner radius.
+**Implementation Note (2026-05-06):** The final implementation uses **larger corner radius values** than originally specified for a more modern, elegant feel:
+- Section containers: `rounded-[2rem]` (32px) instead of 12px
+- Cards: `rounded-3xl` (24px) instead of 12px  
+- Buttons: `rounded-full` (pill shape) instead of 8px
+
+These larger radius values create a softer, more contemporary aesthetic while maintaining clear visual hierarchy and accessibility.
 
 Elevation should be applied subtly. Standard elements should use a light shadow such as `0 1px 3px rgba(0,0,0,0.08)`. Hovered cards should use `0 4px 12px rgba(0,0,0,0.12)`. Modals and dialogs should use `0 8px 24px rgba(0,0,0,0.16)`.
 
@@ -453,7 +460,9 @@ The chosen design direction is **Elegant Clarity**, which prioritizes immediate 
 
 **Layout Structure:**
 
-The layout uses a full-width hero section with couple photo and overlaid names and date, followed by a vertical single-page flow of clearly separated content sections. Each section feels distinct through card-based visual treatment with subtle elevation and generous spacing. The maximum content width is constrained to approximately 1200px and centered, with consistent side padding on mobile.
+**Implementation Note (2026-05-06):** The final layout uses a **typography-first hero** with gradient background instead of a full-width couple photo. The section flow is: **Hero → Event Details → Venue → Schedule → Contact → FAQ**. The RSVP section will be inserted between Schedule and Contact when Epic 3 is integrated.
+
+The layout uses a vertical single-page flow of clearly separated content sections. Each section feels distinct through card-based visual treatment with subtle elevation and generous spacing. The maximum content width is constrained to approximately 1200px (`max-w-5xl`) and centered, with consistent side padding on mobile.
 
 **Visual Weight:**
 
@@ -465,11 +474,23 @@ All interactions use established web patterns. Guests scroll vertically through 
 
 **Component Approach:**
 
+**Implementation Note (2026-05-06):** The final component set reflects Epic 2 implementation decisions:
+
 The component set includes:
-- Hero section with full-width image and text overlay
-- Section containers with subtle card styling and generous padding
-- RSVP form with clear labels, appropriate input types, and inline validation
-- FAQ accordion using progressive disclosure
+- **Hero section** with typography-first design (no couple photo), gradient background, prominent couple names, decorative divider, and CTA
+- **Section containers** with pink-tinted card styling (`rounded-[2rem]`, `bg-white/80`, `ring-rose-200/40`) and generous padding
+- **Event Details cards** in 2-column grid with rose-tinted backgrounds
+- **Venue section** with 2-column layout (venue info + directions CTA)
+- **Schedule timeline** with dark rose background (`rose-900`) and vertical timeline design
+- **Contact section** with minimal centered layout (icon + underlined link, no card grid)
+- **FAQ accordion** using progressive disclosure with rose-tinted backgrounds
+
+**De-scoped components** (Story 2.6):
+- Gallery teaser (removed for MVP clarity)
+- Travel guidance (removed for MVP clarity)  
+- Calendar support (removed for MVP clarity)
+
+RSVP form components will be added during Epic 3 integration.
 - Confirmation panel with explicit success messaging and response summary
 - Venue card with map integration
 - Timeline or schedule block with clear visual separation

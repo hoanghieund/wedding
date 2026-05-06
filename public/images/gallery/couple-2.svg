@@ -1,0 +1,15 @@
+<svg width="800" height="1000" viewBox="0 0 800 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="1000" fill="url(#gradient2)"/>
+  <defs>
+    <linearGradient id="gradient2" x1="800" y1="0" x2="0" y2="1000" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fdf2f8"/>
+      <stop offset="50%" stop-color="#fce7f3"/>
+      <stop offset="100%" stop-color="#fbcfe8"/>
+    </linearGradient>
+  </defs>
+  <path d="M400 300 Q300 400 400 500 Q500 400 400 300 Z" fill="#ec4899" opacity="0.4"/>
+  <circle cx="350" cy="380" r="40" fill="#ec4899" opacity="0.3"/>
+  <circle cx="450" cy="380" r="40" fill="#ec4899" opacity="0.3"/>
+  <rect x="300" y="550" width="200" height="300" rx="100" fill="#ec4899" opacity="0.2"/>
+  <text x="400" y="900" font-family="system-ui, sans-serif" font-size="24" fill="#9f1239" text-anchor="middle" opacity="0.6">Gallery Placeholder</text>
+</svg>

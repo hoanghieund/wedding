@@ -1,0 +1,43 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="heroGradient" x1="0" y1="0" x2="1920" y2="1080" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fdf2f8"/>
+      <stop offset="30%" stop-color="#fce7f3"/>
+      <stop offset="60%" stop-color="#fbcfe8"/>
+      <stop offset="100%" stop-color="#f9a8d4"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="50%" cy="50%">
+      <stop offset="0%" stop-color="#ec4899" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#ec4899" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1920" height="1080" fill="url(#heroGradient)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="300" cy="200" r="150" fill="url(#glow1)"/>
+  <circle cx="1620" cy="880" r="200" fill="url(#glow1)"/>
+
+  <!-- Center couple silhouettes -->
+  <g transform="translate(960, 540)">
+    <!-- Left figure -->
+    <ellipse cx="-80" cy="-150" rx="60" ry="80" fill="#ec4899" opacity="0.4"/>
+    <rect x="-110" y="-50" width="60" height="200" rx="30" fill="#ec4899" opacity="0.4"/>
+
+    <!-- Right figure -->
+    <ellipse cx="80" cy="-150" rx="60" ry="80" fill="#ec4899" opacity="0.4"/>
+    <rect x="50" y="-50" width="60" height="200" rx="30" fill="#ec4899" opacity="0.4"/>
+
+    <!-- Heart between them -->
+    <path d="M-20,-100 Q-40,-120 -40,-140 Q-40,-160 -20,-160 Q0,-160 0,-140 Q0,-160 20,-160 Q40,-160 40,-140 Q40,-120 20,-100 L0,-80 Z"
+          fill="#ec4899" opacity="0.5"/>
+  </g>
+
+  <!-- Floating petals -->
+  <ellipse cx="400" cy="300" rx="15" ry="25" fill="#f9a8d4" opacity="0.6" transform="rotate(45 400 300)"/>
+  <ellipse cx="1500" cy="200" rx="12" ry="20" fill="#fbcfe8" opacity="0.6" transform="rotate(-30 1500 200)"/>
+  <ellipse cx="600" cy="800" rx="18" ry="28" fill="#fce7f3" opacity="0.6" transform="rotate(60 600 800)"/>
+  <ellipse cx="1300" cy="700" rx="14" ry="22" fill="#f9a8d4" opacity="0.6" transform="rotate(-45 1300 700)"/>
+
+  <text x="960" y="950" font-family="system-ui, sans-serif" font-size="32" fill="#9f1239" text-anchor="middle" opacity="0.5">Hero Background</text>
+</svg>
