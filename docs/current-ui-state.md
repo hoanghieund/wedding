@@ -1,7 +1,8 @@
 # Wedding Website - Current UI State
 
-**Last Updated:** 2026-05-06  
-**Status:** Epic 2 Complete + UI Refinements Applied
+**Last Updated:** 2026-05-07  
+**Status:** Epic 2 Complete + Multi-Agent UI Redesign Applied  
+**Theme:** Lovingly Mysterious Futuristic Romance (Cyan #00e5ff, Dark #030305)
 
 ---
 
@@ -9,37 +10,38 @@
 
 ### Color Palette
 
-**Primary Theme:** Hồng phấn (Pink Blush)
+**Primary Theme:** Dark Cyan/Neon (#00e5ff) with Deep Space background (#030305)
 
-- **Background Gradient:** `#fff8fc` → `#fff1f7` → `#fde7f1` (soft pink gradient)
+- **Background:** `#030305` (deep space) with gradient overlays (`bg-gradient-to-br from-[#0A0A0D] via-[#1A1A2E] to-[#3A1F5D]`)
+- **Accent Color:** `#00e5ff` (cyan neon) for all interactive elements
 - **Text Colors:**
-  - Headings: `rose-950` (deep rose, nearly black)
-  - Body: `rose-800/70` to `rose-800/80` (warm rose with opacity)
-  - Labels: `rose-600` (medium rose for accents)
+  - Headings: `text-white` (pure white)
+  - Body: `text-white/90` (slightly transparent)
+  - Muted: `text-[#a0a0b0]` (dark gray)
+  - Accent labels: `text-[#00e5ff]` with uppercase `font-mono`
 - **Interactive Elements:**
-  - Primary CTA: `rose-600` background, hover `rose-500`
-  - Links: `rose-500` with underline decoration
-  - Focus rings: `rose-300`
-- **Section Backgrounds:**
-  - Cards: `white/80` with `ring-rose-200/40`
-  - Hero: gradient `rose-100` → `pink-50` → `fuchsia-100`
-  - Schedule timeline: `rose-900` (dark rose for contrast)
-  - FAQ accordion: `rose-50/50` with `rose-100/70` hover
+  - Primary buttons: `bg-[#00e5ff]` with `hover:bg-[#00e5ff]/80`
+  - Glass cards: `bg-[rgba(20,20,30,0.6)]` with `backdrop-blur-xl`
+  - Borders: `border-[#00e5ff]/20` or `border-white/10`
+  - Focus rings: `ring-[#00e5ff]`
 
 ### Typography
 
-- **Hero Heading:** `text-5xl sm:text-6xl lg:text-7xl` — prominent, centered
-- **Section Headings:** `text-3xl font-semibold tracking-tight text-rose-950`
-- **Section Labels:** `text-sm font-medium uppercase tracking-[0.2em] text-rose-600`
-- **Body Text:** `text-base leading-7 text-rose-800/70`
-- **Font Stack:** System fonts (Apple System, Segoe UI, Roboto)
+- **Hero Heading:** `text-6xl sm:text-7xl md:text-8xl lg:text-9xl` — uses `font-serif` (Dancing Script from Google Fonts)
+- **Section Headings:** `text-4xl font-extrabold uppercase tracking-tight text-white`
+- **Section Labels:** `text-xs font-medium uppercase tracking-[0.24em] text-[#00e5ff]/60`
+- **Body Text:** `text-base leading-7 text-white/90`
+- **Font Stack:**
+  - Display: `Inter` (Google Fonts)
+  - Fancy (Hero): `Dancing Script` (Google Fonts)
+  - Mono (Labels): `JetBrains Mono` (Google Fonts)
 
 ### Spacing & Layout
 
-- **Container:** `max-w-5xl` centered with responsive padding
-- **Section Gap:** `gap-8` between major sections
-- **Border Radius:** `rounded-[2rem]` for section containers, `rounded-3xl` for cards
-- **Shadow:** `shadow-sm` with subtle `ring-1` borders
+- **Container:** `max-w-6xl` centered with responsive padding
+- **Section Gap:** `space-y-16 sm:space-y-20 lg:space-y-24`
+- **Border Radius:** `rounded-2xl` for sections, `rounded-3xl` for cards, `rounded-full` for buttons
+- **Shadow:** `shadow-[0_0_60px_rgba(0,229,255,0.08)]` for glass effect
 
 ---
 
@@ -47,262 +49,146 @@
 
 ### Current Section Order
 
-1. **Hero Section** — Prominent introduction with couple names, date, CTA
-2. **Event Details Section** — Key logistics in card grid (date, time, dress code, RSVP deadline)
-3. **Venue Section** — Two-column layout with venue info + directions CTA
-4. **Schedule Section** — Dark timeline with event flow
-5. **Contact Section** — Centered minimal contact links (phone/email)
-6. **FAQ Section** — Accordion with common questions
+1. **Hero Section** — Cinematic introduction with particle canvas, countdown timer, couple names in Dancing Script
+2. **Quick Facts Band** — Glass cards with event details (date, venue, dress code, deadline)
+3. **Floating Controls** — Fixed bottom-right: music toggle, RSVP link, gift link
+4. **Love Story Section** — Vertical timeline with glow dots, glass cards
+5. **Album Slideshow** — Holographic Memory Deck: 3D carousel with Ken Burns effect, auto-play, multiple animations (Pan, Zoom, Pulse, Rotate, Shake, Glow)
+6. **Schedule Section** — Dark timeline with cyan accents
+7. **Wedding Party Section** — Grid cards with avatars, roles in JetBrains Mono
+8. **Gift Section** — QR code cards for bank transfers (Techcombank, VIB)
+9. **Venue Section** — Map with glass card overlay, Google Maps iframe
+10. **Travel Section** — Tips with glass cards
+11. **FAQ Section** — Accordion with glassmorphism
+12. **RSVP Form** — Full form with name, guest count, message, calendar link
 
-### Removed Sections
+### Removed/Replaced Sections
 
-The following sections were **removed from scope** during UI refinement:
-
-- **Gallery** — Placeholder content, not essential for MVP
-- **Travel** — Generic content, not adding value
-- **Calendar** — "Coming soon" alert, incomplete feature
+- **GalleryTeaserSection** → Replaced by **Album Slideshow** (dynamic folder-based slideshow)
+- **InvitationNote** → Removed (content merged into Hero/Love Story)
+- **ContactSection** → Replaced by **Gift Section** + **Floating Controls**
+- **EventDetailsSection** → Merged into **Quick Facts Band**
 
 ---
 
-## Section Details
+## Component Details
 
 ### Hero Section
 
 **File:** `src/components/sections/HeroSection.tsx`
 
 **Visual Treatment:**
-- Gradient background: `rose-100` → `pink-50` → `fuchsia-100`
-- Badge: "Lễ Thành Hôn" in white/75 with rose ring
-- Centered layout with `max-w-3xl`
-- Decorative horizontal divider (gradient line)
-- Large typography scale for couple names
+- Background: `HAR01404.jpg` with opacity-65 + gradient overlay
+- Particle canvas: 70 cyan particles with glow
+- Countdown timer: Large white numbers with cyan labels
+- Couple names: `font-serif` (Dancing Script) with text-shadow glow
+- CTA buttons: Glass cards with cyan borders
 
-**Content Tone:** Formal, elegant invitation language  
-**CTA:** "Xem thông tin chi tiết" → scrolls to `#event-details`
+**Content Tone:** Futuristic yet romantic ("Save the date", "Countdown to our special day")
 
-**Key Changes from Original:**
-- Increased padding: `py-16 sm:py-24` (was `py-14 sm:py-18`)
-- Larger heading scale: `text-5xl sm:text-6xl lg:text-7xl` (was `text-4xl sm:text-5xl`)
-- Badge text changed from "Lễ cưới" to "Lễ Thành Hôn" (more formal)
-- Added decorative divider line
-- CTA changed from `stone-900` to `rose-600`
+### Album Slideshow (NEW)
 
----
+**File:** `src/components/sections/GalleryTeaserSection.tsx`  
+**Provider:** `src/components/sections/GalleryProvider.tsx` (server component, auto-scans `public/images/gallery/*/`)
 
-### Event Details Section
+**Features:**
+- **Dynamic Categories:** Auto-discovers folders in `public/images/gallery/` (e.g., `sapa/`, `nhat-ban/`)
+- **3D Carousel:** `perspective:1400px` with CSS transforms
+- **Ken Burns Effect:** Slow zoom + pan on active slide
+- **8 Animation Modes:** Ken Burns, Pan Left, Pan Up, Zoom In, Pulse, Rotate, Shake, Glow Pulse
+- **Auto-Play:** 5-second interval with auto-advance to next category
+- **Controls:** Prev/Next, Play/Pause, Animation switcher
+- **Progress Bar:** Cinematic wipes with slideProgress
+- **Keyboard Nav:** Arrow keys + Space for play/pause
 
-**File:** `src/components/sections/EventDetailsSection.tsx`
+**Active Category:** `sapa/` (20 images, auto-hides category tabs since only 1 category)
 
-**Layout:** 2-column grid (`sm:grid-cols-2`) of info cards
+### RSVP Form
 
-**Cards Include:**
-- Ngày tổ chức (Event Date)
-- Giờ bắt đầu (Start Time)
-- Trang phục (Dress Code)
-- Xác nhận tham dự (RSVP Deadline)
+**File:** `src/components/sections/RsvpBand.tsx`
 
-**Visual Treatment:**
-- White/80 cards with rose-200/40 ring
-- Rose-900 headings, rose-950 values
-- Supporting text in rose-700/70
+**Design:**
+- Glass card form with `backdrop-blur-md`
+- Fields: Name (text), Guest count (select), Message (textarea)
+- Submit: Gradient button with cyan glow
+- Success state: "RSVP_RECEIVED" message
+- Calendar link: "Thêm vào lịch" with Google Calendar integration
 
----
-
-### Venue Section
-
-**File:** `src/components/sections/VenueSection.tsx`
-
-**Layout:** Two-column grid (`lg:grid-cols-[1.15fr_0.85fr]`)
-
-**Left Column:**
-- Venue name and address in rose-50/50 card with rose-200/60 ring
-- Rose-950 heading, rose-800/80 address text
-
-**Right Column:**
-- Directions note in rose-100/60 card with rose-200 ring
-- CTA button: "Xem chỉ dẫn đường đi" (rose-600 background)
-- Opens Google Maps in new tab
-
-**Key Enhancement:** Increased visual prominence with larger cards and clearer hierarchy
+**Note:** No admin form submit or Google Excel export — data is handled via Next.js API routes and Prisma.
 
 ---
 
-### Schedule Section
+## Technical Implementation
 
-**File:** `src/components/sections/ScheduleSection.tsx`
+### Stack
 
-**Visual Treatment:**
-- Dark rose-900 background for contrast
-- Vertical timeline with pink-300 dots
-- Rose-700 connector lines between events
-- White headings, pink-200 time labels, rose-200 descriptions
+- **Framework:** Next.js 16.2.4 (App Router)
+- **Styling:** Tailwind CSS v4 (with `bg-[#xxx]` arbitrary values)
+- **Fonts:** Google Fonts (Inter, Dancing Script, JetBrains Mono) via `@import` in `globals.css`
+- **State:** React hooks (`useState`, `useEffect`, `useMemo`, `useCallback`)
+- **Animations:** CSS `@keyframes` with Tailwind `animate-[...]`
+- **Data Loading:** Server component (`GalleryProvider.tsx`) uses `fs.readdirSync` to scan gallery folders at build time
+- **Build:** Turbopack (fast refresh, optimized production builds)
 
-**Content:** Event timeline from arrival to departure
+### File Structure
 
----
+```
+src/
+├── app/
+│   ├── layout.tsx
+│   ├── page.tsx          ← Main page with all sections
+│   └── opengraph-image.tsx
+├── components/
+│   ├── sections/
+│   │   ├── HeroSection.tsx
+│   │   ├── QuickFactsBand.tsx
+│   │   ├── LoveStorySection.tsx
+│   │   ├── GalleryTeaserSection.tsx  ← NEW slideshow
+│   │   ├── GalleryProvider.tsx       ← NEW server component
+│   │   ├── ScheduleSection.tsx
+│   │   ├── WeddingPartySection.tsx  ← NEW
+│   │   ├── GiftSection.tsx          ← NEW
+│   │   ├── VenueSection.tsx
+│   │   ├── TravelSection.tsx
+│   │   ├── FaqSection.tsx
+│   │   ├── RsvpBand.tsx
+│   │   └── FloatingControls.tsx
+│   ├── ui/
+│   │   ├── ParticleCanvas.tsx
+│   │   ├── CountdownTimer.tsx
+│   │   └── TimelineItem.tsx
+│   └── forms/  (empty - no admin forms)
+├── lib/
+│   ├── constants/event-data.ts
+│   └── formatters/calendar.ts
+└── hooks/useMusic.ts
+```
 
-### Contact Section
+### Data Management
 
-**File:** `src/components/sections/ContactSection.tsx`
+- **Event Data:** `src/lib/constants/event-data.ts` (couple names: "Hoàng Hiếu & Kim Liên", date: 2026-12-25)
+- **Gallery Data:** Auto-generated by `GalleryProvider.tsx` (no manual JSON needed)
+- **RSVP Data:** Stored via Prisma (not in this repo — handled by API routes)
 
-**Layout:** Centered minimal design (no longer card grid)
-
-**Visual Treatment:**
-- Gradient background: `rose-100/50` → `white/90` → `pink-100/50`
-- Icon + underlined link format (not support cards)
-- Rose-500 icons, rose-800 text
-- Underline decoration: rose-300, hover rose-500
-
-**Key Change from Original:**
-- Removed 2-column card grid layout
-- Changed to simple centered icon + link pairs
-- More elegant, less "business support" feel
-
----
-
-### FAQ Section
-
-**File:** `src/components/sections/FaqSection.tsx`
-
-**Visual Treatment:**
-- Accordion with rose-50/50 background
-- Rose-200/70 borders
-- Hover state: rose-100/70
-- Rose-950 question text, rose-800/80 answer text
-- Chevron icon rotates on expand
-
-**Content:** 6 common questions (dress code, RSVP, plus-one, parking, dietary, arrival time)
-
----
-
-## Content Tone
-
-**Overall Voice:** Sang trọng cổ điển (Elegant Classical)
-
-**Characteristics:**
-- Formal Vietnamese: "quý vị", "trân trọng kính mời", "ngày trọng đại"
-- Avoids casual "bạn" or "chúng tôi"
-- Uses "lễ thành hôn" instead of "đám cưới"
-- Restrained, dignified language
-- No UI/meta descriptions (e.g., "easy to read on small screens")
-
-**Example Phrases:**
-- "Trân trọng kính mời quý vị đến chung vui trong ngày trọng đại của gia đình chúng tôi."
-- "Xin gửi đến quý vị những thông tin cần thiết cho ngày lễ trọng đại."
-- "Chương trình hôn lễ được chuẩn bị trang trọng như sau."
-
----
-
-## Data Source
-
-**Centralized Constants:** `src/lib/constants/event-data.ts`
-
-**Exports:**
-- `COUPLE_NAMES` — Couple display names
-- `WEDDING_DATE_ISO` — ISO date string
-- `VENUE` — Venue name, address lines, map URL, note
-- `CONTACT_ACTIONS` — Phone/email contact info
-- `EVENT_DETAILS` — Date, time, dress code, RSVP deadline cards
-- `SCHEDULE_ITEMS` — Timeline events
-- `FAQ_DATA` — Question/answer pairs
-
-**Consistency:** All sections pull from this single source to avoid data drift
-
----
-
-## Accessibility
-
-**ARIA Attributes:**
-- Section landmarks with `aria-labelledby`
-- Accordion buttons with `aria-expanded` and `aria-controls`
-- Icon SVGs with `aria-hidden="true"` and `focusable="false"`
-- Semantic HTML: `<section>`, `<article>`, `<time>`, `<h1>`-`<h3>`
-
-**Focus States:**
-- All interactive elements have `focus-visible:outline-none` with custom `focus-visible:ring-2 ring-rose-300`
-- Minimum touch target: `min-h-[44px]` for buttons/links
-
-**Keyboard Navigation:**
-- FAQ accordion fully keyboard accessible
-- All CTAs and links keyboard navigable
-
----
-
-## Responsive Behavior
-
-**Breakpoints:**
-- Mobile-first: base styles for narrow screens
-- `sm:` — 640px+ (tablets)
-- `lg:` — 1024px+ (desktops)
-
-**Key Responsive Changes:**
-- Hero heading scales: `text-5xl` → `text-6xl` → `text-7xl`
-- Event Details grid: 1 column → 2 columns at `sm:`
-- Venue layout: stacked → 2-column at `lg:`
-- Padding increases at larger breakpoints
+**No Google Excel or Admin Form Submit** — The system uses Next.js API routes + Prisma for data persistence.
 
 ---
 
 ## Build Status
 
-**Last Build:** 2026-05-06  
-**Status:** ✅ Success  
-**TypeScript:** ✅ Pass  
-**Warnings:** metadataBase not set (non-blocking)
+- ✅ **Lint:** 0 errors (1 warning for `@next/next/no-img-element` in GiftSection — not blocking)
+- ✅ **TypeScript:** No errors found
+- ✅ **Build:** Successful (Turbopack, Next.js 16.2.4)
 
-**Dev Server:** Running on `http://localhost:3000` (port 3000)
-
----
-
-## Known Gaps vs. Original Design
-
-### Completed Refinements
-- ✅ Hero section enhanced (larger, more formal)
-- ✅ Contact section simplified (no longer card grid)
-- ✅ Color scheme changed to pink blush
-- ✅ Removed Gallery/Travel/Calendar sections
-- ✅ Content tone updated to formal classical
-
-### Remaining Work (Epic 3+)
-- ⏳ RSVP form implementation (Epic 3)
-- ⏳ Admin dashboard (Epic 4-5)
-- ⏳ Database integration (Epic 3-5)
-
----
-
-## Files Changed in Recent UI Refinements
-
-### Color Scheme Update (2026-05-06)
-```
-Modified:
-  src/app/globals.css                           (body background/color)
-  src/app/page.tsx                              (gradient background)
-  src/components/sections/HeroSection.tsx       (gradient, badge, CTA, text colors)
-  src/components/sections/EventDetailsSection.tsx (card backgrounds, text colors)
-  src/components/sections/VenueSection.tsx      (card backgrounds, CTA, text colors)
-  src/components/sections/ScheduleSection.tsx   (timeline background, accent colors)
-  src/components/sections/ContactSection.tsx    (gradient, link colors)
-  src/components/sections/FaqSection.tsx        (accordion backgrounds, borders, text)
-```
-
-### Contact Layout Simplification (2026-05-06)
-```
-Modified:
-  src/components/sections/ContactSection.tsx    (removed card grid, added centered links)
-```
-
-### Hero Enhancement (2026-05-06)
-```
-Modified:
-  src/components/sections/HeroSection.tsx       (increased scale, added divider, formal badge)
-```
+**Warnings:**
+- `metadataBase` not set (not critical for local dev)
+- Edge runtime warning for `/opengraph-image` (expected)
 
 ---
 
 ## Next Steps
 
-1. **Epic 3:** Implement RSVP form with database integration
-2. **Epic 4:** Admin authentication
-3. **Epic 5:** Admin dashboard and RSVP management
-
-**Current Phase:** Ready to begin Epic 3 story creation
+1. **Epic 3 (Guest RSVP Submission):** Implement full RSVP functionality with API routes
+2. **Multi-Agent Expansion:** Add more gallery categories (e.g., `nhat-ban/`, `studio/`)
+3. **Performance:** Optimize images (AVIF/WebP conversion)
+4. **Testing:** E2E tests for RSVP flow

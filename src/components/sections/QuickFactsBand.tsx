@@ -1,7 +1,11 @@
+"use client";
+
 import { EVENT_DETAILS, WEDDING_DATE_ISO, RSVP_DEADLINE_ISO } from "@/lib/constants/event-data";
 import { formatEventDate } from "@/lib/formatters/date-format";
+import { useInView } from "@/hooks/useInView";
 
 export function QuickFactsBand() {
+  const { ref, isInView } = useInView({ threshold: 0.2 });
   const quickFacts = [
     {
       icon: (
@@ -37,26 +41,31 @@ export function QuickFactsBand() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
       ),
-      label: "RSVP trước",
+      label: "Hạn xác nhận",
       value: formatEventDate(RSVP_DEADLINE_ISO),
     },
   ];
 
   return (
     <section
+      ref={ref}
       aria-label="Thông tin nhanh về sự kiện"
-      className="border-y border-rose-200/30 bg-rose-50/20 py-8 sm:py-10"
+      className="relative border-y border-[#00e5ff]/10 bg-[#0A0A0D]/80 py-16 sm:py-20"
     >
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-6 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
-        {quickFacts.map((fact) => (
-          <div key={fact.label} className="flex flex-col items-center text-center">
-            <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-rose-600/10 text-rose-600">
+      <div className="absolute inset-0 bg-gradient-to-r from-[#3A1F5D]/20 via-transparent to-[#1A1A2E]/20" />
+      <div className="relative mx-auto grid max-w-6xl grid-cols-1 gap-6 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
+        {quickFacts.map((fact, index) => (
+          <div
+            key={fact.label}
+            className={`group relative flex flex-col items-center rounded-2xl border border-[#00e5ff]/10 bg-[#00e5ff]/5 p-6 text-center backdrop-blur-xl transition-all duration-500 hover:border-[#00e5ff]/30 hover:bg-[#00e5ff]/10 hover:shadow-[0_0_40px_-10px_rgba(245,225,164,0.15)] ${isInView ? `animate-fade-up stagger-${index + 1}` : 'reveal-hidden'}`}
+          >
+            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full border border-[#00e5ff]/20 bg-[#00e5ff]/10 text-[#00e5ff] shadow-[0_0_20px_rgba(245,225,164,0.1)] transition-all duration-500 group-hover:scale-110 group-hover:border-[#00e5ff]/40">
               {fact.icon}
             </div>
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-rose-600/80">
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#00e5ff]/60">
               {fact.label}
             </p>
-            <p className="mt-2 text-base font-medium leading-7 text-rose-950">
+            <p className="mt-2 text-base font-medium leading-7 text-white/90">
               {fact.value}
             </p>
           </div>

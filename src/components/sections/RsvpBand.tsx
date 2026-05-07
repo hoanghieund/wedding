@@ -1,63 +1,91 @@
-import { CONTACT_ACTIONS, CALENDAR_EVENT } from "@/lib/constants/event-data";
+"use client";
+
+import { useState } from "react";
+import { useInView } from "@/hooks/useInView";
+import { CALENDAR_EVENT } from "@/lib/constants/event-data";
 import { buildGoogleCalendarUrl } from "@/lib/formatters/calendar";
 
 export function RsvpBand() {
+  const [submitted, setSubmitted] = useState(false);
+  const { ref, isInView } = useInView();
   const calendarUrl = buildGoogleCalendarUrl(CALENDAR_EVENT);
 
   return (
     <section
       id="rsvp"
       aria-labelledby="rsvp-heading"
-      className="border-t border-rose-200/30 bg-gradient-to-br from-rose-50/30 via-white/50 to-pink-50/30 py-16 sm:py-20 lg:py-24"
+      ref={ref}
+      className={`border-t border-[#00e5ff]/10 bg-transparent py-16 sm:py-20 lg:py-24 reveal-hidden ${isInView ? "animate-fade-up" : ""}`}
     >
-      <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
         <h2
           id="rsvp-heading"
-          className="font-serif text-3xl font-semibold text-rose-950 sm:text-4xl lg:text-5xl"
+          className="text-center text-2xl font-extrabold uppercase tracking-tight text-white sm:text-3xl lg:text-4xl"
         >
-          Xác nhận tham dự
+          Xác Nhận Tham Dự
         </h2>
-        <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-rose-800/80">
-          Kính mong quý vị xác nhận tham dự trước ngày 30 tháng 10 năm 2026 để gia đình chúng tôi có thể chuẩn bị chu đáo.
-        </p>
 
-        <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-          <a
-            href={CONTACT_ACTIONS[0].href}
-            className="inline-flex min-h-[56px] w-full items-center justify-center gap-2 rounded-full bg-rose-600 px-8 py-4 text-base font-semibold text-white shadow-lg transition hover:bg-rose-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-300 focus-visible:ring-offset-2 sm:w-auto"
-          >
-            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-            </svg>
-            Gọi điện xác nhận
-          </a>
-          <a
-            href={calendarUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex min-h-[56px] w-full items-center justify-center gap-2 rounded-full border-2 border-rose-600 bg-white px-8 py-4 text-base font-semibold text-rose-600 transition hover:bg-rose-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-300 focus-visible:ring-offset-2 sm:w-auto"
-          >
-            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-            Thêm vào lịch
-          </a>
-        </div>
+        <div className="mt-10 rounded-3xl border border-white/10 bg-[rgba(20,20,30,0.38)] p-8 shadow-[0_20px_50px_rgba(0,0,0,0.45)] backdrop-blur-md">
+          {submitted ? (
+            <div className="text-center">
+              <p className="font-mono text-sm uppercase tracking-[0.25em] text-[#00e5ff]">XÁC NHẬN ĐÃ GỬI</p>
+              <p className="mt-4 text-lg leading-6 text-white/80">Gia đình xin cảm ơn quý vị đã xác nhận tham dự.</p>
+            </div>
+          ) : (
+            <form
+              className="space-y-5"
+              onSubmit={(event) => {
+                event.preventDefault();
+                setSubmitted(true);
+              }}
+            >
+              <label className="block">
+                <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#a0a0b0]">Tên khách mời</span>
+                <input
+                  type="text"
+                  required
+                  placeholder="Ví dụ: Nguyễn Văn A"
+                  className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition placeholder:text-white/30 focus:border-[#00e5ff]"
+                />
+              </label>
 
-        <div className="mt-12 space-y-3 border-t border-rose-200/30 pt-8">
-          <p className="text-sm font-medium uppercase tracking-[0.2em] text-rose-600/80">
-            Liên hệ gia đình
-          </p>
-          <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-            {CONTACT_ACTIONS.map((action) => (
-              <a
-                key={action.href}
-                href={action.href}
-                className="text-base font-medium text-rose-800 underline decoration-rose-300 underline-offset-4 transition hover:text-rose-600 hover:decoration-rose-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-300 focus-visible:ring-offset-2"
+              <label className="block">
+                <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#a0a0b0]">Số lượng khách tham dự</span>
+                <select className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-[#00e5ff]">
+                  <option className="bg-[#030305]">1 người</option>
+                  <option className="bg-[#030305]">2 người</option>
+                  <option className="bg-[#030305]">Gia đình (3 người trở lên)</option>
+                </select>
+              </label>
+
+              <label className="block">
+                <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#a0a0b0]">Lời chúc gửi đến Hoàng Hiếu & Kim Liên</span>
+                <textarea
+                  placeholder="Kính chúc hai bạn trăm năm hạnh phúc..."
+                  className="mt-2 min-h-28 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition placeholder:text-white/30 focus:border-[#00e5ff]"
+                />
+              </label>
+
+              <button
+                type="submit"
+                className={`w-full rounded-full bg-gradient-to-r from-[#00e5ff] to-[#007bff] px-8 py-4 font-bold uppercase tracking-[0.18em] text-white shadow-[0_10px_25px_rgba(0,229,255,0.35)] transition hover:-translate-y-1 hover:shadow-[0_15px_35px_rgba(0,229,255,0.45)] reveal-hidden ${
+                  isInView ? "animate-zoom-in animate-glow-pulse stagger-1" : ""
+                }`}
               >
-                {action.hint}
-              </a>
-            ))}
+                Xác Nhận Tham Dự
+              </button>
+            </form>
+          )}
+
+          <div className="mt-6 text-center">
+            <a
+              href={calendarUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-mono text-xs uppercase tracking-[0.18em] text-[#00e5ff] underline decoration-[#00e5ff]/30 underline-offset-4 transition hover:decoration-[#00e5ff]"
+            >
+              Thêm vào lịch
+            </a>
           </div>
         </div>
       </div>

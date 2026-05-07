@@ -10,86 +10,103 @@ export type ScheduleItem = {
   description: string;
 };
 
-export const COUPLE_NAMES = "Minh & An";
+export const COUPLE_NAMES = "Hoàng Hiếu & Kim Liên";
 
-export const WEDDING_DATE_ISO = "2026-11-22T15:00:00+07:00";
-export const RSVP_DEADLINE_ISO = "2026-10-30T23:59:59+07:00";
+export const WEDDING_DATE_ISO = "2026-12-25T09:00:00+07:00";
+export const RSVP_DEADLINE_ISO = "2026-12-15T23:59:59+07:00";
 
 export const EVENT_DETAILS: EventDetail[] = [
   {
     label: "Địa điểm",
-    value: "Trung tâm Tiệc cưới White Palace",
-    supportingText: "194 Hoàng Văn Thụ, Phường 9, Quận Phú Nhuận, TP. Hồ Chí Minh",
+    value: "Tư gia nhà trai",
+    supportingText: "An Lạc, Xã Vụ Bản, Tỉnh Ninh Bình",
   },
   {
     label: "Ngày & Giờ",
-    value: "Chủ Nhật, ngày 22 tháng 11, 2026 · 15:00",
-    supportingText: "Lễ cưới sẽ bắt đầu đúng giờ, vui lòng đến sớm 15 phút.",
+    value: "Thứ Năm, ngày 25 tháng 12, 2026 · 09:00",
+    supportingText: "Lễ Thành Hôn sẽ bắt đầu đúng giờ, kính mong quý vị đến sớm 20-30 phút.",
   },
   {
-    label: "Hạn chót xác nhận tham dự",
-    value: "Thứ Sáu, ngày 30 tháng 10, 2026",
-    supportingText: "Vui lòng xác nhận tham dự sớm để chúng tôi chuẩn bị chu đáo nhất.",
+    label: "Hạn xác nhận",
+    value: "Thứ Hai, ngày 15 tháng 12, 2026",
+    supportingText: "Kính mong quý vị xác nhận tham dự sớm để gia đình chuẩn bị chu đáo.",
   },
   {
     label: "Trang phục",
-    value: "Trang phục lịch sự với tông màu trung tính hoặc pastel",
-    supportingText: "Vui lòng tránh mặc trang phục màu trắng tinh để nhường sự nổi bật cho cô dâu.",
+    value: "Trang phục lịch sự, áo dài truyền thống được hoan nghênh",
+    supportingText: "Kính mong quý vị tránh mặc trang phục màu trắng để dành sự nổi bật cho cô dâu.",
   },
   {
-    label: "Hướng dẫn khách mời",
-    value: "Có bãi đậu xe tại chỗ và hỗ trợ thang máy.",
-    supportingText: "Kính mong quý vị cho chúng tôi biết về yêu cầu chế độ ăn uống đặc biệt khi xác nhận tham dự.",
+    label: "Lưu ý",
+    value: "Có bãi đậu xe tại nhà",
+    supportingText: "Nếu quý vị có nhu cầu về món chay hoặc chế độ ăn đặc biệt, kính mong thông báo khi xác nhận tham dự.",
   },
 ];
 
 export const SCHEDULE_ITEMS: ScheduleItem[] = [
   {
-    time: "15:00",
-    title: "Đón khách",
-    description: "Nước uống chào mừng, hướng dẫn khách và sắp xếp chỗ ngồi trước khi buổi lễ bắt đầu.",
+    time: "07:00 - 08:30",
+    title: "Lễ Vu Quy tại nhà gái",
+    description: "Gia đình nhà trai đến nhà gái làm lễ Vu Quy, cô dâu từ giã tổ tiên và gia đình.",
   },
   {
-    time: "15:30",
-    title: "Lễ cưới",
-    description: "Buổi lễ ngắn gọn với những lời chúc phúc từ gia đình và lời thề nguyện của cặp đôi.",
+    time: "08:30 - 09:00",
+    title: "Rước dâu về nhà trai",
+    description: "Đoàn rước dâu khởi hành từ nhà gái về nhà trai, cô dâu chính thức về nhà chồng.",
   },
   {
-    time: "16:30",
+    time: "09:00 - 10:00",
+    title: "Lễ Thành Hôn tại nhà trai",
+    description: "Lễ gia tiên, lễ thành hôn, cô dâu chú rể làm lễ trước bàn thờ tổ tiên nhà trai và nhận lời chúc phúc từ gia đình hai bên.",
+  },
+  {
+    time: "10:00 - 11:00",
     title: "Chụp ảnh & Chào hỏi",
-    description: "Thời gian thoải mái để chụp ảnh cùng cặp đôi và gia đình hai bên.",
+    description: "Thời gian để chụp ảnh cùng cặp đôi, gia đình hai bên và khách mời.",
   },
   {
-    time: "17:30",
-    title: "Tiệc tối",
-    description: "Tiệc tối bắt đầu với các tiết mục biểu diễn, nâng ly và chung vui cùng nhau.",
+    time: "11:00 - 13:30",
+    title: "Tiệc mừng",
+    description: "Tiệc mừng cưới với các món ăn truyền thống, nâng ly chúc phúc và chung vui cùng gia đình hai họ.",
   },
   {
-    time: "20:30",
+    time: "13:30",
     title: "Tiễn khách",
-    description: "Lời cảm ơn cuối cùng, tặng quà mang về và hỗ trợ phương tiện di chuyển.",
+    description: "Gia đình hai bên cảm ơn và tiễn khách về.",
   },
 ];
 
-export const VENUE = {
-  venueName: "Trung tâm Tiệc cưới White Palace",
-  addressLines: ["194 Hoàng Văn Thụ, Phường 9", "Quận Phú Nhuận, TP. Hồ Chí Minh"],
-  mapUrl: "https://www.google.com/maps/search/?api=1&query=White+Palace+194+Hoàng+Văn+Thụ",
-  note: "Bãi đậu xe tại chỗ có giới hạn, nên ưu tiên sử dụng dịch vụ gọi xe hoặc đi chung xe.",
+export const VENUE_GROOM = {
+  venueName: "Tư gia nhà trai",
+  addressLines: ["An Lạc, Xã Vụ Bản", "Tỉnh Ninh Bình"],
+  coordinates: { lat: 20.324818, lng: 106.088168 },
+  mapUrl: "https://www.google.com/maps/place/20%C2%B019'29.3%22N+106%C2%B005'17.4%22E/@20.324818,106.0855931,17z",
+  note: "Có bãi đậu xe tại nhà. Kính mong quý vị đến sớm 20-30 phút để thuận tiện sắp xếp chỗ ngồi.",
 };
+
+export const VENUE_BRIDE = {
+  venueName: "Tư gia nhà gái",
+  addressLines: ["Đội 3 Vân Cát, Xã Vụ Bản", "Tỉnh Ninh Bình"],
+  coordinates: { lat: 20.363823, lng: 106.083362 },
+  mapUrl: "https://www.google.com/maps/place/20%C2%B021'49.8%22N+106%C2%B005'00.1%22E/@20.363823,106.0827183,19z",
+  note: "Địa điểm tổ chức Lễ Vu Quy vào sáng sớm.",
+};
+
+// Backward compatibility
+export const VENUE = VENUE_GROOM;
 
 export const CONTACT_ACTIONS = [
   {
-    label: "Liên hệ gia đình",
+    label: "Liên hệ gia đình nhà trai",
     hint: "+84 912 345 678",
     href: "tel:+84912345678",
     icon: "phone" as const,
   },
   {
-    label: "Email hỗ trợ",
-    hint: "hello@ourweddingday.com",
-    href: "mailto:hello@ourweddingday.com",
-    icon: "mail" as const,
+    label: "Liên hệ gia đình nhà gái",
+    hint: "+84 987 654 321",
+    href: "tel:+84987654321",
+    icon: "phone" as const,
   },
 ];
 
@@ -102,32 +119,42 @@ export const FAQ_DATA: FaqItem[] = [
   {
     question: "Trang phục tham dự như thế nào?",
     answer:
-      "Kính mong quý vị lựa chọn trang phục lịch sự với tông màu trung tính hoặc pastel, và vui lòng tránh màu trắng để dành sự nổi bật cho cô dâu.",
+      "Kính mong quý vị lựa chọn trang phục lịch sự, áo dài truyền thống được hoan nghênh. Vui lòng tránh màu trắng để dành sự nổi bật cho cô dâu.",
   },
   {
-    question: "Hạn chót xác nhận tham dự (RSVP) là khi nào?",
+    question: "Hạn xác nhận tham dự là khi nào?",
     answer:
-      "Kính mong quý vị xác nhận tham dự trước ngày 30 tháng 10 năm 2026 để gia đình chúng tôi có thể chuẩn bị chu đáo cho buổi tiệc.",
+      "Kính mong quý vị xác nhận tham dự trước ngày 15 tháng 12 năm 2026 để gia đình chúng tôi có thể chuẩn bị chu đáo.",
   },
   {
-    question: "Tôi có thể dẫn theo người thân (plus-one) không?",
+    question: "Tôi có thể đưa trẻ nhỏ đi cùng không?",
     answer:
-      "Do sự sắp xếp chỗ ngồi của buổi tiệc, chúng tôi xin được đón tiếp những khách mời có tên trong thiệp mời. Kính mong quý vị thông cảm.",
+      "Gia đình chúng tôi rất hoan nghênh các em nhỏ tham dự. Kính mong quý vị thông báo số lượng trẻ em khi xác nhận để chúng tôi chuẩn bị ghế ngồi phù hợp.",
   },
   {
-    question: "Có chỗ đậu xe tại địa điểm không?",
+    question: "Thiệp mời có dành cho người đi cùng không?",
     answer:
-      "Địa điểm tổ chức có khu vực đậu xe tại chỗ và hỗ trợ thang máy để thuận tiện cho việc di chuyển của quý vị.",
+      "Do sự sắp xếp chỗ ngồi và chuẩn bị tiệc, kính mong quý vị thông báo số lượng người đi cùng khi xác nhận tham dự. Gia đình chúng tôi xin trân trọng đón tiếp.",
   },
   {
-    question: "Có tùy chọn món chay hoặc món ăn theo chế độ đặc biệt không?",
+    question: "Có chỗ đậu xe tại nhà không?",
     answer:
-      "Nếu quý vị có nhu cầu về món chay hoặc chế độ ăn đặc biệt, kính mong vui lòng thông báo khi xác nhận tham dự để gia đình chúng tôi chuẩn bị được chu toàn.",
+      "Có bãi đậu xe tại nhà và khu vực lân cận. Nếu quý vị đi từ xa, có thể liên hệ gia đình để được hỗ trợ chỉ đường cụ thể.",
+  },
+  {
+    question: "Có món chay hoặc món ăn theo chế độ đặc biệt không?",
+    answer:
+      "Nếu quý vị có nhu cầu về món chay hoặc chế độ ăn đặc biệt, kính mong thông báo khi xác nhận tham dự để gia đình chuẩn bị chu đáo.",
   },
   {
     question: "Tôi nên đến lúc mấy giờ?",
     answer:
-      "Kính mong quý vị có mặt trước giờ cử hành khoảng 15 phút để thuận tiện cho việc đón tiếp và ổn định chỗ ngồi.",
+      "Lễ Thành Hôn bắt đầu lúc 09:00 sáng. Kính mong quý vị có mặt trước 20-30 phút để thuận tiện đón tiếp và sắp xếp chỗ ngồi.",
+  },
+  {
+    question: "Nếu tôi đến muộn thì sao?",
+    answer:
+      "Nếu có việc bận không thể đến đúng giờ, kính mong quý vị thông báo trước để gia đình sắp xếp. Quý vị vẫn được chào đón nồng nhiệt dù đến muộn.",
   },
 ];
 
@@ -141,11 +168,11 @@ export type CalendarEventInfo = {
 };
 
 export const CALENDAR_EVENT: CalendarEventInfo = {
-  title: "Lễ Thành Hôn Minh & An",
-  location: "Trung tâm Tiệc cưới White Palace, 194 Hoàng Văn Thụ, Phường 9, Quận Phú Nhuận, TP. Hồ Chí Minh",
+  title: "Lễ Thành Hôn Hoàng Hiếu & Kim Liên",
+  location: "Tư gia nhà trai, Xã An Lạc, Vụ Bản, Ninh Bình",
   startTime: WEDDING_DATE_ISO,
-  endTime: "2026-11-22T20:30:00+07:00",
-  description: "Trân trọng kính mời quý vị đến chung vui trong ngày trọng đại của gia đình chúng tôi.",
+  endTime: "2026-12-25T13:30:00+07:00",
+  description: "Gia đình chúng tôi trân trọng kính mời quý vị đến chung vui trong ngày trọng đại.",
   ctaLabel: "Thêm vào lịch",
 };
 
@@ -161,32 +188,36 @@ export type TravelItem = {
 
 export const TRAVEL_GUIDANCE: TravelItem[] = [
   {
-    title: "Lưu trú gợi ý",
-    summary: "Khách sạn gần địa điểm tổ chức",
+    title: "Từ Hà Nội",
+    summary: "Khoảng cách ~90km, thời gian di chuyển khoảng 2 giờ",
     details:
-      "Khu vực Phú Nhuận có nhiều khách sạn 3-4 sao trong bán kính 2km. Chúng tôi khuyến nghị đặt phòng sớm nếu quý vị đến từ tỉnh xa.",
+      "Từ Hà Nội đi theo Quốc lộ 1A hoặc cao tốc Pháp Vân - Ninh Bình, sau đó rẽ vào hướng Vụ Bản. Có thể sử dụng xe khách, xe riêng hoặc thuê xe.",
     link: {
-      label: "Tìm khách sạn gần đây",
-      href: "https://www.google.com/maps/search/hotels+near+194+Hoàng+Văn+Thụ,+Phú+Nhuận",
+      label: "Xem chỉ đường trên Google Maps",
+      href: "https://www.google.com/maps/dir/Hà+Nội/An+Lạc+Vụ+Bản+Ninh+Bình",
     },
   },
   {
-    title: "Di chuyển đến địa điểm",
-    summary: "Phương tiện công cộng và gọi xe",
+    title: "Từ TP. Nam Định",
+    summary: "Khoảng cách ~30km, thời gian di chuyển khoảng 40 phút",
     details:
-      "Từ sân bay Tân Sơn Nhất: khoảng 20 phút bằng taxi/Grab. Từ trung tâm Quận 1: khoảng 15 phút. Địa điểm nằm trên trục đường chính, dễ dàng tìm thấy.",
+      "Từ trung tâm TP. Nam Định đi theo Quốc lộ 21B hướng Ninh Bình, sau đó rẽ vào hướng Vụ Bản. Đường đi thuận tiện, dễ tìm.",
   },
   {
-    title: "Đậu xe và gọi xe",
-    summary: "Bãi đậu xe có giới hạn",
+    title: "Lưu trú gợi ý",
+    summary: "Khách sạn tại TP. Ninh Bình hoặc Nam Định",
     details:
-      "Trung tâm có bãi đậu xe tại chỗ nhưng số lượng có hạn. Chúng tôi khuyến nghị sử dụng dịch vụ Grab/taxi hoặc đi chung xe để thuận tiện hơn.",
+      "Nếu quý vị đến từ xa, có thể nghỉ tại các khách sạn ở TP. Ninh Bình (cách ~15km) hoặc TP. Nam Định (cách ~30km). Chúng tôi khuyến nghị đặt phòng sớm.",
+    link: {
+      label: "Tìm khách sạn gần Ninh Bình",
+      href: "https://www.google.com/maps/search/hotels+near+Ninh+Bình",
+    },
   },
   {
-    title: "Đến sớm",
-    summary: "Khuyến nghị đến trước 15 phút",
+    title: "Đậu xe và đến sớm",
+    summary: "Có bãi đậu xe tại nhà",
     details:
-      "Kính mong quý vị có mặt trước giờ cử hành khoảng 15 phút để thuận tiện cho việc đón tiếp, sắp xếp chỗ ngồi và tránh bỏ lỡ phần lễ quan trọng.",
+      "Nhà có bãi đậu xe rộng rãi. Kính mong quý vị đến sớm 20-30 phút để thuận tiện đón tiếp, sắp xếp chỗ ngồi và không bỏ lỡ phần lễ quan trọng.",
   },
 ];
 

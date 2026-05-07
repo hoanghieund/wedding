@@ -74,6 +74,12 @@ The strongest architectural drivers are:
 
 These NFRs strongly suggest an architecture that favors static-first delivery, minimal client-side complexity, efficient asset handling, secure server-side RSVP processing, and a simple but robust admin boundary.
 
+### Current Architecture Update - 2026-05-07
+
+The current guest-facing implementation uses a cinematic dark/neon visual system with client-side interactive sections and server-side content discovery where appropriate. The gallery architecture now uses a server component (`GalleryProvider.tsx`) to scan `public/images/gallery/*/` with Node `fs`; each folder is treated as a category and image paths are passed into the client slideshow component. This avoids hardcoded image lists, JSON manifests, and manual code updates when adding new shoot locations.
+
+RSVP and guest data management must not use Google Forms, Google Sheets, Google Excel, or admin form-submit workflows as the source of truth. If persistence is required, use first-party Next.js server routes/actions with Prisma/database storage and explicit validation. Admin-only operations, if later reintroduced, must remain separate from the public guest bundle and must not be implemented as spreadsheet-driven workflows.
+
 **Scale & Complexity:**
 
 This project is small in product scope but quality-sensitive in execution. It does not require real-time systems, collaboration, multi-tenancy, or heavy domain workflows. However, it does require careful handling of content structure, form submission, guest data protection, and mobile performance.

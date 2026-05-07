@@ -1,106 +1,284 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useInView } from "@/hooks/useInView";
 
-import { GALLERY_TEASER_ITEMS } from "@/lib/constants/event-data";
+type Category = {
+  slug: string;
+  name: string;
+  images: { src: string; alt: string }[];
+};
 
-export function GalleryTeaserSection() {
-  const [selectedImage, setSelectedImage] = useState<number | null>(null);
+const ANIMATIONS = [
+  { name: "Ken Burns", class: "animate-[kenburns_10s_ease-in-out_infinite_alternate]" },
+  { name: "Pan Left", class: "animate-[panLeft_10s_ease-in-out_infinite]" },
+  { name: "Pan Up", class: "animate-[panUp_10s_ease-in-out_infinite]" },
+  { name: "Zoom In", class: "animate-[zoomIn_10s_ease-in-out_infinite]" },
+  { name: "Pulse", class: "animate-[pulse_3s_ease-in-out_infinite]" },
+  { name: "Rotate", class: "animate-[rotateSlow_20s_linear_infinite]" },
+  { name: "Shake", class: "animate-[shake_4s_ease-in-out_infinite]" },
+  { name: "Glow Pulse", class: "animate-[glowPulse_3s_ease-in-out_infinite]" },
+];
 
-  if (GALLERY_TEASER_ITEMS.length === 0) {
-    return null;
-  }
+export default function GalleryTeaserSection({
+  categories,
+}: {
+  categories: Category[];
+}) {
+  const { ref, isInView } = useInView({ threshold: 0.1 });
+  const sectionRef = ref as React.RefObject<HTMLElement>;
+  const [selectedSlug, setSelectedSlug] = useState<string>(
+    categories[0]?.slug ?? "",
+  );
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [progressKey, setProgressKey] = useState(0);
+  const [animIndex, setAnimIndex] = useState(0);
+
+  const activeCategory = useMemo(
+    () => categories.find((c) => c.slug === selectedSlug),
+    [categories, selectedSlug],
+  );
+  const images = activeCategory?.images ?? [];
+  const total = images.length;
+  const currentAnim = ANIMATIONS[animIndex % ANIMATIONS.length];
+
+  const goTo = useCallback((index: number) => {
+    setCurrentIndex(index);
+    setProgressKey((k) => k + 1);
+  }, []);
+
+  const goPrev = useCallback(() => {
+    setAnimIndex((i) => i + 1);
+    goTo((currentIndex - 1 + total) % total);
+    setIsPlaying(false);
+  }, [currentIndex, goTo, total]);
+
+  const goNext = useCallback(() => {
+    setAnimIndex((i) => i + 1);
+    goTo((currentIndex + 1) % total);
+    setIsPlaying(false);
+  }, [currentIndex, goTo, total]);
+
+  useEffect(() => {
+    if (!isPlaying || total === 0) return;
+    const timer = window.setInterval(() => {
+      // Auto-advance: nếu đang ở ảnh cuối cùng, chuyển category
+      const nextIndex = (currentIndex + 1) % total;
+      if (nextIndex === 0) {
+        const currentCatIndex = categories.findIndex(c => c.slug === selectedSlug);
+        const nextCatIndex = (currentCatIndex + 1) % categories.length;
+        if (categories[nextCatIndex]) {
+          setSelectedSlug(categories[nextCatIndex].slug);
+          setCurrentIndex(0);
+          setAnimIndex((i) => i + 1);
+          setProgressKey((k) => k + 1);
+          setIsPlaying(true);
+        }
+      } else {
+        setAnimIndex((i) => i + 1);
+        setCurrentIndex(nextIndex);
+        setProgressKey((k) => k + 1);
+      }
+    }, 5000);
+    return () => window.clearInterval(timer);
+  }, [isPlaying, total, currentIndex, categories, selectedSlug]);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") goPrev();
+      if (e.key === "ArrowRight") goNext();
+      if (e.key === " ") {
+        e.preventDefault();
+        setIsPlaying((v) => !v);
+        setProgressKey((k) => k + 1);
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [goPrev, goNext]);
+
+  if (total === 0) return null;
 
   return (
-    <>
-      <section id="gallery" aria-labelledby="gallery-heading" className="space-y-8">
-        <div className="space-y-3 text-center">
-          <p className="text-xs font-medium uppercase tracking-[0.24em] text-rose-600">
-            Khoảnh khắc lưu giữ
-          </p>
-          <h2 id="gallery-heading" className="font-serif text-4xl font-semibold tracking-tight text-rose-950 sm:text-5xl">
-            Album ảnh cưới của chúng tôi
-          </h2>
-        </div>
+    <section
+      ref={sectionRef}
+      id="gallery"
+      aria-labelledby="gallery-heading"
+      className="space-y-10"
+    >
+      <div className={`space-y-3 text-center ${isInView ? "animate-fade-up" : "reveal-hidden"}`}>
+        <p className="font-mono text-xs uppercase tracking-[0.24em] text-[#00e5ff]/60">
+          Holographic Memory Deck
+        </p>
+        <h2
+          id="gallery-heading"
+          className="text-4xl font-extrabold uppercase tracking-tight text-white sm:text-5xl"
+        >
+          Album Ảnh Cưới
+        </h2>
+      </div>
 
-        <div className="grid gap-4 md:grid-cols-3">
-          {GALLERY_TEASER_ITEMS.slice(0, 3).map((item, index) => (
+      {categories.length > 1 && (
+        <div
+          className={`flex flex-wrap justify-center gap-3 ${
+            isInView ? "animate-fade-up stagger-1" : "reveal-hidden"
+          }`}
+        >
+          {categories.map((cat) => (
             <button
-              key={item.src}
-              onClick={() => setSelectedImage(index)}
-              className="group relative aspect-[3/4] overflow-hidden rounded-2xl bg-rose-100/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:ring-offset-2"
-              aria-label={`Xem ảnh: ${item.alt}`}
+              key={cat.slug}
+              onClick={() => {
+                setSelectedSlug(cat.slug);
+                setCurrentIndex(0);
+                setProgressKey((k) => k + 1);
+              }}
+              className={`rounded-full border px-5 py-2 font-mono text-xs uppercase tracking-widest transition-all ${
+                selectedSlug === cat.slug
+                  ? "border-[#00e5ff] bg-[#00e5ff] text-black shadow-[0_0_20px_rgba(0,229,255,0.4)]"
+                  : "border-white/20 bg-white/5 text-white/60 hover:border-[#00e5ff]/50 hover:text-white"
+              }`}
             >
-              <Image
-                src={item.src}
-                alt={item.alt}
-                fill
-                className="object-cover transition duration-500 group-hover:scale-105"
-                sizes="(min-width: 768px) 33vw, 100vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-rose-950/45 via-transparent to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-5 text-left">
-                <p className="text-sm font-medium leading-6 text-white drop-shadow-md">{item.alt}</p>
-              </div>
+              {cat.name}
             </button>
           ))}
         </div>
-      </section>
+      )}
 
-      {selectedImage !== null && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-rose-950/95 p-4 backdrop-blur-sm"
-          onClick={() => setSelectedImage(null)}
-          role="dialog"
-          aria-modal="true"
-          aria-label="Lightbox xem ảnh"
-        >
+      <div
+        className={`relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] border border-[#00e5ff]/20 bg-black/35 p-4 shadow-[0_0_80px_rgba(0,229,255,0.18)] backdrop-blur-md sm:p-6 ${
+          isInView ? "animate-fade-up stagger-2" : "reveal-hidden"
+        }`}
+      >
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-20 h-16 bg-gradient-to-b from-black/70 to-transparent" />
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-20 bg-gradient-to-t from-black/80 to-transparent" />
+        <div className="pointer-events-none absolute -left-24 top-1/2 h-64 w-64 -translate-y-1/2 rounded-full bg-[#00e5ff]/20 blur-3xl" />
+        <div className="pointer-events-none absolute -right-24 top-1/3 h-64 w-64 rounded-full bg-[#ff2d55]/15 blur-3xl" />
+
+        <div className="relative h-[520px] overflow-hidden rounded-[1.5rem] [perspective:1400px] max-sm:h-[420px]">
+          {images.map((img, i) => (
+            <div
+              key={img.src}
+              className={`absolute inset-0 transition-opacity duration-700 ${
+                i === currentIndex ? "opacity-100" : "opacity-0"
+              }`}
+            >
+                      <Image
+                        src={img.src}
+                        alt={img.alt}
+                        fill
+                        unoptimized
+                        className={`object-contain ${i === currentIndex ? currentAnim.class : ""}`}
+                        sizes="(max-width: 768px) 100vw, 1280px"
+                        priority={i === 0}
+                      />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20" />
+              {i === currentIndex && (
+                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,transparent_0%,rgba(0,229,255,0.15)_45%,transparent_60%)] animate-[hologramSweep_3.5s_ease-in-out_infinite] mix-blend-screen" />
+              )}
+            </div>
+          ))}
+
           <button
-            onClick={() => setSelectedImage(null)}
-            className="absolute right-4 top-4 rounded-full bg-white/10 p-3 text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
-            aria-label="Đóng lightbox"
+            onClick={goPrev}
+            className="absolute left-4 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-[#00e5ff]/30 bg-black/50 text-[#00e5ff] backdrop-blur-md transition hover:bg-[#00e5ff] hover:text-black"
+            aria-label="Ảnh trước"
           >
-            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
+            ←
+          </button>
+          <button
+            onClick={goNext}
+            className="absolute right-4 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-[#00e5ff]/30 bg-black/50 text-[#00e5ff] backdrop-blur-md transition hover:bg-[#00e5ff] hover:text-black"
+            aria-label="Ảnh sau"
+          >
+            →
           </button>
 
-          <div className="relative max-h-[90vh] max-w-5xl" onClick={(e) => e.stopPropagation()}>
-            <Image
-              src={GALLERY_TEASER_ITEMS[selectedImage].src}
-              alt={GALLERY_TEASER_ITEMS[selectedImage].alt}
-              width={1200}
-              height={1200}
-              className="h-auto max-h-[90vh] w-auto rounded-2xl object-contain shadow-2xl"
-            />
+          <button
+            onClick={() => setAnimIndex((i) => i + 1)}
+            className="absolute left-4 bottom-4 z-10 flex items-center gap-1.5 rounded-full border border-[#00e5ff]/30 bg-black/50 px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider text-[#00e5ff] backdrop-blur-md transition hover:bg-[#00e5ff] hover:text-black"
+            title="Đổi hiệu ứng"
+          >
+            ✦ {currentAnim.name}
+          </button>
 
-            <div className="mt-4 text-center">
-              <p className="text-sm text-white/80">{GALLERY_TEASER_ITEMS[selectedImage].alt}</p>
-              <p className="mt-1 text-xs text-white/60">
-                {selectedImage + 1} / {GALLERY_TEASER_ITEMS.length}
-              </p>
-            </div>
+          <button
+            onClick={() => {
+              setIsPlaying((v) => !v);
+              setProgressKey((k) => k + 1);
+            }}
+            className="absolute bottom-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-[#00e5ff]/30 bg-black/50 font-mono text-xs text-[#00e5ff] backdrop-blur-md transition hover:bg-[#00e5ff] hover:text-black"
+            aria-label={isPlaying ? "Tạm dừng" : "Phát"}
+          >
+            {isPlaying ? "⏸" : "▶"}
+          </button>
 
-            <div className="mt-4 flex justify-center gap-3">
-              <button
-                onClick={() => setSelectedImage((prev) => (prev! > 0 ? prev! - 1 : GALLERY_TEASER_ITEMS.length - 1))}
-                className="rounded-full bg-white/10 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
-                aria-label="Ảnh trước"
-              >
-                ← Trước
-              </button>
-              <button
-                onClick={() => setSelectedImage((prev) => (prev! < GALLERY_TEASER_ITEMS.length - 1 ? prev! + 1 : 0))}
-                className="rounded-full bg-white/10 px-5 py-2.5 text-sm font-medium text-white transition hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
-                aria-label="Ảnh sau"
-              >
-                Sau →
-              </button>
-            </div>
+          <div className="absolute bottom-4 left-1/2 z-10 -translate-x-1/2 rounded-full border border-[#00e5ff]/20 bg-black/60 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.18em] text-[#00e5ff] backdrop-blur-xl">
+            {String(currentIndex + 1).padStart(2, "0")} /{" "}
+            {String(total).padStart(2, "0")}
           </div>
         </div>
-      )}
-    </>
+
+        <div className="absolute bottom-0 left-0 z-50 h-1 w-full overflow-hidden rounded-full bg-white/10">
+          <div
+            key={progressKey}
+            className={`h-full origin-left bg-[#00e5ff] transition-transform ${
+              isPlaying
+                ? "animate-[slideProgress_5s_linear_forwards] shadow-[0_0_12px_rgba(0,229,255,0.8)]"
+                : "scale-x-0 opacity-40"
+            }`}
+          />
+        </div>
+      </div>
+
+      <style jsx>{`
+        @keyframes kenburns {
+          0% { transform: scale(1) translate3d(0,0,0); }
+          100% { transform: scale(1.12) translate3d(-2%,-2%,0); }
+        }
+        @keyframes panLeft {
+          0% { transform: scale(1.15) translateX(3%); }
+          100% { transform: scale(1.15) translateX(-3%); }
+        }
+        @keyframes panUp {
+          0% { transform: scale(1.1) translateY(3%); }
+          100% { transform: scale(1.1) translateY(-3%); }
+        }
+        @keyframes zoomIn {
+          0% { transform: scale(1); filter: brightness(1); }
+          50% { transform: scale(1.2); filter: brightness(1.2); }
+          100% { transform: scale(1); filter: brightness(1); }
+        }
+        @keyframes pulse {
+          0%, 100% { transform: scale(1); filter: brightness(1) saturate(1); }
+          50% { transform: scale(1.06); filter: brightness(1.1) saturate(1.1); }
+        }
+        @keyframes rotateSlow {
+          0% { transform: scale(1.05) rotate(0deg); }
+          100% { transform: scale(1.05) rotate(360deg); }
+        }
+        @keyframes shake {
+          0%, 100% { transform: translateX(0) translateY(0); }
+          20% { transform: translateX(-2px) translateY(1px); }
+          40% { transform: translateX(2px) translateY(-1px); }
+          60% { transform: translateX(-1px) translateY(2px); }
+          80% { transform: translateX(1px) translateY(-2px); }
+        }
+        @keyframes glowPulse {
+          0%, 100% { filter: brightness(1) drop-shadow(0 0 0px rgba(0,229,255,0)); }
+          50% { filter: brightness(1.15) drop-shadow(0 0 25px rgba(0,229,255,0.6)); }
+        }
+        @keyframes hologramSweep {
+          0% { transform: translateX(-120%); opacity: 0; }
+          35% { opacity: 1; }
+          100% { transform: translateX(120%); opacity: 0; }
+        }
+        @keyframes slideProgress {
+          from { transform: scaleX(0); }
+          to { transform: scaleX(1); }
+        }
+      `}</style>
+    </section>
   );
 }

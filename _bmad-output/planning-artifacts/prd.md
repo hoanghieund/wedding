@@ -37,6 +37,12 @@ The website prioritizes clarity and speed over decoration. Guests should underst
 
 **Why guests will prefer this:** Most wedding websites are either beautiful but slow/confusing, or functional but generic. This product delivers both: guests get the information they need instantly while experiencing a design that feels intentional and personal.
 
+### Current Direction Update - 2026-05-07
+
+The current product direction has shifted from the earlier soft pink visual system to a **Lovingly Mysterious Futuristic Romance** interface: deep-space background (`#030305`), cyan neon accents (`#00e5ff`), glassmorphism cards, particle effects, cinematic hero imagery, countdown timer, holographic album slideshow, gift section, and RSVP form embedded directly in the guest-facing page.
+
+The product must **not** depend on admin form submissions, Google Forms, Google Sheets, or Google Excel-style list management. RSVP and future guest response handling should use first-party Next.js application flows backed by Prisma/database persistence. Gallery content is file-system driven: folders under `public/images/gallery/` become categories automatically, so adding a new shoot location only requires adding a folder and images.
+
 ## Project Classification
 
 - **Project Type:** Web application (static-first architecture)

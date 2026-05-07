@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
-export const alt = "Lễ Cưới - Minh & An";
+export const alt = "Lễ Cưới - Hoàng Hiếu & Kim Liên";
 export const size = {
   width: 1200,
   height: 630,
@@ -52,7 +52,7 @@ export default async function Image() {
               marginBottom: 24,
             }}
           >
-            Minh & An
+            Hoàng Hiếu & Kim Liên
           </h1>
           <p
             style={{

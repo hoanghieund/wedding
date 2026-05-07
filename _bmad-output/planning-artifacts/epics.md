@@ -12,6 +12,12 @@ inputDocuments:
 
 This document provides the complete epic and story breakdown for wedding, decomposing the requirements from the PRD, UX Design if it exists, and Architecture requirements into implementable stories.
 
+### Current Scope Update - 2026-05-07
+
+The active product direction prioritizes the redesigned public wedding experience: futuristic dark/neon cyan theme, cinematic hero, dynamic folder-based gallery categories, gift section, and embedded RSVP form. Any previously discussed Google Form, Google Sheets, Google Excel, or admin form-submit workflow is removed from the current implementation direction. RSVP storage and review should use first-party application infrastructure only (Next.js server routes/actions plus Prisma/database persistence) if persistence is needed.
+
+Gallery-related stories should treat `public/images/gallery/<category>/` as the source of truth. Folder names become category names, and the slideshow moves through images and categories without requiring hardcoded filenames.
+
 ## Requirements Inventory
 
 ### Functional Requirements
