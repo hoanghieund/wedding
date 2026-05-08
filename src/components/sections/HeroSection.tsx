@@ -98,7 +98,7 @@ export default function HeroSection() {
                       className={`inline-block ${isInView ? '' : 'reveal-hidden'}`}
                       style={getLetterStyle(i, char)}
                     >
-                      {char === ' ' ? ' ' : char}
+                      {char === ' ' ? ' ' : char}
                     </span>
                   );
                 })}

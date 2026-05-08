@@ -1,18 +1,38 @@
+import dynamic from "next/dynamic";
 import HeroSection from "@/components/sections/HeroSection";
 import { QuickFactsBand } from "@/components/sections/QuickFactsBand";
-import LoveStorySection from "@/components/sections/LoveStorySection";
-import ScheduleSection from "@/components/sections/ScheduleSection";
-import { VenueSection } from "@/components/sections/VenueSection";
-import GalleryProvider from "@/components/sections/GalleryProvider";
-import WeddingPartySection from "@/components/sections/WeddingPartySection";
-import GiftSection from "@/components/sections/GiftSection";
-import { TravelSection } from "@/components/sections/TravelSection";
-import { FaqSection } from "@/components/sections/FaqSection";
-import { RsvpBand } from "@/components/sections/RsvpBand";
 import FloatingControls from "@/components/sections/FloatingControls";
 import EnterInvitationOverlay from "@/components/sections/EnterInvitationOverlay";
 import { FAQStructuredData } from "@/components/seo/StructuredData";
 import { VENUE_GROOM, VENUE_BRIDE } from "@/lib/constants/event-data";
+
+const LoveStorySection = dynamic(() => import("@/components/sections/LoveStorySection"), {
+  loading: () => <div className="h-40" />,
+});
+const GalleryProvider = dynamic(() => import("@/components/sections/GalleryProvider"), {
+  loading: () => <div className="h-40" />,
+});
+const ScheduleSection = dynamic(() => import("@/components/sections/ScheduleSection"), {
+  loading: () => <div className="h-40" />,
+});
+const WeddingPartySection = dynamic(() => import("@/components/sections/WeddingPartySection"), {
+  loading: () => <div className="h-40" />,
+});
+const GiftSection = dynamic(() => import("@/components/sections/GiftSection"), {
+  loading: () => <div className="h-40" />,
+});
+const VenueSection = dynamic(() => import("@/components/sections/VenueSection").then(m => ({ default: m.VenueSection })), {
+  loading: () => <div className="h-40" />,
+});
+const TravelSection = dynamic(() => import("@/components/sections/TravelSection").then(m => ({ default: m.TravelSection })), {
+  loading: () => <div className="h-40" />,
+});
+const FaqSection = dynamic(() => import("@/components/sections/FaqSection").then(m => ({ default: m.FaqSection })), {
+  loading: () => <div className="h-40" />,
+});
+const RsvpBand = dynamic(() => import("@/components/sections/RsvpBand").then(m => ({ default: m.RsvpBand })), {
+  loading: () => <div className="h-40" />,
+});
 
 export default function Home() {
   const eventStructuredData = {
