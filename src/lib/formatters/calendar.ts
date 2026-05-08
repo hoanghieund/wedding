@@ -1,4 +1,6 @@
-import type { CalendarEventInfo } from "../constants/event-data";
+import type { CALENDAR_EVENT } from "../constants/event-data";
+
+type CalendarEventInfo = typeof CALENDAR_EVENT;
 
 /**
  * Generates a Google Calendar URL for adding an event.

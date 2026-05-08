@@ -4,33 +4,39 @@ import Image from "next/image";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useInView } from "@/hooks/useInView";
 
-type Category = {
+type GalleryCategory = {
   slug: string;
   name: string;
   images: { src: string; alt: string }[];
 };
 
-const ANIMATIONS = [
-  { name: "Ken Burns", class: "animate-[kenburns_10s_ease-in-out_infinite_alternate]" },
-  { name: "Pan Left", class: "animate-[panLeft_10s_ease-in-out_infinite]" },
-  { name: "Pan Up", class: "animate-[panUp_10s_ease-in-out_infinite]" },
-  { name: "Zoom In", class: "animate-[zoomIn_10s_ease-in-out_infinite]" },
-  { name: "Pulse", class: "animate-[pulse_3s_ease-in-out_infinite]" },
-  { name: "Rotate", class: "animate-[rotateSlow_20s_linear_infinite]" },
-  { name: "Shake", class: "animate-[shake_4s_ease-in-out_infinite]" },
-  { name: "Glow Pulse", class: "animate-[glowPulse_3s_ease-in-out_infinite]" },
+type AnimationPreset = {
+  name: string;
+  className: string;
+};
+
+const ANIMATIONS: AnimationPreset[] = [
+  { name: "Ken Burns", className: "animate-[kenburns_10s_ease-in-out_infinite_alternate]" },
+  { name: "Pan Left", className: "animate-[panLeft_10s_ease-in-out_infinite]" },
+  { name: "Pan Up", className: "animate-[panUp_10s_ease-in-out_infinite]" },
+  { name: "Zoom In", className: "animate-[zoomIn_10s_ease-in-out_infinite]" },
+  { name: "Pulse", className: "animate-[pulse_3s_ease-in-out_infinite]" },
+  { name: "Rotate", className: "animate-[rotateSlow_20s_linear_infinite]" },
+  { name: "Shake", className: "animate-[shake_4s_ease-in-out_infinite]" },
+  { name: "Glow Pulse", className: "animate-[glowPulse_3s_ease-in-out_infinite]" },
 ];
 
-export default function GalleryTeaserSection({
-  categories,
-}: {
-  categories: Category[];
-}) {
+const SLIDE_INTERVAL_MS = 4000;
+
+type GalleryTeaserSectionProps = {
+  categories: GalleryCategory[];
+};
+
+export default function GalleryTeaserSection({ categories }: GalleryTeaserSectionProps) {
   const { ref, isInView } = useInView({ threshold: 0.1 });
   const sectionRef = ref as React.RefObject<HTMLElement>;
-  const [selectedSlug, setSelectedSlug] = useState<string>(
-    categories[0]?.slug ?? "",
-  );
+  
+  const [selectedSlug, setSelectedSlug] = useState<string>(categories[0]?.slug ?? "");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [progressKey, setProgressKey] = useState(0);
@@ -40,6 +46,7 @@ export default function GalleryTeaserSection({
     () => categories.find((c) => c.slug === selectedSlug),
     [categories, selectedSlug],
   );
+  
   const images = activeCategory?.images ?? [];
   const total = images.length;
   const currentAnim = ANIMATIONS[animIndex % ANIMATIONS.length];
@@ -63,25 +70,26 @@ export default function GalleryTeaserSection({
 
   useEffect(() => {
     if (!isPlaying || total === 0) return;
+    
     const timer = window.setInterval(() => {
-      // Auto-advance: nếu đang ở ảnh cuối cùng, chuyển category
       const nextIndex = (currentIndex + 1) % total;
+      
       if (nextIndex === 0) {
-        const currentCatIndex = categories.findIndex(c => c.slug === selectedSlug);
-        const nextCatIndex = (currentCatIndex + 1) % categories.length;
-        if (categories[nextCatIndex]) {
-          setSelectedSlug(categories[nextCatIndex].slug);
+        const currentCatIndex = categories.findIndex((c) => c.slug === selectedSlug);
+        const nextCategory = categories[(currentCatIndex + 1) % categories.length];
+        
+        if (nextCategory) {
+          setSelectedSlug(nextCategory.slug);
           setCurrentIndex(0);
-          setAnimIndex((i) => i + 1);
           setProgressKey((k) => k + 1);
-          setIsPlaying(true);
         }
       } else {
         setAnimIndex((i) => i + 1);
         setCurrentIndex(nextIndex);
         setProgressKey((k) => k + 1);
       }
-    }, 5000);
+    }, SLIDE_INTERVAL_MS);
+    
     return () => window.clearInterval(timer);
   }, [isPlaying, total, currentIndex, categories, selectedSlug]);
 
@@ -95,6 +103,7 @@ export default function GalleryTeaserSection({
         setProgressKey((k) => k + 1);
       }
     };
+    
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [goPrev, goNext]);
@@ -109,14 +118,14 @@ export default function GalleryTeaserSection({
       className="space-y-10"
     >
       <div className={`space-y-3 text-center ${isInView ? "animate-fade-up" : "reveal-hidden"}`}>
-        <p className="font-mono text-xs uppercase tracking-[0.24em] text-[#00e5ff]/60">
-          Holographic Memory Deck
+        <p className="font-mono text-xs uppercase tracking-[0.24em] text-cyan-400/60">
+          Album Ảnh Cưới
         </p>
         <h2
           id="gallery-heading"
           className="text-4xl font-extrabold uppercase tracking-tight text-white sm:text-5xl"
         >
-          Album Ảnh Cưới
+          Khoảnh Khắc
         </h2>
       </div>
 
@@ -134,10 +143,10 @@ export default function GalleryTeaserSection({
                 setCurrentIndex(0);
                 setProgressKey((k) => k + 1);
               }}
-              className={`rounded-full border px-5 py-2 font-mono text-xs uppercase tracking-widest transition-all ${
+              className={`rounded-full border px-5 py-2 font-mono text-xs uppercase tracking-widest transition-all duration-300 ${
                 selectedSlug === cat.slug
-                  ? "border-[#00e5ff] bg-[#00e5ff] text-black shadow-[0_0_20px_rgba(0,229,255,0.4)]"
-                  : "border-white/20 bg-white/5 text-white/60 hover:border-[#00e5ff]/50 hover:text-white"
+                  ? "border-cyan-400 bg-cyan-400 text-black shadow-[0_0_20px_rgba(0,229,255,0.4)]"
+                  : "border-white/20 bg-white/5 text-white/60 hover:border-cyan-400/50 hover:text-white"
               }`}
             >
               {cat.name}
@@ -147,32 +156,30 @@ export default function GalleryTeaserSection({
       )}
 
       <div
-        className={`relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] border border-[#00e5ff]/20 bg-black/35 p-4 shadow-[0_0_80px_rgba(0,229,255,0.18)] backdrop-blur-md sm:p-6 ${
+        className={`relative mx-auto w-full max-w-4xl ${
           isInView ? "animate-fade-up stagger-2" : "reveal-hidden"
         }`}
       >
-        <div className="pointer-events-none absolute inset-x-0 top-0 z-20 h-16 bg-gradient-to-b from-black/70 to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-20 bg-gradient-to-t from-black/80 to-transparent" />
-        <div className="pointer-events-none absolute -left-24 top-1/2 h-64 w-64 -translate-y-1/2 rounded-full bg-[#00e5ff]/20 blur-3xl" />
-        <div className="pointer-events-none absolute -right-24 top-1/3 h-64 w-64 rounded-full bg-[#ff2d55]/15 blur-3xl" />
-
-        <div className="relative h-[520px] overflow-hidden rounded-[1.5rem] [perspective:1400px] max-sm:h-[420px]">
+        <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-cyan-400/10 bg-black/80">
           {images.map((img, i) => (
             <div
               key={img.src}
               className={`absolute inset-0 transition-opacity duration-700 ${
-                i === currentIndex ? "opacity-100" : "opacity-0"
+                i === currentIndex
+                  ? `z-10 opacity-100 ${currentAnim?.className ?? ""}`
+                  : "z-0 opacity-0"
               }`}
             >
-                      <Image
-                        src={img.src}
-                        alt={img.alt}
-                        fill
-                        unoptimized
-                        className={`object-contain ${i === currentIndex ? currentAnim.class : ""}`}
-                        sizes="(max-width: 768px) 100vw, 1280px"
-                        priority={i === 0}
-                      />
+              <Image
+                src={img.src}
+                alt={img.alt}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1024px"
+                className="object-cover"
+                quality={85}
+                loading={i < 2 ? "eager" : "lazy"}
+                priority={i === 0}
+              />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20" />
               {i === currentIndex && (
                 <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,transparent_0%,rgba(0,229,255,0.15)_45%,transparent_60%)] animate-[hologramSweep_3.5s_ease-in-out_infinite] mix-blend-screen" />
@@ -182,14 +189,14 @@ export default function GalleryTeaserSection({
 
           <button
             onClick={goPrev}
-            className="absolute left-4 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-[#00e5ff]/30 bg-black/50 text-[#00e5ff] backdrop-blur-md transition hover:bg-[#00e5ff] hover:text-black"
+            className="absolute left-4 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-cyan-400/30 bg-black/50 text-cyan-400 backdrop-blur-md transition hover:bg-cyan-400 hover:text-black"
             aria-label="Ảnh trước"
           >
             ←
           </button>
           <button
             onClick={goNext}
-            className="absolute right-4 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-[#00e5ff]/30 bg-black/50 text-[#00e5ff] backdrop-blur-md transition hover:bg-[#00e5ff] hover:text-black"
+            className="absolute right-4 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-cyan-400/30 bg-black/50 text-cyan-400 backdrop-blur-md transition hover:bg-cyan-400 hover:text-black"
             aria-label="Ảnh sau"
           >
             →
@@ -197,10 +204,10 @@ export default function GalleryTeaserSection({
 
           <button
             onClick={() => setAnimIndex((i) => i + 1)}
-            className="absolute left-4 bottom-4 z-10 flex items-center gap-1.5 rounded-full border border-[#00e5ff]/30 bg-black/50 px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider text-[#00e5ff] backdrop-blur-md transition hover:bg-[#00e5ff] hover:text-black"
+            className="absolute left-4 bottom-4 z-10 flex items-center gap-1.5 rounded-full border border-cyan-400/30 bg-black/50 px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider text-cyan-400 backdrop-blur-md transition hover:bg-cyan-400 hover:text-black"
             title="Đổi hiệu ứng"
           >
-            ✦ {currentAnim.name}
+            ✦ {currentAnim?.name ?? "FX"}
           </button>
 
           <button
@@ -208,13 +215,13 @@ export default function GalleryTeaserSection({
               setIsPlaying((v) => !v);
               setProgressKey((k) => k + 1);
             }}
-            className="absolute bottom-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-[#00e5ff]/30 bg-black/50 font-mono text-xs text-[#00e5ff] backdrop-blur-md transition hover:bg-[#00e5ff] hover:text-black"
+            className="absolute bottom-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-cyan-400/30 bg-black/50 font-mono text-xs text-cyan-400 backdrop-blur-md transition hover:bg-cyan-400 hover:text-black"
             aria-label={isPlaying ? "Tạm dừng" : "Phát"}
           >
             {isPlaying ? "⏸" : "▶"}
           </button>
 
-          <div className="absolute bottom-4 left-1/2 z-10 -translate-x-1/2 rounded-full border border-[#00e5ff]/20 bg-black/60 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.18em] text-[#00e5ff] backdrop-blur-xl">
+          <div className="absolute bottom-4 left-1/2 z-10 -translate-x-1/2 rounded-full border border-cyan-400/20 bg-black/60 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.18em] text-cyan-400 backdrop-blur-xl">
             {String(currentIndex + 1).padStart(2, "0")} /{" "}
             {String(total).padStart(2, "0")}
           </div>
@@ -223,9 +230,9 @@ export default function GalleryTeaserSection({
         <div className="absolute bottom-0 left-0 z-50 h-1 w-full overflow-hidden rounded-full bg-white/10">
           <div
             key={progressKey}
-            className={`h-full origin-left bg-[#00e5ff] transition-transform ${
+            className={`h-full origin-left bg-cyan-400 transition-transform ${
               isPlaying
-                ? "animate-[slideProgress_5s_linear_forwards] shadow-[0_0_12px_rgba(0,229,255,0.8)]"
+                ? "animate-[slideProgress_4s_linear_forwards] shadow-[0_0_12px_rgba(0,229,255,0.8)]"
                 : "scale-x-0 opacity-40"
             }`}
           />

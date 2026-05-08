@@ -1,15 +1,10 @@
-interface ContactAction {
-  label: string;
-  hint: string;
-  href: string;
-  icon: "phone" | "mail";
-}
+import { CONTACT_ACTIONS } from "@/lib/constants/event-data";
 
 interface ContactSectionProps {
-  actions: ContactAction[];
+  actions?: typeof CONTACT_ACTIONS;
 }
 
-export function ContactSection({ actions }: ContactSectionProps) {
+export function ContactSection({ actions = CONTACT_ACTIONS }: ContactSectionProps) {
   return (
     <section
       id="contact"
