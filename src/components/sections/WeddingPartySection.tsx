@@ -31,22 +31,22 @@ export default function WeddingPartySection() {
       id="party"
       aria-labelledby="party-heading"
       ref={ref}
-      className={`space-y-8 reveal-hidden ${isInView ? "animate-fade-up" : ""}`}
+      className="space-y-12"
     >
       <div className="mx-auto max-w-3xl space-y-4 text-center">
-        <p className="font-mono text-xs uppercase tracking-[0.3em] text-[#00e5ff]">
-          Những người thân thiết nhất
+        <p className={`section-label ${isInView ? "animate-fade-down" : "reveal-hidden"}`}>
+          Chương 6
         </p>
         <h2
           id="party-heading"
-          className="text-4xl font-extrabold uppercase tracking-tight text-white sm:text-5xl"
+          className={`chapter-title text-4xl sm:text-5xl ${
+            isInView ? "animate-fade-up" : "reveal-hidden"
+          }`}
         >
           Đội Ngũ Đồng Hành
         </h2>
-        <p className="text-base leading-7 text-white/75 sm:text-lg">
-          Đây là những người bạn, người thân luôn ở bên cô dâu chú rể trong
-          quá trình chuẩn bị và trong ngày cưới. Mỗi người đều góp một phần để
-          buổi lễ diễn ra ấm áp, chỉn chu và đáng nhớ hơn.
+        <p className={`copy-muted text-lg leading-8 sm:text-xl ${isInView ? "animate-fade-up stagger-1" : "reveal-hidden"}`}>
+          Đây là những người bạn, người thân luôn ở bên cô dâu chú rể trong quá trình chuẩn bị và trong ngày cưới.
         </p>
       </div>
 
@@ -54,18 +54,16 @@ export default function WeddingPartySection() {
         {partyMembers.map((member, index) => (
           <article
             key={member.role}
-            className={`flex h-full flex-col rounded-2xl border border-white/10 bg-[rgba(20,20,30,0.6)] p-6 text-center shadow-[0_20px_50px_rgba(0,0,0,0.35)] backdrop-blur-xl reveal-hidden ${
+            className={`section-shell hover-lift flex h-full flex-col rounded-[1.75rem] p-6 text-center reveal-hidden ${
               isInView ? `animate-zoom-in stagger-${index + 1}` : ""
             }`}
           >
-            <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full border-2 border-[#00e5ff] bg-[rgba(20,20,30,0.6)] text-3xl shadow-[0_0_24px_rgba(0,229,255,0.25)]">
+            <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full border border-[var(--border-soft)] bg-[var(--surface)] text-4xl shadow-[var(--glow-soft)]">
               {member.emoji}
             </div>
-            <h3 className="text-xl font-semibold text-white">{member.name}</h3>
-            <p className="mt-2 font-mono text-xs uppercase tracking-[0.2em] text-[#00e5ff]">
-              {member.role}
-            </p>
-            <p className="mt-4 text-sm leading-6 text-white/70">{member.duty}</p>
+            <h3 className="text-2xl font-display-serif text-[var(--accent)]">{member.name}</h3>
+            <p className="mt-2 section-label text-[10px]">{member.role}</p>
+            <p className="copy-muted mt-4 text-base leading-7">{member.duty}</p>
           </article>
         ))}
       </div>

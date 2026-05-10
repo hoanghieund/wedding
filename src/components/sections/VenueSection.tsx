@@ -28,11 +28,11 @@ interface MapCardProps {
   embedUrl: string;
 }
 
-const sectionCardClassName = "space-y-4 rounded-2xl border border-[#00e5ff]/10 bg-[#0A0A0D]/40 p-6";
+const sectionCardClassName = "section-shell space-y-4 rounded-[1.75rem] p-6";
 const mapLinkClassName =
-  "inline-flex min-h-[48px] items-center gap-2 rounded-full border border-[#00e5ff]/30 bg-[#00e5ff]/15 px-6 py-3 text-sm font-semibold text-[#00e5ff] transition hover:bg-[#00e5ff]/25 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00e5ff]";
+  "focus-ring-accent inline-flex min-h-[48px] items-center gap-2 rounded-full border border-[var(--border-soft)] bg-[var(--surface)] px-6 py-3 text-sm font-medium text-[var(--accent)] transition hover:border-[var(--accent-soft)] hover:bg-[var(--surface-strong)]";
 const mapFrameWrapperClassName =
-  "overflow-hidden rounded-2xl border border-[#00e5ff]/15 bg-[#00e5ff]/5 shadow-[0_0_50px_rgba(245,225,164,0.08)]";
+  "overflow-hidden rounded-[1.75rem] border border-[var(--border-soft)] bg-[var(--surface)] shadow-[var(--glow-soft)]";
 
 function buildMapEmbedUrl({ lat, lng }: VenueInfo["coordinates"]) {
   return `https://www.google.com/maps?q=${lat},${lng}&z=16&output=embed`;
@@ -55,13 +55,13 @@ function LocationIcon() {
 function VenueCard({ venue, animationClassName }: VenueCardProps) {
   return (
     <div className={`${sectionCardClassName} ${animationClassName}`}>
-      <h3 className="font-serif text-2xl font-medium text-[#00e5ff]">{venue.venueName}</h3>
-      <div className="space-y-1 text-base leading-6 text-white/75">
+      <h3 className="font-display-serif text-2xl text-[var(--accent)]">{venue.venueName}</h3>
+      <div className="copy-muted space-y-1 text-base leading-7">
         {venue.addressLines.map((line) => (
           <p key={line}>{line}</p>
         ))}
       </div>
-      {venue.note ? <p className="text-sm leading-6 text-white/60">{venue.note}</p> : null}
+      {venue.note ? <p className="copy-muted text-sm leading-6">{venue.note}</p> : null}
       <a
         href={venue.mapUrl}
         target="_blank"
@@ -80,17 +80,17 @@ function MapCard({ title, timeLabel, mapUrl, embedUrl }: MapCardProps) {
     <div className="space-y-3">
       <div className="space-y-1">
         <div className="flex items-center justify-between gap-4">
-          <h3 className="font-serif text-lg font-medium text-[#00e5ff] sm:text-xl">{title}</h3>
+          <h3 className="font-display-serif text-lg text-[var(--accent)] sm:text-xl">{title}</h3>
           <a
             href={mapUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs text-[#00e5ff]/70 underline decoration-[#00e5ff]/30 underline-offset-2 transition hover:text-[#00e5ff]"
+            className="text-xs text-[var(--accent-soft)] underline decoration-[var(--accent-soft)]/30 underline-offset-2 transition hover:text-[var(--accent)]"
           >
             Mở rộng
           </a>
         </div>
-        <p className="text-sm text-white/60">{timeLabel}</p>
+        <p className="copy-muted text-sm">{timeLabel}</p>
       </div>
       <div className={mapFrameWrapperClassName}>
         <iframe
@@ -125,11 +125,11 @@ export function VenueSection({ groomVenue, brideVenue }: VenueSectionProps) {
       ref={ref}
       id="venue"
       aria-labelledby="venue-heading"
-      className="space-y-8 rounded-3xl border border-[#00e5ff]/10 bg-[#0A0A0D]/60 p-8 backdrop-blur-xl"
+      className="space-y-10"
     >
-      <div className="space-y-3">
-        <p className="text-xs font-medium uppercase tracking-[0.24em] text-[#00e5ff]/60">Tọa độ điểm đến</p>
-        <h2 id="venue-heading" className="font-serif text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl">
+      <div className="space-y-3 text-center">
+        <p className={`section-label ${isInView ? "animate-fade-down" : "reveal-hidden"}`}>Chương 8</p>
+        <h2 id="venue-heading" className={`chapter-title text-4xl sm:text-5xl ${isInView ? "animate-fade-up" : "reveal-hidden"}`}>
           Nơi hân hạnh đón tiếp quý vị
         </h2>
       </div>
@@ -158,19 +158,19 @@ export function VenueSection({ groomVenue, brideVenue }: VenueSectionProps) {
         href={directionsUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="group relative flex min-h-[120px] items-center justify-between gap-6 overflow-hidden rounded-2xl border border-[#00e5ff]/15 bg-gradient-to-br from-[#0f1720] via-[#0A0A0D] to-[#10212a] p-6 shadow-[0_0_50px_rgba(245,225,164,0.08)] transition hover:border-[#00e5ff]/30"
+        className="group section-shell relative flex min-h-[120px] items-center justify-between gap-6 overflow-hidden rounded-[1.75rem] p-6 transition hover:border-[rgba(244,228,193,0.22)]"
       >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(0,229,255,0.18),transparent_40%),radial-gradient(circle_at_bottom_right,rgba(0,229,255,0.10),transparent_35%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(244,228,193,0.12),transparent_40%),radial-gradient(circle_at_bottom_right,rgba(212,165,116,0.10),transparent_35%)]" />
         <div className="relative space-y-2">
-          <p className="text-xs font-medium uppercase tracking-[0.24em] text-[#00e5ff]/60">Google Maps</p>
-          <h3 className="font-serif text-2xl font-semibold text-white">Xem chỉ đường từ nhà gái đến nhà trai</h3>
-          <p className="max-w-2xl text-sm leading-6 text-white/65">
+          <p className="section-label text-[10px]">Google Maps</p>
+          <h3 className="font-display-serif text-2xl text-[var(--accent)]">Xem chỉ đường từ nhà gái đến nhà trai</h3>
+          <p className="copy-muted max-w-2xl text-sm leading-6">
             Mở Google Maps để xem lộ trình di chuyển chi tiết giữa hai địa điểm
           </p>
         </div>
         <svg
           aria-hidden="true"
-          className="relative h-8 w-8 shrink-0 text-[#00e5ff] transition group-hover:translate-x-1"
+          className="relative h-8 w-8 shrink-0 text-[var(--accent)] transition group-hover:translate-x-1"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
