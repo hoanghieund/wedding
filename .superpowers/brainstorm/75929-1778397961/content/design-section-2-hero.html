@@ -1,0 +1,109 @@
+<h2>Phần 2: Hero Section — Opening Scene</h2>
+<p class="subtitle">Fullscreen cinematic intro với parallax depth và countdown timer</p>
+
+<div class="mockup">
+  <div class="mockup-header">Hero Section (Desktop 1920x1080)</div>
+  <div class="mockup-body" style="background:#0a0e27;position:relative;min-height:500px;display:flex;align-items:center;justify-content:center;overflow:hidden">
+
+    <!-- Background layer -->
+    <div style="position:absolute;inset:0;background:linear-gradient(135deg, #0a0e27 0%, #1a2332 50%, #2d1b2e 100%);opacity:0.9"></div>
+
+    <!-- Particle layer (simulated) -->
+    <div style="position:absolute;inset:0;background:radial-gradient(circle at 30% 40%, rgba(244,228,193,0.03) 0%, transparent 50%),radial-gradient(circle at 70% 60%, rgba(212,165,116,0.04) 0%, transparent 50%)"></div>
+
+    <!-- Content layer -->
+    <div style="position:relative;z-index:10;text-align:center;padding:40px">
+
+      <!-- Section label -->
+      <div style="font-family:monospace;font-size:11px;letter-spacing:0.3em;color:#d4a574;text-transform:uppercase;margin-bottom:24px">
+        Save the Date
+      </div>
+
+      <!-- Couple names in poetic script -->
+      <h1 style="font-family:'Brush Script MT',cursive;font-size:72px;color:#f4e4c1;margin:0;line-height:1.2;text-shadow:0 0 40px rgba(244,228,193,0.3)">
+        Hoàng Hiếu & Kim Liên
+      </h1>
+
+      <!-- Date in serif -->
+      <p style="font-family:Georgia,serif;font-size:20px;color:#fff8ee;margin:32px 0;letter-spacing:0.05em">
+        25 • 12 • 2026
+      </p>
+
+      <!-- Countdown timer -->
+      <div style="display:flex;gap:32px;justify-content:center;margin:48px 0">
+        <div style="text-align:center">
+          <div style="font-family:Georgia,serif;font-size:48px;color:#f4e4c1;font-weight:300">229</div>
+          <div style="font-family:monospace;font-size:11px;color:#d4a574;letter-spacing:0.2em;text-transform:uppercase;margin-top:8px">Days</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-family:Georgia,serif;font-size:48px;color:#f4e4c1;font-weight:300">14</div>
+          <div style="font-family:monospace;font-size:11px;color:#d4a574;letter-spacing:0.2em;text-transform:uppercase;margin-top:8px">Hours</div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-family:Georgia,serif;font-size:48px;color:#f4e4c1;font-weight:300">26</div>
+          <div style="font-family:monospace;font-size:11px;color:#d4a574;letter-spacing:0.2em;text-transform:uppercase;margin-top:8px">Minutes</div>
+        </div>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div style="margin-top:64px">
+        <div style="width:1px;height:40px;background:linear-gradient(to bottom, transparent, #d4a574);margin:0 auto"></div>
+        <div style="font-family:monospace;font-size:10px;color:#d4a574;letter-spacing:0.3em;text-transform:uppercase;margin-top:12px">Scroll</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:24px">
+  <h3>Thiết kế chi tiết</h3>
+
+  <h4 style="margin-top:16px;color:#d4a574">Layout & Composition</h4>
+  <ul>
+    <li><strong>Fullscreen:</strong> min-h-screen với centered content</li>
+    <li><strong>3-layer parallax:</strong>
+      <ul>
+        <li>Background gradient (slowest scroll speed)</li>
+        <li>Particle canvas với champagne/gold dots (medium speed)</li>
+        <li>Text content (normal speed)</li>
+      </ul>
+    </li>
+    <li><strong>Vertical rhythm:</strong> Label → Names → Date → Countdown → Scroll indicator</li>
+  </ul>
+
+  <h4 style="margin-top:16px;color:#d4a574">Typography Hierarchy</h4>
+  <ul>
+    <li><strong>Couple names:</strong> Great Vibes 96px (desktop) / 56px (mobile), champagne color với text-shadow glow</li>
+    <li><strong>Date:</strong> Playfair Display 24px, cream color, letter-spacing wide</li>
+    <li><strong>Countdown numbers:</strong> Playfair Display 64px, light weight, champagne</li>
+    <li><strong>Labels:</strong> JetBrains Mono 11px, uppercase, rose gold, tracking-widest</li>
+  </ul>
+
+  <h4 style="margin-top:16px;color:#d4a574">Animation Sequence</h4>
+  <ol>
+    <li><strong>0-0.5s:</strong> Background gradient fade in</li>
+    <li><strong>0.5-1s:</strong> Particles fade in và bắt đầu float animation</li>
+    <li><strong>1-1.5s:</strong> "Save the Date" label fade + slide up</li>
+    <li><strong>1.5-2.5s:</strong> Couple names fade in với scale từ 0.95 → 1</li>
+    <li><strong>2.5-3s:</strong> Date fade in</li>
+    <li><strong>3-3.5s:</strong> Countdown timer stagger reveal (mỗi unit delay 100ms)</li>
+    <li><strong>3.5-4s:</strong> Scroll indicator fade in</li>
+  </ol>
+
+  <h4 style="margin-top:16px;color:#d4a574">Interactive Elements</h4>
+  <ul>
+    <li><strong>Parallax on scroll:</strong> Background và particles di chuyển chậm hơn content khi scroll</li>
+    <li><strong>Countdown live update:</strong> Real-time countdown đến 25/12/2026 09:00 GMT+7</li>
+    <li><strong>Scroll indicator:</strong> Pulse animation nhẹ để hint user scroll xuống</li>
+  </ul>
+
+  <h4 style="margin-top:16px;color:#d4a574">Background Treatment</h4>
+  <ul>
+    <li><strong>Option 1 (khuyến nghị):</strong> Gradient mesh midnight navy → deep slate → deep plum, không dùng ảnh để tránh distraction</li>
+    <li><strong>Option 2:</strong> Giữ ảnh HAR01404.jpg nhưng với heavy dark overlay (opacity 0.15) và blur nhẹ, để focus vào typography</li>
+  </ul>
+</div>
+
+<p style="margin-top:24px;padding:16px;background:rgba(244,228,193,0.08);border-radius:8px;border-left:3px solid #d4a574">
+  <strong>Hero section này có ổn không?</strong> Bạn muốn dùng gradient thuần (option 1) hay giữ ảnh nền mờ (option 2)?
+</p>

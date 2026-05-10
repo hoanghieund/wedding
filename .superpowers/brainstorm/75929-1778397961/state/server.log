@@ -1,0 +1,13 @@
+{"type":"server-started","port":63280,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:63280","screen_dir":"/Users/hoanghieu/Documents/Workspace/BMAD/wedding/.superpowers/brainstorm/75929-1778397961/content","state_dir":"/Users/hoanghieu/Documents/Workspace/BMAD/wedding/.superpowers/brainstorm/75929-1778397961/state"}
+{"type":"screen-added","file":"/Users/hoanghieu/Documents/Workspace/BMAD/wedding/.superpowers/brainstorm/75929-1778397961/content/color-palette.html"}
+{"source":"user-event","type":"click","text":"C\n    \n      Champagne & Midnight Navy\n      Elegant drama — tinh tế, cổ điển, như một đám cưới hoàng gia về đêm","choice":"champagne","id":null,"timestamp":1778398133431}
+{"source":"user-event","type":"click","text":"C\n    \n      Champagne & Midnight Navy\n      Elegant drama — tinh tế, cổ điển, như một đám cưới hoàng gia về đêm","choice":"champagne","id":null,"timestamp":1778398141218}
+{"source":"user-event","type":"click","text":"C\n    \n      Champagne & Midnight Navy\n      Elegant drama — tinh tế, cổ điển, như một đám cưới hoàng gia về đêm","choice":"champagne","id":null,"timestamp":1778398141614}
+{"source":"user-event","type":"click","text":"C\n    \n      Champagne & Midnight Navy\n      Elegant drama — tinh tế, cổ điển, như một đám cưới hoàng gia về đêm","choice":"champagne","id":null,"timestamp":1778398142630}
+{"type":"screen-added","file":"/Users/hoanghieu/Documents/Workspace/BMAD/wedding/.superpowers/brainstorm/75929-1778397961/content/typography-direction.html"}
+{"type":"screen-added","file":"/Users/hoanghieu/Documents/Workspace/BMAD/wedding/.superpowers/brainstorm/75929-1778397961/content/design-approaches.html"}
+{"type":"screen-added","file":"/Users/hoanghieu/Documents/Workspace/BMAD/wedding/.superpowers/brainstorm/75929-1778397961/content/design-section-1.html"}
+{"type":"screen-added","file":"/Users/hoanghieu/Documents/Workspace/BMAD/wedding/.superpowers/brainstorm/75929-1778397961/content/design-section-2-hero.html"}
+{"type":"screen-added","file":"/Users/hoanghieu/Documents/Workspace/BMAD/wedding/.superpowers/brainstorm/75929-1778397961/content/design-section-3.html"}
+{"type":"screen-added","file":"/Users/hoanghieu/Documents/Workspace/BMAD/wedding/.superpowers/brainstorm/75929-1778397961/content/design-section-4-final.html"}
+{"type":"server-stopped","reason":"idle timeout"}

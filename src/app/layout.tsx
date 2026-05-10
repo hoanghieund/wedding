@@ -1,5 +1,30 @@
 import type { Metadata } from "next";
+import { Cormorant_Garamond, Great_Vibes, JetBrains_Mono, Playfair_Display } from "next/font/google";
 import "./globals.css";
+
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin", "vietnamese"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-display-serif",
+});
+
+const cormorantGaramond = Cormorant_Garamond({
+  subsets: ["latin", "vietnamese"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-body-serif",
+});
+
+const greatVibes = Great_Vibes({
+  subsets: ["latin", "vietnamese"],
+  weight: "400",
+  variable: "--font-script",
+});
+
+const jetBrainsMono = JetBrains_Mono({
+  subsets: ["latin", "vietnamese"],
+  weight: ["400", "500", "700"],
+  variable: "--font-mono",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://wedding.hoho-kimlien.com"),
@@ -54,15 +79,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="vi" className="h-full antialiased">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=JetBrains+Mono:wght@400;500;700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html
+      lang="vi"
+      className={`h-full antialiased ${playfairDisplay.variable} ${cormorantGaramond.variable} ${greatVibes.variable} ${jetBrainsMono.variable}`}
+    >
       <body className="min-h-full flex flex-col bg-[var(--bg)] font-sans text-[var(--text-primary)]">{children}</body>
     </html>
   );

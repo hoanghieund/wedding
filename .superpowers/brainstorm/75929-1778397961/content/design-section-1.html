@@ -1,0 +1,75 @@
+<h2>Phần 1: Design System & Visual Language</h2>
+<p class="subtitle">Toàn bộ site sẽ dùng chung một hệ thống visual — champagne, midnight navy, poetic typography, cinematic transitions</p>
+
+<div class="section">
+  <h3>Bảng màu</h3>
+  <div style="display:flex;gap:16px;flex-wrap:wrap;margin:16px 0">
+    <div>
+      <div style="width:80px;height:80px;background:#f4e4c1;border-radius:8px"></div>
+      <p style="font-size:12px;margin-top:8px">Champagne<br/><code>#f4e4c1</code></p>
+    </div>
+    <div>
+      <div style="width:80px;height:80px;background:#0a0e27;border-radius:8px"></div>
+      <p style="font-size:12px;margin-top:8px">Midnight Navy<br/><code>#0a0e27</code></p>
+    </div>
+    <div>
+      <div style="width:80px;height:80px;background:#1a2332;border-radius:8px"></div>
+      <p style="font-size:12px;margin-top:8px">Deep Slate<br/><code>#1a2332</code></p>
+    </div>
+    <div>
+      <div style="width:80px;height:80px;background:#d4a574;border-radius:8px"></div>
+      <p style="font-size:12px;margin-top:8px">Rose Gold<br/><code>#d4a574</code></p>
+    </div>
+    <div>
+      <div style="width:80px;height:80px;background:#fff8ee;border-radius:8px"></div>
+      <p style="font-size:12px;margin-top:8px">Cream<br/><code>#fff8ee</code></p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Typography</h3>
+  <table style="width:100%;border-collapse:collapse">
+    <tr style="border-bottom:1px solid rgba(244,228,193,0.1)">
+      <td style="padding:12px"><span style="font-size:48px;font-family:Georgia,serif">Aa</span></td>
+      <td style="padding:12px"><strong>Display Serif</strong><br/>Playfair Display<br/><span style="font-size:13px;color:#a0a0b0">Hero titles, section headings</span></td>
+    </tr>
+    <tr style="border-bottom:1px solid rgba(244,228,193,0.1)">
+      <td style="padding:12px"><span style="font-size:36px;font-family:'Brush Script MT',cursive">Aa</span></td>
+      <td style="padding:12px"><strong>Poetic Script</strong><br/>Great Vibes / Dancing Script<br/><span style="font-size:13px;color:#a0a0b0">Couple names, romantic quotes</span></td>
+    </tr>
+    <tr style="border-bottom:1px solid rgba(244,228,193,0.1)">
+      <td style="padding:12px"><span style="font-size:24px;font-family:'Courier New',monospace">Aa</span></td>
+      <td style="padding:12px"><strong>Mono Labels</strong><br/>JetBrains Mono<br/><span style="font-size:13px;color:#a0a0b0">Section labels, dates, meta info</span></td>
+    </tr>
+    <tr>
+      <td style="padding:12px"><span style="font-size:20px;font-family:Georgia,serif">Aa</span></td>
+      <td style="padding:12px"><strong>Body Serif</strong><br/>Cormorant Garamond<br/><span style="font-size:13px;color:#a0a0b0">Body text, descriptions</span></td>
+    </tr>
+  </table>
+</div>
+
+<div class="section">
+  <h3>Chuyển động & Transitions</h3>
+  <ul>
+    <li><strong>Scroll reveals:</strong> Mỗi section fade + slide up khi scroll vào viewport (intersection observer)</li>
+    <li><strong>Parallax depth:</strong> Hero có 3 layer parallax — text layer, photo layer, particle layer</li>
+    <li><strong>Staggered reveals:</strong> Cards, timeline items xuất hiện tuần tự với animation-delay tăng dần</li>
+    <li><strong>Hover states:</strong> Gold shimmer trên interactive elements</li>
+    <li><strong>Page transitions:</strong> Không cần (single page) — nhưng section transitions dùng CSS scroll-driven animations</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h3>Layout Pattern</h3>
+  <ul>
+    <li><strong>Container:</strong> max-w-6xl, nhưng một số section sẽ full-width (Hero, Gallery)</li>
+    <li><strong>Grid:</strong> 12-column variable grid, sections xen kẽ 2-col / 1-col để tạo rhythm</li>
+    <li><strong>Spacing:</strong> py-24 đến py-32 giữa các section, tạo không gian "thở" điện ảnh</li>
+    <li><strong>Glass elements:</strong> Giữ lại glassmorphism nhưng với champagne tint thay vì cyan</li>
+  </ul>
+</div>
+
+<p style="margin-top:24px;padding:16px;background:rgba(244,228,193,0.08);border-radius:8px;border-left:3px solid #d4a574">
+  <strong>Phần này có ổn không?</strong> Tôi sẽ tiếp tục với Hero Section design ở phần tiếp theo.
+</p>
