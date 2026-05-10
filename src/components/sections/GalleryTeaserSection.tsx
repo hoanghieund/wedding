@@ -159,7 +159,7 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
           isInView ? "animate-fade-up stagger-2" : "reveal-hidden"
         }`}
       >
-        <div className="relative aspect-[16/10] overflow-hidden rounded-[2rem] border border-[var(--border-soft)] bg-[var(--surface-strong)] shadow-[var(--glow-soft)]">
+        <div className="relative aspect-[4/5] sm:aspect-[3/2] md:aspect-[16/10] overflow-hidden rounded-[2rem] border border-[var(--border-soft)] bg-[var(--surface-strong)] shadow-[var(--glow-soft)]">
           {images.map((img, i) => (
             <div
               key={img.src}
