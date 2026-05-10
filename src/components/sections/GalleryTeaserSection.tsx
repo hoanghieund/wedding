@@ -35,7 +35,7 @@ type GalleryTeaserSectionProps = {
 export default function GalleryTeaserSection({ categories }: GalleryTeaserSectionProps) {
   const { ref, isInView } = useInView({ threshold: 0.1 });
   const sectionRef = ref as React.RefObject<HTMLElement>;
-  
+
   const [selectedSlug, setSelectedSlug] = useState<string>(categories[0]?.slug ?? "");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
@@ -46,7 +46,7 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
     () => categories.find((c) => c.slug === selectedSlug),
     [categories, selectedSlug],
   );
-  
+
   const images = activeCategory?.images ?? [];
   const total = images.length;
   const currentAnim = ANIMATIONS[animIndex % ANIMATIONS.length];
@@ -70,14 +70,14 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
 
   useEffect(() => {
     if (!isPlaying || total === 0) return;
-    
+
     const timer = window.setInterval(() => {
       const nextIndex = (currentIndex + 1) % total;
-      
+
       if (nextIndex === 0) {
         const currentCatIndex = categories.findIndex((c) => c.slug === selectedSlug);
         const nextCategory = categories[(currentCatIndex + 1) % categories.length];
-        
+
         if (nextCategory) {
           setSelectedSlug(nextCategory.slug);
           setCurrentIndex(0);
@@ -89,7 +89,7 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
         setProgressKey((k) => k + 1);
       }
     }, SLIDE_INTERVAL_MS);
-    
+
     return () => window.clearInterval(timer);
   }, [isPlaying, total, currentIndex, categories, selectedSlug]);
 
@@ -103,7 +103,7 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
         setProgressKey((k) => k + 1);
       }
     };
-    
+
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [goPrev, goNext]);
@@ -115,18 +115,17 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
       ref={sectionRef}
       id="gallery"
       aria-labelledby="gallery-heading"
-      className="space-y-10"
+      className="space-y-12"
     >
       <div className={`space-y-3 text-center ${isInView ? "animate-fade-up" : "reveal-hidden"}`}>
-        <p className="font-mono text-xs uppercase tracking-[0.24em] text-cyan-400/60">
-          Album Ảnh Cưới
-        </p>
+        <p className="section-label">Chương 4</p>
         <h2
           id="gallery-heading"
-          className="text-4xl font-extrabold uppercase tracking-tight text-white sm:text-5xl"
+          className="chapter-title text-4xl sm:text-5xl"
         >
           Khoảnh Khắc
         </h2>
+        <div className="mx-auto h-px w-24 section-divider" />
       </div>
 
       {categories.length > 1 && (
@@ -145,8 +144,8 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
               }}
               className={`rounded-full border px-5 py-2 font-mono text-xs uppercase tracking-widest transition-all duration-300 ${
                 selectedSlug === cat.slug
-                  ? "border-cyan-400 bg-cyan-400 text-black shadow-[0_0_20px_rgba(0,229,255,0.4)]"
-                  : "border-white/20 bg-white/5 text-white/60 hover:border-cyan-400/50 hover:text-white"
+                  ? "border-[var(--accent-soft)] bg-[var(--accent)] text-[var(--bg)] shadow-[var(--glow-soft)]"
+                  : "border-[var(--border-soft)] bg-[var(--surface)] text-[var(--text-secondary)] hover:border-[var(--accent-soft)] hover:text-[var(--text-primary)]"
               }`}
             >
               {cat.name}
@@ -156,11 +155,11 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
       )}
 
       <div
-        className={`relative mx-auto w-full max-w-4xl ${
+        className={`relative mx-auto w-full max-w-5xl ${
           isInView ? "animate-fade-up stagger-2" : "reveal-hidden"
         }`}
       >
-        <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-cyan-400/10 bg-black/80">
+        <div className="relative aspect-[16/10] overflow-hidden rounded-[2rem] border border-[var(--border-soft)] bg-[var(--surface-strong)] shadow-[var(--glow-soft)]">
           {images.map((img, i) => (
             <div
               key={img.src}
@@ -180,23 +179,23 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
                 loading={i < 2 ? "eager" : "lazy"}
                 priority={i === 0}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[rgba(10,14,39,0.82)] via-transparent to-[rgba(10,14,39,0.28)]" />
               {i === currentIndex && (
-                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,transparent_0%,rgba(0,229,255,0.15)_45%,transparent_60%)] animate-[hologramSweep_3.5s_ease-in-out_infinite] mix-blend-screen" />
+                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,transparent_0%,rgba(244,228,193,0.12)_45%,transparent_60%)] animate-[hologramSweep_3.5s_ease-in-out_infinite] mix-blend-screen" />
               )}
             </div>
           ))}
 
           <button
             onClick={goPrev}
-            className="absolute left-4 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-cyan-400/30 bg-black/50 text-cyan-400 backdrop-blur-md transition hover:bg-cyan-400 hover:text-black"
+            className="absolute left-4 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--border-soft)] bg-[var(--surface)] text-[var(--accent)] backdrop-blur-md transition hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)]"
             aria-label="Ảnh trước"
           >
             ←
           </button>
           <button
             onClick={goNext}
-            className="absolute right-4 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-cyan-400/30 bg-black/50 text-cyan-400 backdrop-blur-md transition hover:bg-cyan-400 hover:text-black"
+            className="absolute right-4 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--border-soft)] bg-[var(--surface)] text-[var(--accent)] backdrop-blur-md transition hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)]"
             aria-label="Ảnh sau"
           >
             →
@@ -204,7 +203,7 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
 
           <button
             onClick={() => setAnimIndex((i) => i + 1)}
-            className="absolute left-4 bottom-4 z-10 flex items-center gap-1.5 rounded-full border border-cyan-400/30 bg-black/50 px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider text-cyan-400 backdrop-blur-md transition hover:bg-cyan-400 hover:text-black"
+            className="absolute left-4 bottom-4 z-10 flex items-center gap-1.5 rounded-full border border-[var(--border-soft)] bg-[var(--surface)] px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider text-[var(--accent)] backdrop-blur-md transition hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)]"
             title="Đổi hiệu ứng"
           >
             ✦ {currentAnim?.name ?? "FX"}
@@ -215,24 +214,23 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
               setIsPlaying((v) => !v);
               setProgressKey((k) => k + 1);
             }}
-            className="absolute bottom-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-cyan-400/30 bg-black/50 font-mono text-xs text-cyan-400 backdrop-blur-md transition hover:bg-cyan-400 hover:text-black"
+            className="absolute bottom-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border-soft)] bg-[var(--surface)] font-mono text-xs text-[var(--accent)] backdrop-blur-md transition hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)]"
             aria-label={isPlaying ? "Tạm dừng" : "Phát"}
           >
             {isPlaying ? "⏸" : "▶"}
           </button>
 
-          <div className="absolute bottom-4 left-1/2 z-10 -translate-x-1/2 rounded-full border border-cyan-400/20 bg-black/60 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.18em] text-cyan-400 backdrop-blur-xl">
-            {String(currentIndex + 1).padStart(2, "0")} /{" "}
-            {String(total).padStart(2, "0")}
+          <div className="absolute bottom-4 left-1/2 z-10 -translate-x-1/2 rounded-full border border-[var(--border-soft)] bg-[var(--surface-strong)] px-4 py-1.5 font-mono text-xs uppercase tracking-[0.18em] text-[var(--accent)] backdrop-blur-xl">
+            {String(currentIndex + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
           </div>
         </div>
 
         <div className="absolute bottom-0 left-0 z-50 h-1 w-full overflow-hidden rounded-full bg-white/10">
           <div
             key={progressKey}
-            className={`h-full origin-left bg-cyan-400 transition-transform ${
+            className={`h-full origin-left bg-[var(--accent-soft)] transition-transform ${
               isPlaying
-                ? "animate-[slideProgress_4s_linear_forwards] shadow-[0_0_12px_rgba(0,229,255,0.8)]"
+                ? "animate-[slideProgress_4s_linear_forwards] shadow-[0_0_12px_rgba(212,165,116,0.65)]"
                 : "scale-x-0 opacity-40"
             }`}
           />
@@ -254,12 +252,12 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
         }
         @keyframes zoomIn {
           0% { transform: scale(1); filter: brightness(1); }
-          50% { transform: scale(1.2); filter: brightness(1.2); }
+          50% { transform: scale(1.2); filter: brightness(1.08); }
           100% { transform: scale(1); filter: brightness(1); }
         }
         @keyframes pulse {
           0%, 100% { transform: scale(1); filter: brightness(1) saturate(1); }
-          50% { transform: scale(1.06); filter: brightness(1.1) saturate(1.1); }
+          50% { transform: scale(1.06); filter: brightness(1.05) saturate(1.05); }
         }
         @keyframes rotateSlow {
           0% { transform: scale(1.05) rotate(0deg); }
@@ -273,8 +271,8 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
           80% { transform: translateX(1px) translateY(-2px); }
         }
         @keyframes glowPulse {
-          0%, 100% { filter: brightness(1) drop-shadow(0 0 0px rgba(0,229,255,0)); }
-          50% { filter: brightness(1.15) drop-shadow(0 0 25px rgba(0,229,255,0.6)); }
+          0%, 100% { filter: brightness(1) drop-shadow(0 0 0px rgba(212,165,116,0)); }
+          50% { filter: brightness(1.1) drop-shadow(0 0 25px rgba(212,165,116,0.45)); }
         }
         @keyframes hologramSweep {
           0% { transform: translateX(-120%); opacity: 0; }
