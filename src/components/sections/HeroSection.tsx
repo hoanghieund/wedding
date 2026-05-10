@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import CountdownTimer from "@/components/ui/CountdownTimer";
 import ParticleCanvas from "@/components/ui/ParticleCanvas";
 import { useInView } from "@/hooks/useInView";
@@ -56,9 +55,9 @@ export default function HeroSection() {
                   isInView ? "animate-fade-up-soft" : hiddenClass
                 }`}
               >
-                {COUPLE.groomName}
+                {COUPLE.groom.name}
                 <span className="mx-3 text-5xl sm:mx-5 sm:text-6xl md:text-7xl lg:text-8xl font-script text-[var(--accent-soft)]">&</span>
-                {COUPLE.brideName}
+                {COUPLE.bride.name}
               </h1>
               <div
                 className={`mx-auto h-px w-40 section-divider ${

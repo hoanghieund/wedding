@@ -24,7 +24,7 @@ export default function TimelineItem({
       />
       <div className={`section-shell rounded-[1.75rem] p-6 sm:p-8 ${highlight ? "border-[rgba(244,228,193,0.22)]" : ""}`}>
         <p className="section-label text-[10px]">
-          {date} <span className="text-[var(--text-secondary)]">// {code}</span>
+          {date} <span className="text-[var(--text-secondary)]">{'//'} {code}</span>
         </p>
         <h3 className="mt-3 text-2xl font-display-serif text-[var(--accent)] sm:text-3xl">{title}</h3>
         <p className="copy-muted mt-4 text-lg leading-8 sm:text-xl">{desc}</p>
