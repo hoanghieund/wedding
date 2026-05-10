@@ -51,13 +51,13 @@ export default function HeroSection() {
               </p>
               <h1
                 id="hero-heading"
-                className={`font-display-serif text-6xl font-semibold tracking-tight text-[var(--accent)] sm:text-7xl md:text-8xl lg:text-9xl ${
+                className={`font-display-serif ${
                   isInView ? "animate-fade-up-soft" : hiddenClass
                 }`}
               >
-                <span className="block">{COUPLE.groom.name}</span>
+                <span className="block text-7xl font-semibold tracking-tight text-[var(--accent)] sm:text-8xl md:text-9xl lg:text-[10rem]">{COUPLE.groom.name}</span>
                 <span className="block my-2 text-5xl sm:my-3 sm:text-6xl md:text-7xl lg:text-8xl font-script text-[var(--accent-soft)]">&</span>
-                <span className="block">{COUPLE.bride.name}</span>
+                <span className="block text-5xl font-medium tracking-wide text-[var(--accent)]/90 sm:text-6xl md:text-7xl lg:text-8xl">{COUPLE.bride.name}</span>
               </h1>
               <div
                 className={`mx-auto h-px w-40 section-divider ${
