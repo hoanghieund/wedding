@@ -50,22 +50,22 @@ export function QuickFactsBand() {
     <section
       ref={ref}
       aria-label="Thông tin nhanh về sự kiện"
-      className="relative border-y border-[#00e5ff]/10 bg-[#0A0A0D]/80 py-16 sm:py-20"
+      className="relative border-y border-[var(--border-soft)] bg-[var(--bg-elevated)]/60 py-16 sm:py-20"
     >
-      <div className="absolute inset-0 bg-gradient-to-r from-[#3A1F5D]/20 via-transparent to-[#1A1A2E]/20" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg-deep)]/40 via-transparent to-[var(--bg-deep)]/40" />
       <div className="relative mx-auto grid max-w-6xl grid-cols-1 gap-6 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
         {quickFacts.map((fact, index) => (
           <div
             key={fact.label}
-            className={`group relative flex flex-col items-center rounded-2xl border border-[#00e5ff]/10 bg-[#00e5ff]/5 p-6 text-center backdrop-blur-xl transition-all duration-500 hover:border-[#00e5ff]/30 hover:bg-[#00e5ff]/10 hover:shadow-[0_0_40px_-10px_rgba(245,225,164,0.15)] ${isInView ? `animate-fade-up stagger-${index + 1}` : 'reveal-hidden'}`}
+            className={`group section-shell hover-lift rounded-xl p-6 text-center ${isInView ? `animate-fade-up stagger-${index + 1}` : 'reveal-hidden'}`}
           >
-            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full border border-[#00e5ff]/20 bg-[#00e5ff]/10 text-[#00e5ff] shadow-[0_0_20px_rgba(245,225,164,0.1)] transition-all duration-500 group-hover:scale-110 group-hover:border-[#00e5ff]/40">
+            <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full border border-[var(--border-soft)] bg-[var(--surface)] text-[var(--accent-soft)] shadow-[var(--glow-soft)] transition-all duration-300 group-hover:scale-110 group-hover:border-[var(--accent-soft)] mx-auto">
               {fact.icon}
             </div>
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#00e5ff]/60">
+            <p className="section-label text-[10px]">
               {fact.label}
             </p>
-            <p className="mt-2 text-base font-medium leading-7 text-white/90">
+            <p className="mt-2 text-base font-body-serif leading-7 text-[var(--text-primary)]">
               {fact.value}
             </p>
           </div>

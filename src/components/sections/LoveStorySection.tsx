@@ -42,7 +42,6 @@ const LOVE_STORY_TIMELINE = [
   },
 ];
 
-const SECTION_TITLE = "Hành Trình Nên Duyên";
 const STAGGER_CLASSES = [
   "stagger-1",
   "stagger-2",
@@ -61,37 +60,48 @@ export default function LoveStorySection() {
       ref={sectionRef}
       id="story"
       aria-labelledby="story-heading"
-      className="space-y-10"
+      className="space-y-14"
     >
-      <h2
-        id="story-heading"
-        className={`text-center text-4xl font-extrabold uppercase tracking-tight text-white sm:text-5xl ${
-          isInView ? "animate-fade-up" : "reveal-hidden"
-        }`}
-      >
-        {SECTION_TITLE}
-      </h2>
-
-      <div className="mx-auto max-w-3xl rounded-3xl border border-white/10 bg-[rgba(20,20,30,0.6)] p-8 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl sm:p-12">
-        <ol className="border-l-2 border-[#00e5ff] pl-4">
-          {LOVE_STORY_TIMELINE.map((milestone, index) => (
-            <TimelineItem
-              key={milestone.code}
-              date={milestone.date}
-              code={milestone.code}
-              title={milestone.title}
-              desc={milestone.desc}
-              className={`${
-                isInView
-                  ? index % 2 === 0
-                    ? "animate-fade-left"
-                    : "animate-fade-right"
-                  : "reveal-hidden"
-              } ${STAGGER_CLASSES[Math.min(index, STAGGER_CLASSES.length - 1)]}`}
-            />
-          ))}
-        </ol>
+      <div className="text-center space-y-3">
+        <p
+          className={`section-label ${isInView ? "animate-fade-down" : "reveal-hidden"}`}
+        >
+          Chương 3
+        </p>
+        <h2
+          id="story-heading"
+          className={`chapter-title text-4xl sm:text-5xl ${
+            isInView ? "animate-fade-up" : "reveal-hidden"
+          }`}
+        >
+          Hành Trình Nên Duyên
+        </h2>
+        <div
+          className={`mx-auto h-px w-24 section-divider ${
+            isInView ? "animate-fade-up stagger-1" : "reveal-hidden"
+          }`}
+        />
       </div>
+
+      <ol className="mx-auto max-w-3xl border-l-2 border-[var(--border-soft)]">
+        {LOVE_STORY_TIMELINE.map((milestone, index) => (
+          <TimelineItem
+            key={milestone.code}
+            date={milestone.date}
+            code={milestone.code}
+            title={milestone.title}
+            desc={milestone.desc}
+            highlight={index === LOVE_STORY_TIMELINE.length - 1}
+            className={`${
+              isInView
+                ? index % 2 === 0
+                  ? "animate-fade-left"
+                  : "animate-fade-right"
+                : "reveal-hidden"
+            } ${STAGGER_CLASSES[Math.min(index, STAGGER_CLASSES.length - 1)]}`}
+          />
+        ))}
+      </ol>
     </section>
   );
 }
