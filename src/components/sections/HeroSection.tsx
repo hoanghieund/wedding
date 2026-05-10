@@ -40,8 +40,8 @@ export default function HeroSection() {
 
       <div className="relative flex min-h-screen items-center justify-center">
         <div className="z-10 mx-auto w-full max-w-4xl px-6 text-center sm:px-10 lg:px-14">
-          <div className="space-y-14">
-            <div className="space-y-6">
+          <div className="space-y-10 lg:space-y-12">
+            <div className="space-y-5 lg:space-y-6">
               <p
                 className={`font-mono text-xs uppercase tracking-[0.35em] text-[var(--accent-soft)] ${
                   isInView ? "animate-fade-down" : hiddenClass
@@ -55,9 +55,9 @@ export default function HeroSection() {
                   isInView ? "animate-fade-up-soft" : hiddenClass
                 }`}
               >
-                <span className="block text-7xl font-semibold tracking-tight text-[var(--accent)] sm:text-8xl md:text-9xl lg:text-[10rem]">{COUPLE.groom.name}</span>
-                <span className="block my-2 text-5xl sm:my-3 sm:text-6xl md:text-7xl lg:text-8xl font-script text-[var(--accent-soft)]">&</span>
-                <span className="block text-5xl font-medium tracking-wide text-[var(--accent)]/90 sm:text-6xl md:text-7xl lg:text-8xl">{COUPLE.bride.name}</span>
+                <span className="block text-6xl font-semibold tracking-tight text-[var(--accent)] sm:text-7xl md:text-8xl lg:text-[7rem] xl:text-[7.75rem]">{COUPLE.groom.name}</span>
+                <span className="block my-1.5 text-4xl sm:my-2 sm:text-5xl md:text-6xl lg:text-7xl font-script text-[var(--accent-soft)]">&</span>
+                <span className="block -mt-1 pl-4 text-4xl font-medium tracking-[0.04em] text-[var(--accent)]/90 sm:pl-6 sm:text-5xl md:pl-8 md:text-6xl lg:-mt-2 lg:pl-10 lg:text-[5.5rem] xl:text-[6rem]">{COUPLE.bride.name}</span>
               </h1>
               <div
                 className={`mx-auto h-px w-40 section-divider ${
