@@ -188,14 +188,14 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
 
           <button
             onClick={goPrev}
-            className="absolute left-4 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--border-soft)] bg-[var(--surface)] text-[var(--accent)] backdrop-blur-md transition hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)]"
+            className="absolute left-2 top-1/2 z-10 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--border-soft)] bg-[var(--surface)] text-xl text-[var(--accent)] backdrop-blur-md transition hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)] sm:left-4 sm:h-12 sm:w-12 sm:text-base"
             aria-label="Ảnh trước"
           >
             ←
           </button>
           <button
             onClick={goNext}
-            className="absolute right-4 top-1/2 z-10 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--border-soft)] bg-[var(--surface)] text-[var(--accent)] backdrop-blur-md transition hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)]"
+            className="absolute right-2 top-1/2 z-10 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--border-soft)] bg-[var(--surface)] text-xl text-[var(--accent)] backdrop-blur-md transition hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)] sm:right-4 sm:h-12 sm:w-12 sm:text-base"
             aria-label="Ảnh sau"
           >
             →
@@ -203,7 +203,7 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
 
           <button
             onClick={() => setAnimIndex((i) => i + 1)}
-            className="absolute left-4 bottom-4 z-10 flex items-center gap-1.5 rounded-full border border-[var(--border-soft)] bg-[var(--surface)] px-3 py-1.5 font-mono text-[10px] uppercase tracking-wider text-[var(--accent)] backdrop-blur-md transition hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)]"
+            className="absolute left-2 bottom-2 z-10 flex items-center gap-1.5 rounded-full border border-[var(--border-soft)] bg-[var(--surface)] px-4 py-2.5 font-mono text-[10px] uppercase tracking-wider text-[var(--accent)] backdrop-blur-md transition hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)] sm:left-4 sm:bottom-4 sm:px-3 sm:py-1.5"
             title="Đổi hiệu ứng"
           >
             ✦ {currentAnim?.name ?? "FX"}
@@ -214,7 +214,7 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
               setIsPlaying((v) => !v);
               setProgressKey((k) => k + 1);
             }}
-            className="absolute bottom-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border-soft)] bg-[var(--surface)] font-mono text-xs text-[var(--accent)] backdrop-blur-md transition hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)]"
+            className="absolute bottom-2 right-2 z-10 flex h-12 w-12 items-center justify-center rounded-full border border-[var(--border-soft)] bg-[var(--surface)] font-mono text-sm text-[var(--accent)] backdrop-blur-md transition hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)] sm:bottom-4 sm:right-4 sm:h-10 sm:w-10 sm:text-xs"
             aria-label={isPlaying ? "Tạm dừng" : "Phát"}
           >
             {isPlaying ? "⏸" : "▶"}
