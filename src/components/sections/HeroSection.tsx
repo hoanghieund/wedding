@@ -55,9 +55,9 @@ export default function HeroSection() {
                   isInView ? "animate-fade-up-soft" : hiddenClass
                 }`}
               >
-                {COUPLE.groom.name}
-                <span className="mx-3 text-5xl sm:mx-5 sm:text-6xl md:text-7xl lg:text-8xl font-script text-[var(--accent-soft)]">&</span>
-                {COUPLE.bride.name}
+                <span className="block">{COUPLE.groom.name}</span>
+                <span className="block my-2 text-5xl sm:my-3 sm:text-6xl md:text-7xl lg:text-8xl font-script text-[var(--accent-soft)]">&</span>
+                <span className="block">{COUPLE.bride.name}</span>
               </h1>
               <div
                 className={`mx-auto h-px w-40 section-divider ${

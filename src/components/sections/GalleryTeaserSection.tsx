@@ -174,7 +174,7 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
                 alt={img.alt}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1024px"
-                className="object-cover"
+                className="object-contain"
                 quality={85}
                 loading={i < 2 ? "eager" : "lazy"}
                 priority={i === 0}
