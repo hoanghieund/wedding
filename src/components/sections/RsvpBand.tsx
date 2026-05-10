@@ -15,21 +15,25 @@ export function RsvpBand() {
       id="rsvp"
       aria-labelledby="rsvp-heading"
       ref={ref}
-      className={`border-t border-[#00e5ff]/10 bg-transparent py-16 sm:py-20 lg:py-24 reveal-hidden ${isInView ? "animate-fade-up" : ""}`}
+      className={`border-t border-[var(--border-soft)] py-20 sm:py-24 lg:py-28 reveal-hidden ${isInView ? "animate-fade-up" : ""}`}
     >
       <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
-        <h2
-          id="rsvp-heading"
-          className="text-center text-2xl font-extrabold uppercase tracking-tight text-white sm:text-3xl lg:text-4xl"
-        >
-          Xác Nhận Tham Dự
-        </h2>
+        <div className="space-y-4 text-center">
+          <p className="section-label">Chương Kết</p>
+          <h2
+            id="rsvp-heading"
+            className="font-script text-5xl text-[var(--accent)] sm:text-6xl"
+          >
+            Xác Nhận Tham Dự
+          </h2>
+          <p className="copy-muted text-lg leading-8">Gia đình rất hân hạnh được đón tiếp quý vị trong ngày trọng đại này.</p>
+        </div>
 
-        <div className="mt-10 rounded-3xl border border-white/10 bg-[rgba(20,20,30,0.38)] p-8 shadow-[0_20px_50px_rgba(0,0,0,0.45)] backdrop-blur-md">
+        <div className="section-shell mt-10 rounded-[2rem] p-8 shadow-[var(--glow-soft)] sm:p-10">
           {submitted ? (
             <div className="text-center">
-              <p className="font-mono text-sm uppercase tracking-[0.25em] text-[#00e5ff]">XÁC NHẬN ĐÃ GỬI</p>
-              <p className="mt-4 text-lg leading-6 text-white/80">Gia đình xin cảm ơn quý vị đã xác nhận tham dự.</p>
+              <p className="section-label">XÁC NHẬN ĐÃ GỬI</p>
+              <p className="mt-4 text-lg leading-7 text-[var(--text-primary)]">Gia đình xin cảm ơn quý vị đã xác nhận tham dự.</p>
             </div>
           ) : (
             <form
@@ -40,36 +44,36 @@ export function RsvpBand() {
               }}
             >
               <label className="block">
-                <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#a0a0b0]">Tên khách mời</span>
+                <span className="section-label text-[10px]">Tên khách mời</span>
                 <input
                   type="text"
                   required
                   placeholder="Ví dụ: Nguyễn Văn A"
-                  className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition placeholder:text-white/30 focus:border-[#00e5ff]"
+                  className="focus-ring-accent mt-2 w-full rounded-xl border border-[var(--border-soft)] bg-[var(--surface)] px-4 py-3 text-[var(--text-primary)] outline-none transition placeholder:text-[var(--text-secondary)]"
                 />
               </label>
 
               <label className="block">
-                <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#a0a0b0]">Số lượng khách tham dự</span>
-                <select className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition focus:border-[#00e5ff]">
-                  <option className="bg-[#030305]">1 người</option>
-                  <option className="bg-[#030305]">2 người</option>
-                  <option className="bg-[#030305]">Gia đình (3 người trở lên)</option>
+                <span className="section-label text-[10px]">Số lượng khách tham dự</span>
+                <select className="focus-ring-accent mt-2 w-full rounded-xl border border-[var(--border-soft)] bg-[var(--surface)] px-4 py-3 text-[var(--text-primary)] outline-none transition">
+                  <option className="bg-[#0a0e27]">1 người</option>
+                  <option className="bg-[#0a0e27]">2 người</option>
+                  <option className="bg-[#0a0e27]">Gia đình (3 người trở lên)</option>
                 </select>
               </label>
 
               <label className="block">
-                <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#a0a0b0]">Lời chúc gửi đến Hoàng Hiếu & Kim Liên</span>
+                <span className="section-label text-[10px]">Lời chúc gửi đến Hoàng Hiếu & Kim Liên</span>
                 <textarea
                   placeholder="Kính chúc hai bạn trăm năm hạnh phúc..."
-                  className="mt-2 min-h-28 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition placeholder:text-white/30 focus:border-[#00e5ff]"
+                  className="focus-ring-accent mt-2 min-h-28 w-full rounded-xl border border-[var(--border-soft)] bg-[var(--surface)] px-4 py-3 text-[var(--text-primary)] outline-none transition placeholder:text-[var(--text-secondary)]"
                 />
               </label>
 
               <button
                 type="submit"
-                className={`w-full rounded-full bg-gradient-to-r from-[#00e5ff] to-[#007bff] px-8 py-4 font-bold uppercase tracking-[0.18em] text-white shadow-[0_10px_25px_rgba(0,229,255,0.35)] transition hover:-translate-y-1 hover:shadow-[0_15px_35px_rgba(0,229,255,0.45)] reveal-hidden ${
-                  isInView ? "animate-zoom-in animate-glow-pulse stagger-1" : ""
+                className={`w-full rounded-full border border-[var(--accent-soft)] bg-gradient-to-r from-[var(--accent-soft)] to-[var(--accent)] px-8 py-4 font-body-serif text-lg tracking-[0.15em] text-[var(--bg)] shadow-[0_18px_50px_rgba(212,165,116,0.28)] transition hover:-translate-y-1 hover:shadow-[0_22px_60px_rgba(244,228,193,0.26)] reveal-hidden ${
+                  isInView ? "animate-zoom-in stagger-1" : ""
                 }`}
               >
                 Xác Nhận Tham Dự
@@ -82,7 +86,7 @@ export function RsvpBand() {
               href={calendarUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-mono text-xs uppercase tracking-[0.18em] text-[#00e5ff] underline decoration-[#00e5ff]/30 underline-offset-4 transition hover:decoration-[#00e5ff]"
+              className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--accent-soft)] underline decoration-[var(--accent-soft)]/30 underline-offset-4 transition hover:text-[var(--accent)] hover:decoration-[var(--accent-soft)]"
             >
               Thêm vào lịch
             </a>
