@@ -142,7 +142,7 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
                 setCurrentIndex(0);
                 setProgressKey((k) => k + 1);
               }}
-              className={`rounded-full border px-5 py-2 font-mono text-xs uppercase tracking-widest transition-all duration-300 ${
+              className={`rounded-full border px-6 py-3 font-mono text-xs uppercase tracking-widest transition-all duration-300 sm:px-5 sm:py-2 ${
                 selectedSlug === cat.slug
                   ? "border-[var(--accent-soft)] bg-[var(--accent)] text-[var(--bg)] shadow-[var(--glow-soft)]"
                   : "border-[var(--border-soft)] bg-[var(--surface)] text-[var(--text-secondary)] hover:border-[var(--accent-soft)] hover:text-[var(--text-primary)]"
