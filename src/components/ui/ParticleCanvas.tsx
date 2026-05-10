@@ -28,7 +28,7 @@ class Particle {
   }
 
   draw(ctx: CanvasRenderingContext2D) {
-    ctx.fillStyle = `rgba(0, 229, 255, ${this.opacity})`;
+    ctx.fillStyle = `rgba(212, 165, 116, ${this.opacity})`;
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     ctx.fill();
