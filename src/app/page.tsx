@@ -81,13 +81,13 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(eventStructuredData) }}
       />
       <FAQStructuredData />
-      <div className="relative min-h-screen bg-[#030305] bg-[linear-gradient(rgba(3,3,5,0.86),rgba(3,3,5,0.9)),url('/images/HAR01404.jpg')] bg-cover bg-fixed bg-center text-[#f0f0f5]">
+      <div className="relative min-h-screen">
         <HeroSection />
         <QuickFactsBand />
         <FloatingControls />
         <EnterInvitationOverlay />
 
-        <main className="mx-auto w-full max-w-6xl space-y-16 px-4 py-16 sm:space-y-20 sm:px-6 sm:py-20 lg:space-y-24 lg:px-8 lg:py-24">
+        <main className="mx-auto w-full max-w-6xl space-y-20 px-4 py-20 sm:space-y-24 sm:px-6 sm:py-24 lg:space-y-32 lg:px-8 lg:py-32">
           <LoveStorySection />
           <GalleryProvider />
           <ScheduleSection />
