@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { EVENT_DATA } from "@/lib/constants/event-data";
 
-const TARGET_DATE = new Date("2026-12-25T00:00:00").getTime();
+const TARGET_DATE = new Date(EVENT_DATA.event.startISO).getTime();
 
 type TimeLeft = {
   days: string;

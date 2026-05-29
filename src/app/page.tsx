@@ -4,7 +4,7 @@ import { QuickFactsBand } from "@/components/sections/QuickFactsBand";
 import FloatingControls from "@/components/sections/FloatingControls";
 import EnterInvitationOverlay from "@/components/sections/EnterInvitationOverlay";
 import { FAQStructuredData } from "@/components/seo/StructuredData";
-import { VENUE_GROOM, VENUE_BRIDE } from "@/lib/constants/event-data";
+import { EVENT_DATA, VENUE_GROOM, VENUE_BRIDE } from "@/lib/constants/event-data";
 
 const LoveStorySection = dynamic(() => import("@/components/sections/LoveStorySection"), {
   loading: () => <div className="h-40" />,
@@ -38,39 +38,38 @@ export default function Home() {
   const eventStructuredData = {
     "@context": "https://schema.org",
     "@type": "Event",
-    name: "Lễ thành hôn Hoàng Hiếu & Kim Liên",
-    startDate: "2026-12-25T09:00:00+07:00",
-    endDate: "2026-12-25T13:30:00+07:00",
-    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-    eventStatus: "https://schema.org/EventScheduled",
+    name: EVENT_DATA.event.name,
+    startDate: EVENT_DATA.event.startISO,
+    endDate: EVENT_DATA.event.endISO,
+    eventAttendanceMode: EVENT_DATA.event.attendanceMode,
+    eventStatus: EVENT_DATA.event.status,
     location: {
       "@type": "Place",
-      name: "Tư gia nhà trai",
+      name: VENUE_GROOM.venueName,
       address: {
         "@type": "PostalAddress",
-        streetAddress: "An Lạc, Vụ Bản",
-        addressLocality: "Ninh Bình",
-        addressCountry: "VN",
+        streetAddress: VENUE_GROOM.streetAddress,
+        addressLocality: VENUE_GROOM.addressLocality,
+        addressCountry: EVENT_DATA.event.countryCode,
       },
     },
-    image: ["https://wedding.hoho-kimlien.com/opengraph-image.png"],
-    description:
-      "Gia đình chúng tôi trân trọng kính mời quý vị đến chung vui trong ngày trọng đại.",
+    image: [EVENT_DATA.site.ogImage.absoluteUrl],
+    description: EVENT_DATA.event.description,
     offers: {
       "@type": "Offer",
-      url: "https://wedding.hoho-kimlien.com",
+      url: EVENT_DATA.site.baseUrl,
       price: "0",
       priceCurrency: "VND",
       availability: "https://schema.org/InStock",
-      validFrom: "2026-05-07T00:00:00+07:00",
+      validFrom: EVENT_DATA.event.validFromISO,
     },
     performer: {
       "@type": "Person",
-      name: "Hoàng Hiếu & Kim Liên",
+      name: EVENT_DATA.couple.combinedName,
     },
     organizer: {
       "@type": "Person",
-      name: "Hoàng Hiếu & Kim Liên",
+      name: EVENT_DATA.couple.combinedName,
     },
   };
 

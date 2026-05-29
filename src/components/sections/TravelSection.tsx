@@ -1,6 +1,6 @@
 "use client";
 
-import { TRAVEL_GUIDANCE } from "@/lib/constants/event-data";
+import { EVENT_DATA, TRAVEL_GUIDANCE } from "@/lib/constants/event-data";
 import { useInView } from "@/hooks/useInView";
 
 export function TravelSection() {
@@ -19,10 +19,10 @@ export function TravelSection() {
     >
       <div className="space-y-2">
         <p className={`section-label ${isInView ? "animate-fade-down" : "reveal-hidden"}`}>
-          Chương 9
+          {EVENT_DATA.copy.sections.travelChapter}
         </p>
         <h2 id="travel-heading" className={`chapter-title text-3xl sm:text-4xl ${isInView ? "animate-fade-up" : "reveal-hidden"}`}>
-          Thông tin hữu ích
+          {EVENT_DATA.copy.sections.travelTitle}
         </h2>
       </div>
 

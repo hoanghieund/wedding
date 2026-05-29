@@ -1,6 +1,6 @@
 "use client";
 
-import { EVENT_DETAILS, WEDDING_DATE_ISO, RSVP_DEADLINE_ISO } from "@/lib/constants/event-data";
+import { EVENT_DATA, EVENT_DETAILS, WEDDING_DATE_ISO, RSVP_DEADLINE_ISO } from "@/lib/constants/event-data";
 import { formatEventDate } from "@/lib/formatters/date-format";
 import { useInView } from "@/hooks/useInView";
 
@@ -13,7 +13,7 @@ export function QuickFactsBand() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
       ),
-      label: "Ngày cử hành",
+      label: EVENT_DATA.copy.quickFacts.dateLabel,
       value: formatEventDate(WEDDING_DATE_ISO),
     },
     {
@@ -23,7 +23,7 @@ export function QuickFactsBand() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
       ),
-      label: "Địa điểm",
+      label: EVENT_DATA.copy.quickFacts.venueLabel,
       value: EVENT_DETAILS[0].value,
     },
     {
@@ -32,7 +32,7 @@ export function QuickFactsBand() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
         </svg>
       ),
-      label: "Trang phục",
+      label: EVENT_DATA.copy.quickFacts.dressCodeLabel,
       value: EVENT_DETAILS[3].value,
     },
     {
@@ -41,7 +41,7 @@ export function QuickFactsBand() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
       ),
-      label: "Hạn xác nhận",
+      label: EVENT_DATA.copy.quickFacts.rsvpDeadlineLabel,
       value: formatEventDate(RSVP_DEADLINE_ISO),
     },
   ];
@@ -49,7 +49,7 @@ export function QuickFactsBand() {
   return (
     <section
       ref={ref}
-      aria-label="Thông tin nhanh về sự kiện"
+      aria-label={EVENT_DATA.copy.quickFacts.ariaLabel}
       className="relative border-y border-[var(--border-soft)] bg-[var(--bg-elevated)]/60 py-16 sm:py-20"
     >
       <div className="absolute inset-0 bg-gradient-to-r from-[var(--bg-deep)]/40 via-transparent to-[var(--bg-deep)]/40" />

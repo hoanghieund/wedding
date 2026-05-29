@@ -1,27 +1,7 @@
 "use client";
 
 import { useInView } from "@/hooks/useInView";
-
-const partyMembers = [
-  {
-    name: "Phạm Văn A",
-    role: "Phù rể chính",
-    duty: "Đồng hành cùng chú rể, hỗ trợ đón khách và giữ không khí buổi tiệc thật vui vẻ.",
-    emoji: "🤵",
-  },
-  {
-    name: "Nguyễn Thị B",
-    role: "Phù dâu chính",
-    duty: "Luôn bên cạnh cô dâu, hỗ trợ chuẩn bị trang phục, nghi thức và những khoảnh khắc quan trọng.",
-    emoji: "👰",
-  },
-  {
-    name: "Trần Văn C",
-    role: "Người hỗ trợ tiệc cưới",
-    duty: "Giúp kết nối khách mời, hỗ trợ hậu cần và cùng gia đình chăm chút cho ngày vui trọn vẹn.",
-    emoji: "🤵",
-  },
-];
+import { EVENT_DATA } from "@/lib/constants/event-data";
 
 export default function WeddingPartySection() {
   const { ref, isInView } = useInView();
@@ -35,7 +15,7 @@ export default function WeddingPartySection() {
     >
       <div className="mx-auto max-w-3xl space-y-4 text-center">
         <p className={`section-label ${isInView ? "animate-fade-down" : "reveal-hidden"}`}>
-          Chương 6
+          {EVENT_DATA.copy.sections.partyChapter}
         </p>
         <h2
           id="party-heading"
@@ -43,15 +23,15 @@ export default function WeddingPartySection() {
             isInView ? "animate-fade-up" : "reveal-hidden"
           }`}
         >
-          Đội Ngũ Đồng Hành
+          {EVENT_DATA.copy.sections.partyTitle}
         </h2>
         <p className={`copy-muted text-lg leading-8 sm:text-xl ${isInView ? "animate-fade-up stagger-1" : "reveal-hidden"}`}>
-          Đây là những người bạn, người thân luôn ở bên cô dâu chú rể trong quá trình chuẩn bị và trong ngày cưới.
+          {EVENT_DATA.copy.sections.partyDescription}
         </p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-3">
-        {partyMembers.map((member, index) => (
+        {EVENT_DATA.weddingParty.map((member, index) => (
           <article
             key={member.role}
             className={`section-shell hover-lift flex h-full flex-col rounded-[1.75rem] p-6 text-center reveal-hidden ${

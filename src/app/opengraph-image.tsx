@@ -1,11 +1,13 @@
 import { ImageResponse } from "next/og";
+import { EVENT_DATA } from "@/lib/constants/event-data";
+import { formatEventDate } from "@/lib/formatters/date-format";
 
 export const runtime = "edge";
 
-export const alt = "Lễ Cưới - Hoàng Hiếu & Kim Liên";
+export const alt = EVENT_DATA.site.ogImage.alt;
 export const size = {
-  width: 1200,
-  height: 630,
+  width: EVENT_DATA.site.ogImage.width,
+  height: EVENT_DATA.site.ogImage.height,
 };
 export const contentType = "image/png";
 
@@ -41,7 +43,7 @@ export default async function Image() {
               marginBottom: 16,
             }}
           >
-            Lễ Cưới
+            {EVENT_DATA.event.title}
           </p>
           <h1
             style={{
@@ -52,7 +54,7 @@ export default async function Image() {
               marginBottom: 24,
             }}
           >
-            Hoàng Hiếu & Kim Liên
+            {EVENT_DATA.couple.combinedName}
           </h1>
           <p
             style={{
@@ -61,7 +63,7 @@ export default async function Image() {
               marginBottom: 48,
             }}
           >
-            Cùng Chung Vui Trong Ngày Trọng Đại
+            {EVENT_DATA.event.description}
           </p>
           <p
             style={{
@@ -69,7 +71,7 @@ export default async function Image() {
               color: "#78716c",
             }}
           >
-            Ngày 22 tháng 11, 2026 · TP. Hồ Chí Minh
+            {formatEventDate(EVENT_DATA.event.startISO)} · {EVENT_DATA.venues.groom.addressLocality}
           </p>
         </div>
         <div
@@ -87,7 +89,7 @@ export default async function Image() {
               color: "#a8a29e",
             }}
           >
-            RSVP & Chi tiết
+            {EVENT_DATA.rsvp.labels.submit} & Chi tiết
           </p>
         </div>
       </div>

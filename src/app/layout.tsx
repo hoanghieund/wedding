@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Great_Vibes, JetBrains_Mono, Playfair_Display } from "next/font/google";
+import { EVENT_DATA } from "@/lib/constants/event-data";
 import "./globals.css";
 
 const playfairDisplay = Playfair_Display({
@@ -27,38 +28,35 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://wedding.hoho-kimlien.com"),
+  metadataBase: new URL(EVENT_DATA.site.baseUrl),
   title: {
-    default: "Thiệp mời lễ thành hôn – Hoàng Hiếu & Kim Liên",
-    template: "%s | Đám cưới",
+    default: EVENT_DATA.site.title,
+    template: EVENT_DATA.site.titleTemplate,
   },
-  description:
-    "Trân trọng kính mời quý vị tham dự lễ thành hôn. Xem chi tiết, lịch trình, địa điểm và xác nhận tham dự.",
-  keywords: ["đám cưới", "thiệp mời", "Hoàng Hiếu", "Kim Liên", "Ninh Bình"],
-  authors: [{ name: "Hoàng Hiếu & Kim Liên" }],
+  description: EVENT_DATA.site.description,
+  keywords: [...EVENT_DATA.site.keywords],
+  authors: [{ name: EVENT_DATA.couple.combinedName }],
   openGraph: {
     type: "website",
-    locale: "vi_VN",
-    url: "https://wedding.hoho-kimlien.com",
-    siteName: "Đám cưới Hoàng Hiếu & Kim Liên",
-    title: "Thiệp mời lễ thành hôn",
-    description:
-      "Xem chi tiết lễ thành hôn của Hoàng Hiếu & Kim Liên – ngày 25/12/2026, Ninh Bình.",
+    locale: EVENT_DATA.site.locale,
+    url: EVENT_DATA.site.baseUrl,
+    siteName: EVENT_DATA.site.siteName,
+    title: EVENT_DATA.site.title,
+    description: EVENT_DATA.site.shareDescription,
     images: [
       {
-        url: "/opengraph-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Thiệp mời đám cưới Hoàng Hiếu & Kim Liên",
+        url: EVENT_DATA.site.ogImage.url,
+        width: EVENT_DATA.site.ogImage.width,
+        height: EVENT_DATA.site.ogImage.height,
+        alt: EVENT_DATA.site.ogImage.alt,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Thiệp mời lễ thành hôn",
-    description:
-      "Xem chi tiết lễ thành hôn của Hoàng Hiếu & Kim Liên – ngày 25/12/2026, Ninh Bình.",
-    images: ["/opengraph-image.png"],
+    title: EVENT_DATA.site.title,
+    description: EVENT_DATA.site.shareDescription,
+    images: [EVENT_DATA.site.ogImage.url],
   },
   robots: {
     index: true,
@@ -70,7 +68,7 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  alternates: { canonical: "https://wedding.hoho-kimlien.com/" },
+  alternates: { canonical: `${EVENT_DATA.site.baseUrl}/` },
 };
 
 export default function RootLayout({
@@ -80,7 +78,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="vi"
+      lang={EVENT_DATA.site.language}
       className={`h-full antialiased ${playfairDisplay.variable} ${cormorantGaramond.variable} ${greatVibes.variable} ${jetBrainsMono.variable}`}
     >
       <body className="min-h-full flex flex-col bg-[var(--bg)] font-sans text-[var(--text-primary)]">{children}</body>

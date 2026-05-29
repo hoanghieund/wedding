@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useInView } from "@/hooks/useInView";
-import { FAQ_DATA } from "@/lib/constants/event-data";
+import { EVENT_DATA, FAQ_DATA } from "@/lib/constants/event-data";
 
 export function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -26,9 +26,9 @@ export function FaqSection() {
       }`}
     >
       <div className="space-y-2">
-        <p className="section-label">Chương 10</p>
+        <p className="section-label">{EVENT_DATA.copy.sections.faqChapter}</p>
         <h2 id="faq-heading" className="chapter-title text-3xl sm:text-4xl">
-          Câu hỏi thường gặp
+          {EVENT_DATA.copy.sections.faqTitle}
         </h2>
       </div>
 

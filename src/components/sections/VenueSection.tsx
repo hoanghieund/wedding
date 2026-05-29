@@ -2,12 +2,15 @@
 
 import { useMemo } from "react";
 import { useInView } from "@/hooks/useInView";
+import { EVENT_DATA } from "@/lib/constants/event-data";
 
 interface VenueInfo {
   venueName: string;
-  addressLines: string[];
+  addressLines: readonly string[];
   coordinates: { lat: number; lng: number };
   mapUrl: string;
+  mapTitle: string;
+  timeLabel: string;
   note?: string;
 }
 
@@ -141,14 +144,14 @@ export function VenueSection({ groomVenue, brideVenue }: VenueSectionProps) {
 
       <div className={`grid gap-6 md:grid-cols-2 ${isInView ? "animate-fade-up" : "reveal-hidden"} stagger-3`}>
         <MapCard
-          title="Nhà gái - Lễ Vu Quy"
-          timeLabel="07:00 - 08:30 sáng"
+          title={brideVenue.mapTitle}
+          timeLabel={brideVenue.timeLabel}
           mapUrl={brideVenue.mapUrl}
           embedUrl={brideMapEmbedUrl}
         />
         <MapCard
-          title="Nhà trai - Lễ Thành Hôn"
-          timeLabel="09:00 - 13:30"
+          title={groomVenue.mapTitle}
+          timeLabel={groomVenue.timeLabel}
           mapUrl={groomVenue.mapUrl}
           embedUrl={groomMapEmbedUrl}
         />
@@ -163,9 +166,9 @@ export function VenueSection({ groomVenue, brideVenue }: VenueSectionProps) {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(244,228,193,0.12),transparent_40%),radial-gradient(circle_at_bottom_right,rgba(212,165,116,0.10),transparent_35%)]" />
         <div className="relative space-y-2">
           <p className="section-label text-[10px]">Google Maps</p>
-          <h3 className="font-display-serif text-2xl text-[var(--accent)]">Xem chỉ đường từ nhà gái đến nhà trai</h3>
+          <h3 className="font-display-serif text-2xl text-[var(--accent)]">{EVENT_DATA.copy.venueDirections.heading}</h3>
           <p className="copy-muted max-w-2xl text-sm leading-6">
-            Mở Google Maps để xem lộ trình di chuyển chi tiết giữa hai địa điểm
+            {EVENT_DATA.copy.venueDirections.description}
           </p>
         </div>
         <svg

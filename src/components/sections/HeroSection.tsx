@@ -4,15 +4,8 @@ import Image from "next/image";
 import CountdownTimer from "@/components/ui/CountdownTimer";
 import ParticleCanvas from "@/components/ui/ParticleCanvas";
 import { useInView } from "@/hooks/useInView";
-import { COUPLE, EVENT_CONFIG, HERO_IMAGE } from "@/lib/constants/event-data";
+import { COUPLE, EVENT_CONFIG, EVENT_DATA, HERO_IMAGE } from "@/lib/constants/event-data";
 import { formatEventDate } from "@/lib/formatters/date-format";
-
-const HERO_COPY = {
-  invitation: "Trân trọng kính mời",
-  eventTitle: "Lễ Thành Hôn",
-  countdownLabel: "Cùng đếm ngược đến ngày vui",
-  rsvpLabel: "Xác nhận tham dự",
-};
 
 const hiddenClass = "reveal-hidden";
 
@@ -47,7 +40,7 @@ export default function HeroSection() {
                   isInView ? "animate-fade-down" : hiddenClass
                 }`}
               >
-                {HERO_COPY.invitation}
+                {EVENT_DATA.copy.hero.invitation}
               </p>
               <h1
                 id="hero-heading"
@@ -70,7 +63,7 @@ export default function HeroSection() {
                 }`}
               >
                 <p className="text-lg uppercase tracking-[0.2em] text-[var(--text-secondary)] sm:text-xl">
-                  {HERO_COPY.eventTitle}
+                  {EVENT_DATA.event.title}
                 </p>
                 <p className="text-xl leading-7 text-[var(--text-primary)] sm:text-2xl sm:leading-9">
                   <time dateTime={EVENT_CONFIG.weddingDateISO}>{formatEventDate(EVENT_CONFIG.weddingDateISO)}</time>
@@ -80,7 +73,7 @@ export default function HeroSection() {
 
             <div className={`pt-4 ${isInView ? "animate-fade-up stagger-4" : hiddenClass}`}>
               <p className="mb-6 font-mono text-xs uppercase tracking-[0.35em] text-[var(--accent-soft)]/70">
-                {HERO_COPY.countdownLabel}
+                {EVENT_DATA.copy.hero.countdownLabel}
               </p>
               <CountdownTimer />
               <div className="mt-8 flex justify-center">
@@ -88,7 +81,7 @@ export default function HeroSection() {
                   href="#rsvp"
                   className="group inline-flex items-center gap-3 rounded-full border border-[var(--border-soft)] bg-[var(--surface)] px-8 py-4 font-body-serif text-lg tracking-[0.15em] text-[var(--accent)] shadow-[var(--glow-soft)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_62px_rgba(244,228,193,0.26)] hover:border-[var(--accent-soft)]"
                 >
-                  {HERO_COPY.rsvpLabel}
+                  {EVENT_DATA.copy.hero.rsvpLabel}
                   <span className="text-xl transition group-hover:translate-y-0.5">↓</span>
                 </a>
               </div>
@@ -103,7 +96,7 @@ export default function HeroSection() {
         }`}
       >
         <div className="flex flex-col items-center gap-2 text-[var(--accent-soft)]/60">
-          <span className="font-mono text-[10px] uppercase tracking-[0.3em]">Cuộn xuống</span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.3em]">{EVENT_DATA.copy.hero.scrollLabel}</span>
           <div className="h-10 w-px animate-pulse bg-gradient-to-b from-[var(--accent-soft)]/60 to-transparent" />
         </div>
       </div>

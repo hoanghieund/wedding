@@ -2,21 +2,7 @@
 
 import Image from "next/image";
 import { useInView } from "@/hooks/useInView";
-
-const giftAccounts = [
-  {
-    title: "Mừng cưới chú rể",
-    bank: "TECHCOMBANK",
-    name: "HOÀNG HIẾU",
-    qrData: "STK_HIEU",
-  },
-  {
-    title: "Mừng cưới cô dâu",
-    bank: "NGÂN HÀNG VIB",
-    name: "KIM LIÊN",
-    qrData: "STK_LIEN",
-  },
-];
+import { EVENT_DATA } from "@/lib/constants/event-data";
 
 export default function GiftSection() {
   const { ref, isInView } = useInView();
@@ -30,17 +16,17 @@ export default function GiftSection() {
     >
       <div className="space-y-3 text-center">
         <p className={`section-label ${isInView ? "animate-fade-down" : "reveal-hidden"}`}>
-          Chương 7
+          {EVENT_DATA.copy.sections.giftChapter}
         </p>
         <h2 id="gift-heading" className={`chapter-title text-4xl sm:text-5xl ${isInView ? "animate-fade-up" : "reveal-hidden"}`}>
-          Mừng cưới
+          {EVENT_DATA.copy.sections.giftTitle}
         </h2>
         <p className={`mx-auto max-w-2xl copy-muted text-lg leading-8 ${isInView ? "animate-fade-up stagger-1" : "reveal-hidden"}`}>
-          Sự hiện diện của quý vị là niềm vui lớn nhất của gia đình chúng tôi. Nếu thuận tiện, quý vị có thể gửi lời chúc qua mã QR bên dưới.
+          {EVENT_DATA.copy.sections.giftDescription}
         </p>
       </div>
       <div className="grid gap-6 md:grid-cols-2">
-        {giftAccounts.map((account, index) => (
+        {EVENT_DATA.gifts.map((account, index) => (
           <article
             key={account.title}
             className={`section-shell hover-lift rounded-[1.75rem] p-8 text-center reveal-hidden ${

@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next'
+import { EVENT_DATA } from '@/lib/constants/event-data'
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -7,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: '/admin/',
     },
-    sitemap: 'https://wedding.hoho-kimlien.com/sitemap.xml',
+    sitemap: `${EVENT_DATA.site.baseUrl}/sitemap.xml`,
   }
 }

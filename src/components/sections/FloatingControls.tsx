@@ -1,6 +1,7 @@
 "use client";
 
 import { useMusic } from "@/hooks/useMusic";
+import { EVENT_DATA } from "@/lib/constants/event-data";
 
 const controlClassName =
   "flex h-12 w-12 items-center justify-center rounded-full border border-[var(--border-soft)] bg-[var(--surface-strong)] text-[var(--accent)] backdrop-blur-md transition hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)] shadow-[var(--glow-soft)]";
@@ -20,7 +21,7 @@ export default function FloatingControls() {
       <a href="#rsvp" className={controlClassName} title="Xác nhận tham dự">
         ✎
       </a>
-      <a href="#gift" className={controlClassName} title="Mừng cưới">
+      <a href="#gift" className={controlClassName} title={EVENT_DATA.copy.sections.giftTitle}>
         🎁
       </a>
       <audio id="bg-music" loop preload="auto">

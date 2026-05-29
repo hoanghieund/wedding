@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { COUPLE_NAMES } from "@/lib/constants/event-data";
+import { COUPLE_NAMES, EVENT_DATA, HERO_IMAGE } from "@/lib/constants/event-data";
 
 const PARTICLES = Array.from({ length: 30 }, (_, index) => ({
   left: `${(index * 37) % 100}%`,
@@ -53,7 +53,10 @@ export default function EnterInvitationOverlay() {
 
   return (
     <div className="fixed inset-0 z-[999] flex items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_top,rgba(244,228,193,0.08),transparent_30%),linear-gradient(180deg,#0a0e27_0%,#11182b_45%,#0d1323_100%)] px-6 text-center">
-      <div className={`absolute inset-0 bg-[url('/images/HAR01404.jpg')] bg-cover bg-center opacity-15 blur-sm ${prefersReduced ? "" : "animate-slow-zoom"}`} />
+      <div
+        className={`absolute inset-0 bg-cover bg-center opacity-15 blur-sm ${prefersReduced ? "" : "animate-slow-zoom"}`}
+        style={{ backgroundImage: `url(${HERO_IMAGE.src})` }}
+      />
 
       <div className="pointer-events-none absolute inset-0">
         {PARTICLES.map((particle, i) => (
@@ -77,7 +80,7 @@ export default function EnterInvitationOverlay() {
         <div className={`section-shell relative rounded-[2.25rem] px-8 py-10 shadow-[0_0_120px_rgba(212,165,116,0.24)] backdrop-blur-xl sm:px-10 sm:py-11 ${prefersReduced ? "" : "animate-card-float"}`}>
           <div className="relative z-10 space-y-5">
             <div className={`space-y-2 ${prefersReduced ? "" : "animate-fade-in-up"}`} style={{ animationDelay: prefersReduced ? undefined : "0.2s" }}>
-              <p className="section-label text-[10px]">Wedding Invitation</p>
+              <p className="section-label text-[10px]">{EVENT_DATA.copy.overlay.eyebrow}</p>
               <div className="mx-auto h-px w-24 section-divider" />
             </div>
 
@@ -88,14 +91,14 @@ export default function EnterInvitationOverlay() {
                 ))}
               </h1>
               <p className="font-body-serif text-lg italic leading-relaxed text-[var(--text-secondary)]">
-                Trân trọng kính mời
+                {EVENT_DATA.copy.overlay.invitation}
               </p>
             </div>
 
             <div className="mx-auto h-px w-32 section-divider" />
 
             <p className={`mx-auto max-w-[280px] font-body-serif text-base leading-7 text-[var(--text-secondary)] ${prefersReduced ? "" : "animate-fade-in-up"}`} style={{ animationDelay: prefersReduced ? undefined : "0.8s" }}>
-              Hân hạnh được đón tiếp Quý vị trong ngày trọng đại của chúng tôi
+              {EVENT_DATA.copy.overlay.description}
             </p>
 
             <button
@@ -105,7 +108,7 @@ export default function EnterInvitationOverlay() {
               style={{ animationDelay: prefersReduced ? undefined : "1s" }}
             >
               <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
-              <span className="relative z-10">Mở Thiệp</span>
+              <span className="relative z-10">{EVENT_DATA.copy.overlay.openButton}</span>
             </button>
           </div>
         </div>

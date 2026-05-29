@@ -2,45 +2,7 @@
 
 import TimelineItem from "@/components/ui/TimelineItem";
 import { useInView } from "@/hooks/useInView";
-
-const LOVE_STORY_TIMELINE = [
-  {
-    date: "2022",
-    code: "FIRST_SPARK",
-    title: "Năm Ấy, Chúng Mình Bắt Đầu",
-    desc: "Năm 2022, giữa những ngày rất bình thường, chúng mình bước vào cuộc đời nhau. Không ồn ào, không vội vã, chỉ là càng nói chuyện càng thấy hợp, càng gặp lại càng thấy thương.",
-  },
-  {
-    date: "2023",
-    code: "THE_DEPARTURE",
-    title: "Ngày Em Sang Nhật",
-    desc: "Khi tình yêu vừa đủ sâu, cô dâu bắt đầu hành trình 3 năm ở Nhật. Từ đây, yêu nhau không còn chỉ là những buổi hẹn gần bên, mà là học cách thương một người qua màn hình điện thoại.",
-  },
-  {
-    date: "2023 - 2025",
-    code: "LONG_DISTANCE",
-    title: "Ba Năm Giữ Một Lời Hứa",
-    desc: "Có những ngày lệch múi giờ, những đêm nhớ nhau đến nghẹn lòng, những lần chỉ kịp hỏi 'hôm nay em ổn không?'. Nhưng sau tất cả, chúng mình vẫn chọn ở lại, chọn tin nhau, chọn đi tiếp.",
-  },
-  {
-    date: "Mỗi Năm",
-    code: "REUNION_TRIPS",
-    title: "Những Chuyến Bay Về Và Những Chuyến Đi Chung",
-    desc: "Mỗi năm cô dâu bay về Việt Nam, và mỗi lần gặp lại, chúng mình lại cùng nhau đi du lịch. Những chuyến đi ấy không chỉ để ngắm cảnh, mà để bù đắp những cái ôm còn thiếu và lưu lại bằng chứng rằng tình yêu này vẫn luôn ở đây.",
-  },
-  {
-    date: "2026",
-    code: "NEW_BEGINNING",
-    title: "Không Còn Là Yêu Xa",
-    desc: "Sau 4 năm yêu nhau, trong đó có 3 năm cách xa, chúng mình hiểu rằng người phù hợp không phải là người luôn ở cạnh từ đầu, mà là người dù xa đến đâu vẫn khiến mình muốn trở về.",
-  },
-  {
-    date: "Hôm Nay",
-    code: "WEDDING_DAY",
-    title: "Về Chung Một Nhà",
-    desc: "Hôm nay, chúng mình không còn đếm ngày gặp lại. Từ những tin nhắn xuyên đêm, những chuyến bay trở về, những hành trình đã đi cùng nhau — tất cả dẫn chúng mình đến khoảnh khắc này: nắm tay nhau, chính thức gọi nhau là gia đình.",
-  },
-];
+import { EVENT_DATA } from "@/lib/constants/event-data";
 
 const STAGGER_CLASSES = [
   "stagger-1",
@@ -66,7 +28,7 @@ export default function LoveStorySection() {
         <p
           className={`section-label ${isInView ? "animate-fade-down" : "reveal-hidden"}`}
         >
-          Chương 3
+          {EVENT_DATA.copy.sections.storyChapter}
         </p>
         <h2
           id="story-heading"
@@ -74,7 +36,7 @@ export default function LoveStorySection() {
             isInView ? "animate-fade-up" : "reveal-hidden"
           }`}
         >
-          Hành Trình Nên Duyên
+          {EVENT_DATA.copy.sections.storyTitle}
         </h2>
         <div
           className={`mx-auto h-px w-24 section-divider ${
@@ -84,14 +46,14 @@ export default function LoveStorySection() {
       </div>
 
       <ol className="mx-auto max-w-3xl border-l-2 border-[var(--border-soft)]">
-        {LOVE_STORY_TIMELINE.map((milestone, index) => (
+        {EVENT_DATA.loveStoryTimeline.map((milestone, index) => (
           <TimelineItem
             key={milestone.code}
             date={milestone.date}
             code={milestone.code}
             title={milestone.title}
             desc={milestone.desc}
-            highlight={index === LOVE_STORY_TIMELINE.length - 1}
+            highlight={index === EVENT_DATA.loveStoryTimeline.length - 1}
             className={`${
               isInView
                 ? index % 2 === 0
