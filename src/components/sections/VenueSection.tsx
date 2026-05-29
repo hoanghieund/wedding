@@ -31,6 +31,11 @@ interface MapCardProps {
   embedUrl: string;
 }
 
+interface DirectionsCardProps {
+  mapUrl: string;
+  embedUrl: string;
+}
+
 const sectionCardClassName = "section-shell space-y-4 rounded-[1.75rem] p-6";
 const mapLinkClassName =
   "focus-ring-accent inline-flex min-h-[48px] items-center gap-2 rounded-full border border-[var(--border-soft)] bg-[var(--surface)] px-6 py-3 text-sm font-medium text-[var(--accent)] transition hover:border-[var(--accent-soft)] hover:bg-[var(--surface-strong)]";
@@ -39,6 +44,13 @@ const mapFrameWrapperClassName =
 
 function buildMapEmbedUrl({ lat, lng }: VenueInfo["coordinates"]) {
   return `https://www.google.com/maps?q=${lat},${lng}&z=16&output=embed`;
+}
+
+function buildDirectionsEmbedUrl(origin: VenueInfo["coordinates"], destination: VenueInfo["coordinates"]) {
+  const originParam = `${origin.lat},${origin.lng}`;
+  const destinationParam = `${destination.lat},${destination.lng}`;
+
+  return `https://www.google.com/maps?output=embed&saddr=${originParam}&daddr=${destinationParam}&dirflg=d`;
 }
 
 function LocationIcon() {
@@ -111,6 +123,47 @@ function MapCard({ title, timeLabel, mapUrl, embedUrl }: MapCardProps) {
   );
 }
 
+function DirectionsCard({ mapUrl, embedUrl }: DirectionsCardProps) {
+  return (
+    <div className="section-shell relative overflow-hidden rounded-[1.75rem] p-4 sm:p-5">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(244,228,193,0.12),transparent_40%),radial-gradient(circle_at_bottom_right,rgba(212,165,116,0.10),transparent_35%)]" />
+      <div className="relative space-y-4">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+          <div className="space-y-2">
+            <p className="section-label text-[10px]">Google Maps</p>
+            <h3 className="font-display-serif text-2xl text-[var(--accent)]">{EVENT_DATA.copy.venueDirections.heading}</h3>
+            <p className="copy-muted max-w-2xl text-sm leading-6">
+              {EVENT_DATA.copy.venueDirections.description}
+            </p>
+          </div>
+          <a
+            href={mapUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={mapLinkClassName}
+          >
+            <LocationIcon />
+            Mở chỉ đường
+          </a>
+        </div>
+
+        <div className={mapFrameWrapperClassName}>
+          <iframe
+            src={embedUrl}
+            width="100%"
+            height="420"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title={EVENT_DATA.copy.venueDirections.heading}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function VenueSection({ groomVenue, brideVenue }: VenueSectionProps) {
   const { ref, isInView } = useInView();
 
@@ -118,6 +171,11 @@ export function VenueSection({ groomVenue, brideVenue }: VenueSectionProps) {
     () =>
       `https://www.google.com/maps/dir/?api=1&origin=${brideVenue.coordinates.lat},${brideVenue.coordinates.lng}&destination=${groomVenue.coordinates.lat},${groomVenue.coordinates.lng}&travelmode=driving`,
     [brideVenue.coordinates.lat, brideVenue.coordinates.lng, groomVenue.coordinates.lat, groomVenue.coordinates.lng],
+  );
+
+  const directionsEmbedUrl = useMemo(
+    () => buildDirectionsEmbedUrl(brideVenue.coordinates, groomVenue.coordinates),
+    [brideVenue.coordinates, groomVenue.coordinates],
   );
 
   const brideMapEmbedUrl = useMemo(() => buildMapEmbedUrl(brideVenue.coordinates), [brideVenue.coordinates]);
@@ -157,30 +215,7 @@ export function VenueSection({ groomVenue, brideVenue }: VenueSectionProps) {
         />
       </div>
 
-      <a
-        href={directionsUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group section-shell relative flex min-h-[120px] items-center justify-between gap-6 overflow-hidden rounded-[1.75rem] p-6 transition hover:border-[rgba(244,228,193,0.22)]"
-      >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(244,228,193,0.12),transparent_40%),radial-gradient(circle_at_bottom_right,rgba(212,165,116,0.10),transparent_35%)]" />
-        <div className="relative space-y-2">
-          <p className="section-label text-[10px]">Google Maps</p>
-          <h3 className="font-display-serif text-2xl text-[var(--accent)]">{EVENT_DATA.copy.venueDirections.heading}</h3>
-          <p className="copy-muted max-w-2xl text-sm leading-6">
-            {EVENT_DATA.copy.venueDirections.description}
-          </p>
-        </div>
-        <svg
-          aria-hidden="true"
-          className="relative h-8 w-8 shrink-0 text-[var(--accent)] transition group-hover:translate-x-1"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-        </svg>
-      </a>
+      <DirectionsCard mapUrl={directionsUrl} embedUrl={directionsEmbedUrl} />
     </section>
   );
 }

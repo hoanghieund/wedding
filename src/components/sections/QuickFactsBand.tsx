@@ -1,6 +1,6 @@
 "use client";
 
-import { EVENT_DATA, EVENT_DETAILS, WEDDING_DATE_ISO, RSVP_DEADLINE_ISO } from "@/lib/constants/event-data";
+import { EVENT_DATA, RSVP_DEADLINE_ISO, VENUE_GROOM, WEDDING_DATE_ISO } from "@/lib/constants/event-data";
 import { formatEventDate } from "@/lib/formatters/date-format";
 import { useInView } from "@/hooks/useInView";
 
@@ -24,7 +24,7 @@ export function QuickFactsBand() {
         </svg>
       ),
       label: EVENT_DATA.copy.quickFacts.venueLabel,
-      value: EVENT_DETAILS[0].value,
+      value: VENUE_GROOM.venueName,
     },
     {
       icon: (
@@ -33,7 +33,7 @@ export function QuickFactsBand() {
         </svg>
       ),
       label: EVENT_DATA.copy.quickFacts.dressCodeLabel,
-      value: EVENT_DETAILS[3].value,
+      value: EVENT_DATA.details.dressCode,
     },
     {
       icon: (

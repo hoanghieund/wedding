@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useInView } from "@/hooks/useInView";
 import { EVENT_DATA } from "@/lib/constants/event-data";
+import { buildVietQrImageUrl } from "@/lib/vietqr";
 
 export default function GiftSection() {
   const { ref, isInView } = useInView();
@@ -36,15 +37,16 @@ export default function GiftSection() {
             <p className="mb-4 section-label text-[10px]">{account.title}</p>
             <div className="mx-auto inline-flex rounded-2xl bg-white p-3">
               <Image
-                src={`https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${account.qrData}`}
+                src={buildVietQrImageUrl(account)}
                 alt={`QR ${account.title}`}
-                width={140}
-                height={140}
+                width={240}
+                height={284}
                 unoptimized
-                className="h-[140px] w-[140px]"
+                className="h-auto w-[240px] max-w-full"
               />
             </div>
             <p className="mt-5 text-xl font-display-serif text-[var(--accent)]">{account.bank}</p>
+            <p className="mt-2 font-mono text-sm tracking-[0.18em] text-[var(--accent)]">{account.accountNumber}</p>
             <p className="mt-2 font-mono text-sm uppercase tracking-[0.18em] text-[var(--accent-soft)]">{account.name}</p>
           </article>
         ))}

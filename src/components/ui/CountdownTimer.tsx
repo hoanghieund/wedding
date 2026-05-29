@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { EVENT_DATA } from "@/lib/constants/event-data";
+import { WEDDING_DATE_ISO } from "@/lib/constants/event-data";
 
-const TARGET_DATE = new Date(EVENT_DATA.event.startISO).getTime();
+const TARGET_DATE = new Date(WEDDING_DATE_ISO).getTime();
 
 type TimeLeft = {
   days: string;

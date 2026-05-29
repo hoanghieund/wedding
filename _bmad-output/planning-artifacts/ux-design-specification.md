@@ -28,19 +28,15 @@ The primary user is a wedding guest opening the site from a shared link on mobil
 ## Implemented Sections
 
 - `HeroSection`
-- `InvitationNote`
 - `QuickFactsBand`
 - `LoveStorySection`
-- `EventDetailsSection`
 - `ScheduleSection`
 - `WeddingPartySection`
 - `GalleryProvider` and `GalleryTeaserSection`
 - `GiftSection`
 - `VenueSection`
 - `TravelSection`
-- `CalendarSection`
 - `FaqSection`
-- `ContactSection`
 - `RsvpBand`
 - `FloatingControls`
 

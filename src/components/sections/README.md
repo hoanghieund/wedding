@@ -5,7 +5,7 @@
 ## Responsibilities
 
 - Hero section with event title and featured image
-- Event details and schedule sections
+- Quick facts and schedule sections
 - Venue information and map display
 - FAQ section
 - Photo gallery teaser and provider
@@ -22,10 +22,10 @@
 
 Current section components include:
 - `HeroSection.tsx` - cinematic hero with event title
-- `EventDetailsSection.tsx` and `ScheduleSection.tsx` - date/time and wedding flow
+- `QuickFactsBand.tsx` and `ScheduleSection.tsx` - date/time and wedding flow
 - `VenueSection.tsx` - venue info and map action
 - `GalleryProvider.tsx` and `GalleryTeaserSection.tsx` - folder-based gallery slideshow
-- `GiftSection.tsx`, `TravelSection.tsx`, `FaqSection.tsx`, `ContactSection.tsx`, and `RsvpBand.tsx`
+- `GiftSection.tsx`, `TravelSection.tsx`, `FaqSection.tsx`, and `RsvpBand.tsx`
 
 ## Naming Conventions
 

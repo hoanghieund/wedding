@@ -4,7 +4,7 @@ import { QuickFactsBand } from "@/components/sections/QuickFactsBand";
 import FloatingControls from "@/components/sections/FloatingControls";
 import EnterInvitationOverlay from "@/components/sections/EnterInvitationOverlay";
 import { FAQStructuredData } from "@/components/seo/StructuredData";
-import { EVENT_DATA, VENUE_GROOM, VENUE_BRIDE } from "@/lib/constants/event-data";
+import { EVENT_CONFIG, EVENT_DATA, VENUE_GROOM, VENUE_BRIDE } from "@/lib/constants/event-data";
 
 const LoveStorySection = dynamic(() => import("@/components/sections/LoveStorySection"), {
   loading: () => <div className="h-40" />,
@@ -39,8 +39,8 @@ export default function Home() {
     "@context": "https://schema.org",
     "@type": "Event",
     name: EVENT_DATA.event.name,
-    startDate: EVENT_DATA.event.startISO,
-    endDate: EVENT_DATA.event.endISO,
+    startDate: EVENT_CONFIG.weddingDateISO,
+    endDate: EVENT_CONFIG.weddingEndISO,
     eventAttendanceMode: EVENT_DATA.event.attendanceMode,
     eventStatus: EVENT_DATA.event.status,
     location: {
@@ -61,7 +61,7 @@ export default function Home() {
       price: "0",
       priceCurrency: "VND",
       availability: "https://schema.org/InStock",
-      validFrom: EVENT_DATA.event.validFromISO,
+      validFrom: EVENT_CONFIG.validFromISO,
     },
     performer: {
       "@type": "Person",

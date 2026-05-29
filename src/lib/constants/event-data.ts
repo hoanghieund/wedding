@@ -1,9 +1,3 @@
-export type EventDetail = {
-  label: string;
-  value: string;
-  supportingText?: string;
-};
-
 export type ScheduleItem = {
   time: string;
   title: string;
@@ -25,59 +19,71 @@ export type TravelItem = {
   };
 };
 
-export type GalleryTeaserItem = {
-  src: string;
-  alt: string;
-  aspectRatio?: "portrait" | "landscape" | "square";
-};
-
 export type AttendanceStatus = "attending" | "not_attending" | "maybe";
+
+const SITE_BASE_URL = "https://wedding-hieu-lien.vercel.app";
+const WEDDING_TIME_ZONE = "Asia/Ho_Chi_Minh";
+const EVENT_TIMES = {
+  startAt: "2026-12-06 09:00",
+  endAt: "2026-12-06 13:30",
+  rsvpDeadlineAt: "2026-12-05 23:59",
+  validFromAt: "2026-10-01 00:00",
+} as const;
+const COUPLE_INFO = {
+  groomName: "Hoàng Hiếu",
+  groomGiftName: "HOÀNG HIẾU",
+  groomFullName: "Trần Xuân Hiếu",
+  brideName: "Kim Liên",
+  brideGiftName: "KIM LIÊN",
+  brideFullName: "Trần Thị Liên",
+  combinedName: "Hoàng Hiếu & Kim Liên",
+} as const;
+const TRANSFER_NOTE = "Mung cuoi Hoang Hieu Kim Lien";
+
+function toIsoWithWeddingTimezone(dateTime: string) {
+  return `${dateTime.replace(" ", "T")}:00+07:00`;
+}
+
+const EVENT_START_ISO = toIsoWithWeddingTimezone(EVENT_TIMES.startAt);
+const EVENT_END_ISO = toIsoWithWeddingTimezone(EVENT_TIMES.endAt);
+const RSVP_DEADLINE_ISO_VALUE = toIsoWithWeddingTimezone(
+  EVENT_TIMES.rsvpDeadlineAt,
+);
+const VALID_FROM_ISO = toIsoWithWeddingTimezone(EVENT_TIMES.validFromAt);
 
 export const EVENT_DATA = {
   site: {
-    baseUrl: "https://wedding.hoho-kimlien.com",
+    baseUrl: SITE_BASE_URL,
     locale: "vi_VN",
     language: "vi",
-    title: "Thiệp mời lễ thành hôn – Hoàng Hiếu & Kim Liên",
+    title: `Thiệp mời lễ thành hôn – ${COUPLE_INFO.combinedName}`,
     titleTemplate: "%s | Đám cưới",
-    siteName: "Đám cưới Hoàng Hiếu & Kim Liên",
+    siteName: `Đám cưới ${COUPLE_INFO.combinedName}`,
     description:
       "Trân trọng kính mời quý vị tham dự lễ thành hôn. Xem chi tiết, lịch trình, địa điểm và xác nhận tham dự.",
-    shareDescription:
-      "Xem chi tiết lễ thành hôn của Hoàng Hiếu & Kim Liên – ngày 2026/12/25 09:00, Ninh Bình.",
+    shareDescription: `Xem chi tiết lễ thành hôn của ${COUPLE_INFO.combinedName} – ngày ${EVENT_TIMES.startAt}, Ninh Bình.`,
     keywords: ["đám cưới", "thiệp mời", "Hoàng Hiếu", "Kim Liên", "Ninh Bình"],
     ogImage: {
       url: "/opengraph-image.png",
-      absoluteUrl: "https://wedding.hoho-kimlien.com/opengraph-image.png",
+      absoluteUrl: `${SITE_BASE_URL}/opengraph-image.png`,
       width: 1200,
       height: 630,
-      alt: "Thiệp mời đám cưới Hoàng Hiếu & Kim Liên",
+      alt: `Thiệp mời đám cưới ${COUPLE_INFO.combinedName}`,
     },
   },
   couple: {
     groom: {
-      name: "Hoàng Hiếu",
-      fullName: "Trần Hoàng Hiếu",
-      title: "Chú rể",
-      giftName: "HOÀNG HIẾU",
+      name: COUPLE_INFO.groomName,
     },
     bride: {
-      name: "Kim Liên",
-      fullName: "Trần Kim Liên",
-      title: "Cô dâu",
-      giftName: "KIM LIÊN",
+      name: COUPLE_INFO.brideName,
     },
-    combinedName: "Hoàng Hiếu & Kim Liên",
+    combinedName: COUPLE_INFO.combinedName,
   },
   event: {
-    name: "Lễ thành hôn Hoàng Hiếu & Kim Liên",
+    name: `Lễ thành hôn ${COUPLE_INFO.combinedName}`,
     title: "Lễ Thành Hôn",
-    startISO: "2026-12-25T09:00:00+07:00",
-    endISO: "2026-12-25T13:30:00+07:00",
-    rsvpDeadlineISO: "2026-12-15T23:59:59+07:00",
-    validFromISO: "2026-05-07T00:00:00+07:00",
-    ceremonyTime: "09:00",
-    timeZone: "Asia/Ho_Chi_Minh",
+    timeZone: WEDDING_TIME_ZONE,
     attendanceMode: "https://schema.org/OfflineEventAttendanceMode",
     status: "https://schema.org/EventScheduled",
     description:
@@ -120,7 +126,8 @@ export const EVENT_DATA = {
     overlay: {
       eyebrow: "Wedding Invitation",
       invitation: "Trân trọng kính mời",
-      description: "Hân hạnh được đón tiếp Quý vị trong ngày trọng đại của chúng tôi",
+      description:
+        "Hân hạnh được đón tiếp Quý vị trong ngày trọng đại của chúng tôi",
       openButton: "Mở Thiệp",
     },
     quickFacts: {
@@ -151,23 +158,19 @@ export const EVENT_DATA = {
       faqTitle: "Câu hỏi thường gặp",
       rsvpChapter: "Chương Kết",
       rsvpTitle: "Xác Nhận Tham Dự",
-      rsvpDescription: "Gia đình rất hân hạnh được đón tiếp quý vị trong ngày trọng đại này.",
+      rsvpDescription:
+        "Gia đình rất hân hạnh được đón tiếp quý vị trong ngày trọng đại này.",
       rsvpSuccessLabel: "XÁC NHẬN ĐÃ GỬI",
       rsvpSuccessMessage: "Gia đình xin cảm ơn quý vị đã xác nhận tham dự.",
     },
     venueDirections: {
-      heading: "Xem chỉ đường từ nhà gái đến nhà trai",
-      description: "Mở Google Maps để xem lộ trình di chuyển chi tiết giữa hai địa điểm",
+      heading: "Xem chỉ đường từ nhà trai đến nhà gái",
+      description:
+        "Mở Google Maps để xem lộ trình di chuyển chi tiết giữa hai địa điểm",
     },
   },
   details: {
     dressCode: "Trang phục lịch sự, áo dài truyền thống được hoan nghênh",
-    dressCodeNote:
-      "Kính mong quý vị tránh mặc trang phục màu trắng để dành sự nổi bật cho cô dâu.",
-    dateTimeNote:
-      "Lễ Thành Hôn sẽ bắt đầu đúng giờ, kính mong quý vị đến sớm 20-30 phút.",
-    rsvpDeadlineNote:
-      "Kính mong quý vị xác nhận tham dự sớm để gia đình chuẩn bị chu đáo.",
   },
   schedule: [
     {
@@ -256,15 +259,21 @@ export const EVENT_DATA = {
   gifts: [
     {
       title: "Mừng cưới chú rể",
-      bank: "TECHCOMBANK",
-      name: "HOÀNG HIẾU",
-      qrData: "STK_HIEU",
+      bank: "VIETCOMBANK",
+      name: COUPLE_INFO.groomGiftName,
+      bankId: "VCB",
+      accountNumber: "1012880445",
+      accountName: COUPLE_INFO.groomFullName,
+      transferNote: TRANSFER_NOTE,
     },
     {
       title: "Mừng cưới cô dâu",
-      bank: "NGÂN HÀNG VIB",
-      name: "KIM LIÊN",
-      qrData: "STK_LIEN",
+      bank: "VIB",
+      name: COUPLE_INFO.brideGiftName,
+      bankId: "VIB",
+      accountNumber: "1012880445",
+      accountName: COUPLE_INFO.brideFullName,
+      transferNote: TRANSFER_NOTE,
     },
   ],
   faq: [
@@ -275,8 +284,7 @@ export const EVENT_DATA = {
     },
     {
       question: "Hạn xác nhận tham dự là khi nào?",
-      answer:
-        "Kính mong quý vị xác nhận tham dự trước ngày 2026/12/15 23:59 để gia đình chúng tôi có thể chuẩn bị chu đáo.",
+      answer: `Kính mong quý vị xác nhận tham dự trước ngày ${EVENT_TIMES.rsvpDeadlineAt} để gia đình chúng tôi có thể chuẩn bị chu đáo.`,
     },
   ] satisfies FAQItem[],
   travel: [
@@ -291,37 +299,11 @@ export const EVENT_DATA = {
       },
     },
   ] satisfies TravelItem[],
-  contacts: [
-    {
-      label: "Liên hệ gia đình Hoàng Hiếu",
-      hint: "+84 335497969",
-      href: "tel:+84962090819",
-      icon: "phone" as const,
-    },
-    {
-      label: "Liên hệ gia đình Kim Liên",
-      hint: "+84 335497969",
-      href: "tel:+84962090819",
-      icon: "phone" as const,
-    },
-  ],
   media: {
     heroImage: {
       src: "/images/hero/HAR01404.jpg",
       alt: "Ảnh cặp đôi - Hero background",
     },
-    galleryTeaserItems: [
-      {
-        src: "/images/gallery/couple-1.svg",
-        alt: "Ảnh minh hoạ cặp đôi",
-        aspectRatio: "portrait" as const,
-      },
-      {
-        src: "/images/gallery/couple-2.svg",
-        alt: "Ảnh minh hoạ cặp đôi",
-        aspectRatio: "portrait" as const,
-      },
-    ] satisfies GalleryTeaserItem[],
   },
   calendar: {
     ctaLabel: "Thêm vào lịch",
@@ -370,7 +352,8 @@ export const EVENT_DATA = {
       attendanceStatus: "Please choose a valid attendance status.",
       attendeeCount: "Please choose a guest count between 0 and 10.",
       guestMessage: "Please keep your message under 500 characters.",
-      submitFailed: "Chưa gửi được xác nhận. Vui lòng thử lại sau hoặc liên hệ gia đình.",
+      submitFailed:
+        "Chưa gửi được xác nhận. Vui lòng thử lại sau hoặc liên hệ gia đình.",
       serverSubmitFailed: "Unable to submit RSVP right now.",
     },
   },
@@ -378,49 +361,24 @@ export const EVENT_DATA = {
 
 export const COUPLE = EVENT_DATA.couple;
 export const EVENT_CONFIG = {
-  weddingDateISO: EVENT_DATA.event.startISO,
-  rsvpDeadlineISO: EVENT_DATA.event.rsvpDeadlineISO,
-  ceremonyTime: EVENT_DATA.event.ceremonyTime,
+  weddingDateISO: EVENT_START_ISO,
+  weddingEndISO: EVENT_END_ISO,
+  validFromISO: VALID_FROM_ISO,
 };
 export const COUPLE_NAMES = EVENT_DATA.couple.combinedName;
-export const WEDDING_DATE_ISO = EVENT_DATA.event.startISO;
-export const RSVP_DEADLINE_ISO = EVENT_DATA.event.rsvpDeadlineISO;
+export const WEDDING_DATE_ISO = EVENT_START_ISO;
+export const RSVP_DEADLINE_ISO = RSVP_DEADLINE_ISO_VALUE;
 export const VENUE_GROOM = EVENT_DATA.venues.groom;
 export const VENUE_BRIDE = EVENT_DATA.venues.bride;
-export const VENUE = VENUE_GROOM;
-export const EVENT_DETAILS: EventDetail[] = [
-  {
-    label: EVENT_DATA.copy.quickFacts.venueLabel,
-    value: VENUE_GROOM.venueName,
-    supportingText: VENUE_GROOM.addressLines.join(", "),
-  },
-  {
-    label: "Ngày & Giờ",
-    value: EVENT_DATA.event.startISO,
-    supportingText: EVENT_DATA.details.dateTimeNote,
-  },
-  {
-    label: EVENT_DATA.copy.quickFacts.rsvpDeadlineLabel,
-    value: EVENT_DATA.event.rsvpDeadlineISO,
-    supportingText: EVENT_DATA.details.rsvpDeadlineNote,
-  },
-  {
-    label: EVENT_DATA.copy.quickFacts.dressCodeLabel,
-    value: EVENT_DATA.details.dressCode,
-    supportingText: EVENT_DATA.details.dressCodeNote,
-  },
-];
 export const SCHEDULE_ITEMS: ScheduleItem[] = [...EVENT_DATA.schedule];
 export const FAQ_DATA: FAQItem[] = [...EVENT_DATA.faq];
 export const CALENDAR_EVENT = {
   title: `${EVENT_DATA.event.title} ${EVENT_DATA.couple.combinedName}`,
   location: `${VENUE_GROOM.venueName}, ${VENUE_GROOM.addressLines.join(", ")}`,
-  startTime: EVENT_DATA.event.startISO,
-  endTime: EVENT_DATA.event.endISO,
+  startTime: EVENT_START_ISO,
+  endTime: EVENT_END_ISO,
   description: EVENT_DATA.event.description,
   ctaLabel: EVENT_DATA.calendar.ctaLabel,
 };
 export const TRAVEL_GUIDANCE: TravelItem[] = [...EVENT_DATA.travel];
-export const CONTACT_ACTIONS = [...EVENT_DATA.contacts];
 export const HERO_IMAGE = EVENT_DATA.media.heroImage;
-export const GALLERY_TEASER_ITEMS: GalleryTeaserItem[] = [...EVENT_DATA.media.galleryTeaserItems];
