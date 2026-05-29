@@ -25,8 +25,6 @@ Expected UI primitives:
 
 These primitives will be consumed by:
 - `src/components/sections/`
-- `src/components/forms/`
-- `src/components/admin/`
 
 ## Naming Conventions
 

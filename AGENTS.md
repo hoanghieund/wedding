@@ -1,18 +1,31 @@
-# Hướng dẫn nhanh cho OpenCode
+# Repository Guidelines
 
-- **Chạy dự án**: `npm run dev` (khởi động Next.js 16 dev server trên http://localhost:3000).
-- **Kiểm tra**: `npm run build`, `npm run lint`, `npx tsc --noEmit` – các lệnh này luôn phải chạy sạch trước khi commit.
-- **Thư mục mã**: `src/app/` (App Router), `src/components/sections/` (các UI component), `src/lib/` (logic nghiệp vụ, DB, utils).
-- **File không thay**: `src/app/layout.tsx`, `src/app/page.tsx`, `src/app/globals.css`, `src/lib/db/client.ts`, `prisma/schema.prisma`, `next.config.ts`, `package.json`.
-- **Prisma singleton**: dùng `src/lib/db/client.ts` để tạo `PrismaClient` một lần (`globalThis.prismaGlobal`). Các query DB nên import `prisma` từ file này.
-- **Biến môi trường**: `.env.example` có `DATABASE_URL`, `ADMIN_SECRET`, `JWT_SECRET`. Không bao giờ commit giá trị thực tế; `.gitignore` đã bỏ qua `.env*`.
-- **Chạy Prisma**: dùng `node node_modules/.bin/prisma …` (do RTK hook) thay cho `npx prisma`.
-- **Tailwind**: v4 đã được cấu hình; dùng system‑font stack (`--font-serif`, `--font-sans`) và class Tailwind tiêu chuẩn.
-- **Kiểm tra lint**: ESLint cấu hình `@next/eslint-plugin-next`; chạy `npm run lint` để đảm bảo không có lỗi.
-- **Kiểm tra TypeScript**: dự án ở chế độ `strict`; luôn chạy `npx tsc --noEmit` sau khi thay đổi.
-- **Kiểm tra build**: `npm run build` phải hoàn thành không lỗi; nếu có lỗi, kiểm tra lại TypeScript và ESLint trước.
-- **Quy tắc commit**: Không commit các file `.env*`, `prisma/schema.prisma` khi chưa có migration; chỉ commit mã nguồn và tài liệu.
-- **Thêm tính năng mới**: tạo file/component mới dưới `src/components/sections/` và cập nhật import trong `src/app/page.tsx`; đừng quên cập nhật export nếu cần.
-- **Kiểm tra cấu trúc**: `src/lib/` chứa utils, constants (`event-data.ts`), formatters (`date-format.ts`); tuân thủ naming: snake_case cho DB, camelCase cho JS/TS.
-- **Debug UI**: nếu component không render, kiểm tra `export default`/`export` đúng, và nhập đúng path (`@/components/...`).
-- **Môi trường Vercel**: các biến môi trường được cấu hình trong dashboard; local dev cần sao chép `.env.example` thành `.env.local` với giá trị hợp lệ.
+## Project Structure & Module Organization
+
+This is a Next.js 16 wedding site using the App Router. Main routes and metadata live in `src/app/`. Reusable UI is split between `src/components/sections/` for page sections, `src/components/ui/` for shared primitives, and `src/components/seo/` for structured data. Business logic and utilities live in `src/lib/`, including RSVP validation in `src/lib/rsvp.ts`, Google Sheets integration in `src/lib/google-sheets.ts`, constants in `src/lib/constants/`, and formatters in `src/lib/formatters/`. Tests are colocated beside source as `*.test.ts`. Static assets live in `public/`, especially `public/images/` and `public/audio/`. Project notes and UI docs live in `docs/`.
+
+## Build, Test, and Development Commands
+
+- `npm run dev` starts the local Next.js dev server.
+- `npm test` runs the Vitest test suite.
+- `npm run lint` runs ESLint with the Next.js config.
+- `npx tsc --noEmit` checks TypeScript without writing output.
+- `npm run build` creates a production build and must pass before release.
+
+When operating through Codex in this workspace, prefix shell commands with `rtk`, for example `rtk npm test`.
+
+## Coding Style & Naming Conventions
+
+Use TypeScript, React function components, and Tailwind CSS v4 utility classes. Keep code simple and module-local unless a shared helper is already established. Use `PascalCase` for component files and component names, `camelCase` for variables/functions, and kebab-case only for route or document slugs. Prefer named exports for utilities and default exports only where the framework expects them.
+
+## Testing Guidelines
+
+Vitest is the test framework. Name tests `*.test.ts` and colocate them near the unit under test, such as `src/lib/rsvp.test.ts` or `src/app/api/rsvp/route.test.ts`. Add focused tests for validation, API behavior, and data formatting changes. Run `npm test`, `npx tsc --noEmit`, `npm run lint`, and `npm run build` before handing off.
+
+## Security & Configuration Tips
+
+Do not commit real secrets. Local configuration belongs in `.env.local`; examples belong in `.env.example`. RSVP persistence currently uses Google Sheets, so required variables are `GOOGLE_SHEETS_CLIENT_EMAIL`, `GOOGLE_SHEETS_PRIVATE_KEY`, `GOOGLE_SHEETS_SPREADSHEET_ID`, and optional `GOOGLE_SHEETS_SHEET_NAME`.
+
+## Commit & Pull Request Guidelines
+
+Use concise English commit messages with a conventional prefix, for example `fix: increase gallery mobile controls` or `chore: update docs`. Pull requests should include a short summary, verification commands run, linked issue or context, and screenshots for visible UI changes.

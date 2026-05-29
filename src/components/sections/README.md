@@ -8,8 +8,8 @@
 - Event details and schedule sections
 - Venue information and map display
 - FAQ section
-- Photo gallery section (optional)
-- Travel information section (optional)
+- Photo gallery teaser and provider
+- Travel, gift, RSVP, and calendar-support sections
 
 ## Architecture Boundaries
 
@@ -20,13 +20,12 @@
 
 ## Usage Pattern
 
-Expected section components:
-- `HeroSection.tsx` - hero banner with event title (Story 2.1)
-- `EventDetailsSection.tsx` - event date/time/schedule (Story 2.2)
-- `VenueSection.tsx` - venue info and map (Story 2.3)
-- `FaqSection.tsx` - frequently asked questions (Story 2.4)
-- `GallerySection.tsx` - photo gallery (Story 2.6, optional)
-- `TravelSection.tsx` - travel info (Story 2.6, optional)
+Current section components include:
+- `HeroSection.tsx` - cinematic hero with event title
+- `EventDetailsSection.tsx` and `ScheduleSection.tsx` - date/time and wedding flow
+- `VenueSection.tsx` - venue info and map action
+- `GalleryProvider.tsx` and `GalleryTeaserSection.tsx` - folder-based gallery slideshow
+- `GiftSection.tsx`, `TravelSection.tsx`, `FaqSection.tsx`, `ContactSection.tsx`, and `RsvpBand.tsx`
 
 ## Naming Conventions
 

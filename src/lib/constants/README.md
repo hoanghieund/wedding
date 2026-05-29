@@ -15,14 +15,12 @@
 - Constants only; no runtime side effects
 - Avoid mixing business logic with constant definitions
 - Keep constants grouped by concern if the module grows
-- Use constants to reduce duplication across guest/admin features
+- Use constants to reduce duplication across guest-facing features
 
 ## Usage Pattern
 
-Expected constant modules:
-- `site.ts` - site name, URLs, default metadata values
-- `rsvp.ts` - attendance status values, limits, defaults
-- `admin.ts` - admin route constants or labels if needed
+Current constant modules:
+- `event-data.ts` - event details, section copy, RSVP labels, validation limits, sheet metadata, contact links, and gallery labels
 
 ## Naming Conventions
 
@@ -33,5 +31,4 @@ Expected constant modules:
 ## Related Modules
 
 - `src/lib/metadata/` - site metadata defaults
-- `src/lib/validation/` - shared limits and rules
 - `src/components/*` - presentation values and labels

@@ -15,14 +15,11 @@
 - Guest-facing informational content should be static-first
 - Metadata generation supports social sharing and SEO
 - Keep metadata concerns separate from page rendering logic
-- Admin pages typically do not need public-facing share metadata
+- Metadata is only needed for the public guest-facing site.
 
 ## Usage Pattern
 
-Expected metadata modules:
-- `site.ts` - shared site-wide metadata constants
-- `home.ts` - landing page metadata builder (Story 2.5)
-- `og.ts` - Open Graph image metadata helpers
+Current metadata lives in `src/app/layout.tsx`, `src/app/opengraph-image.tsx`, `src/app/sitemap.ts`, and `src/app/robots.ts`.
 
 Metadata should support:
 - Home/landing page title and description

@@ -285,7 +285,7 @@ Mỗi section hoạt động như một “chapter” hoặc “scene” trong m
 ## 11. Out of Scope
 
 - Thay đổi dữ liệu sự kiện
-- Thay đổi logic RSVP backend/API/Prisma
+- Thay đổi logic RSVP backend/API
 - Viết lại gallery engine
 - Thêm feature mới ngoài redesign UI/UX hiện có
 
