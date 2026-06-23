@@ -4,11 +4,8 @@ import Image from "next/image";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useInView } from "@/hooks/useInView";
 
-type GalleryCategory = {
-  slug: string;
-  name: string;
-  images: { src: string; alt: string }[];
-};
+import type { GalleryCategory } from "@/lib/gallery-data";
+
 
 type AnimationPreset = {
   name: string;

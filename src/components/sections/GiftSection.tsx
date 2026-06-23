@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useInView } from "@/hooks/useInView";
 import { EVENT_DATA } from "@/lib/constants/event-data";
-import { buildVietQrImageUrl } from "@/lib/vietqr";
+
 
 export default function GiftSection() {
   const { ref, isInView } = useInView();
@@ -37,7 +37,7 @@ export default function GiftSection() {
             <p className="mb-4 section-label text-[10px]">{account.title}</p>
             <div className="mx-auto inline-flex rounded-2xl bg-white p-3">
               <Image
-                src={buildVietQrImageUrl(account)}
+                src={`https://img.vietqr.io/image/${account.bankId}-${account.accountNumber}-compact2.png?addInfo=${encodeURIComponent(account.transferNote)}&accountName=${encodeURIComponent(account.accountName)}`}
                 alt={`QR ${account.title}`}
                 width={240}
                 height={284}

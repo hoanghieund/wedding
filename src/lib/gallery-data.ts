@@ -2,7 +2,7 @@ import { cache } from "react";
 import fs from "fs/promises";
 import path from "path";
 
-type GalleryCategory = {
+export type GalleryCategory = {
   slug: string;
   name: string;
   images: Array<{ src: string; alt: string }>;
