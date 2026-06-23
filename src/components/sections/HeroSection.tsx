@@ -10,7 +10,7 @@ import { formatDateTime } from "@/lib/formatters/date-format";
 const hiddenClass = "reveal-hidden";
 
 export default function HeroSection() {
-  const { ref, isInView } = useInView({ threshold: 0.2 });
+  const { ref, isInView } = useInView(0.2);
 
   return (
     <section

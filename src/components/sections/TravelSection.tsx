@@ -4,7 +4,7 @@ import { EVENT_DATA, TRAVEL_GUIDANCE } from "@/lib/constants/event-data";
 import { useInView } from "@/hooks/useInView";
 
 export function TravelSection() {
-  const { ref, isInView } = useInView({ threshold: 0.1 });
+  const { ref, isInView } = useInView(0.1);
 
   if (!TRAVEL_GUIDANCE || TRAVEL_GUIDANCE.length === 0) {
     return null;

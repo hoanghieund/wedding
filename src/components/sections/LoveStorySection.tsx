@@ -14,7 +14,7 @@ const STAGGER_CLASSES = [
 ] as const;
 
 export default function LoveStorySection() {
-  const { ref, isInView } = useInView({ threshold: 0.1 });
+  const { ref, isInView } = useInView(0.1);
   const sectionRef = ref as React.RefObject<HTMLElement>;
 
   return (

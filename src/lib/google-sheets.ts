@@ -19,11 +19,6 @@ const getRequiredEnv = (name: string) => {
   return value;
 };
 
-const getSheetRange = (sheetName: string) => {
-  const columnCount = EVENT_DATA.rsvp.sheetColumns.length;
-  const endColumn = String.fromCharCode("A".charCodeAt(0) + columnCount - 1);
-  return `${sheetName}!A:${endColumn}`;
-};
 
 export function getGoogleSheetsConfig(): GoogleSheetsConfig {
   return {
@@ -45,7 +40,7 @@ export async function appendRsvpSubmissionToSheet(submission: RsvpSubmission) {
 
   await sheets.spreadsheets.values.append({
     spreadsheetId: config.spreadsheetId,
-    range: getSheetRange(config.sheetName),
+    range: `${config.sheetName}!A:F`,
     valueInputOption: "RAW",
     insertDataOption: "INSERT_ROWS",
     requestBody: {

@@ -12,24 +12,7 @@ const DATE_TIME_FORMAT_OPTIONS = {
 
 export function formatDateTime(isoStringOrDate: string | Date): string {
   const date = isoStringOrDate instanceof Date ? isoStringOrDate : new Date(isoStringOrDate);
-  const parts = new Intl.DateTimeFormat("en-CA", DATE_TIME_FORMAT_OPTIONS)
-    .formatToParts(date)
-    .reduce<Record<string, string>>((acc, part) => {
-      if (part.type !== "literal") acc[part.type] = part.value;
-      return acc;
-    }, {});
-
-  return `${parts.year}/${parts.month}/${parts.day} ${parts.hour}:${parts.minute}`;
+  return new Intl.DateTimeFormat("en-CA", DATE_TIME_FORMAT_OPTIONS).format(date).replace(/-/g, "/");
 }
 
 
-export function formatTime(isoString: string): string {
-  const date = new Date(isoString);
-
-  return date.toLocaleTimeString("vi-VN", {
-    timeZone: EVENT_DATA.event.timeZone,
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  });
-}

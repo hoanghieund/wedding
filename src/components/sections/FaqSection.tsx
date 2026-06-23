@@ -6,7 +6,7 @@ import { EVENT_DATA, FAQ_DATA } from "@/lib/constants/event-data";
 
 export function FaqSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
-  const { ref, isInView } = useInView({ threshold: 0.1 });
+  const { ref, isInView } = useInView(0.1);
 
   const toggleFaq = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);

@@ -12,16 +12,8 @@ export function buildGoogleCalendarUrl(event: CalendarEventInfo): string {
   const baseUrl = "https://www.google.com/calendar/render?action=TEMPLATE";
 
   // Convert ISO 8601 to Google Calendar format (YYYYMMDDTHHmmssZ)
-  const formatDateForGoogle = (isoString: string): string => {
-    const date = new Date(isoString);
-    const year = date.getUTCFullYear();
-    const month = String(date.getUTCMonth() + 1).padStart(2, "0");
-    const day = String(date.getUTCDate()).padStart(2, "0");
-    const hours = String(date.getUTCHours()).padStart(2, "0");
-    const minutes = String(date.getUTCMinutes()).padStart(2, "0");
-    const seconds = String(date.getUTCSeconds()).padStart(2, "0");
-    return `${year}${month}${day}T${hours}${minutes}${seconds}Z`;
-  };
+  const formatDateForGoogle = (isoString: string): string =>
+    new Date(isoString).toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
 
   const params = new URLSearchParams({
     text: event.title,

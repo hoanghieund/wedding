@@ -36,7 +36,7 @@ type GalleryTeaserSectionProps = {
 };
 
 export default function GalleryTeaserSection({ categories }: GalleryTeaserSectionProps) {
-  const { ref, isInView } = useInView({ threshold: 0.1 });
+  const { ref, isInView } = useInView(0.1);
   const sectionRef = ref as React.RefObject<HTMLElement>;
 
   const [selectedSlug, setSelectedSlug] = useState<string>(categories[0]?.slug ?? "");

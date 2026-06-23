@@ -5,7 +5,7 @@ import { formatDateTime } from "@/lib/formatters/date-format";
 import { useInView } from "@/hooks/useInView";
 
 export function QuickFactsBand() {
-  const { ref, isInView } = useInView({ threshold: 0.2 });
+  const { ref, isInView } = useInView(0.2);
   const quickFacts = [
     {
       icon: (
