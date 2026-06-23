@@ -28,16 +28,8 @@ const ANIMATIONS: AnimationPreset[] = [
 
 const SLIDE_INTERVAL_MS = 4000;
 
-const isEditableTarget = (target: EventTarget | null) => {
-  if (!(target instanceof HTMLElement)) return false;
-
-  return (
-    target instanceof HTMLInputElement ||
-    target instanceof HTMLTextAreaElement ||
-    target instanceof HTMLSelectElement ||
-    target.isContentEditable
-  );
-};
+const isEditableTarget = (target: EventTarget | null) =>
+  target instanceof HTMLElement && (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName));
 
 type GalleryTeaserSectionProps = {
   categories: GalleryCategory[];

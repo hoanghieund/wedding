@@ -370,8 +370,8 @@ export const WEDDING_DATE_ISO = EVENT_START_ISO;
 export const RSVP_DEADLINE_ISO = RSVP_DEADLINE_ISO_VALUE;
 export const VENUE_GROOM = EVENT_DATA.venues.groom;
 export const VENUE_BRIDE = EVENT_DATA.venues.bride;
-export const SCHEDULE_ITEMS: ScheduleItem[] = [...EVENT_DATA.schedule];
-export const FAQ_DATA: FAQItem[] = [...EVENT_DATA.faq];
+export const SCHEDULE_ITEMS: readonly ScheduleItem[] = EVENT_DATA.schedule;
+export const FAQ_DATA: readonly FAQItem[] = EVENT_DATA.faq;
 export const CALENDAR_EVENT = {
   title: `${EVENT_DATA.event.title} ${EVENT_DATA.couple.combinedName}`,
   location: `${VENUE_GROOM.venueName}, ${VENUE_GROOM.addressLines.join(", ")}`,
@@ -380,5 +380,5 @@ export const CALENDAR_EVENT = {
   description: EVENT_DATA.event.description,
   ctaLabel: EVENT_DATA.calendar.ctaLabel,
 };
-export const TRAVEL_GUIDANCE: TravelItem[] = [...EVENT_DATA.travel];
+export const TRAVEL_GUIDANCE: readonly TravelItem[] = EVENT_DATA.travel;
 export const HERO_IMAGE = EVENT_DATA.media.heroImage;

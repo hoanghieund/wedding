@@ -5,11 +5,12 @@ import FloatingControls from "@/components/sections/FloatingControls";
 import EnterInvitationOverlay from "@/components/sections/EnterInvitationOverlay";
 import { FAQStructuredData } from "@/components/seo/StructuredData";
 import { EVENT_CONFIG, EVENT_DATA, VENUE_GROOM, VENUE_BRIDE } from "@/lib/constants/event-data";
+import { getGalleryData } from "@/lib/gallery-data";
 
 const LoveStorySection = dynamic(() => import("@/components/sections/LoveStorySection"), {
   loading: () => <div className="h-40" />,
 });
-const GalleryProvider = dynamic(() => import("@/components/sections/GalleryProvider"), {
+const GalleryTeaserSection = dynamic(() => import("@/components/sections/GalleryTeaserSection"), {
   loading: () => <div className="h-40" />,
 });
 const ScheduleSection = dynamic(() => import("@/components/sections/ScheduleSection"), {
@@ -33,8 +34,7 @@ const FaqSection = dynamic(() => import("@/components/sections/FaqSection").then
 const RsvpBand = dynamic(() => import("@/components/sections/RsvpBand").then(m => ({ default: m.RsvpBand })), {
   loading: () => <div className="h-40" />,
 });
-
-export default function Home() {
+export default async function Home() {
   const eventStructuredData = {
     "@context": "https://schema.org",
     "@type": "Event",
@@ -72,6 +72,7 @@ export default function Home() {
       name: EVENT_DATA.couple.combinedName,
     },
   };
+  const categories = await getGalleryData();
 
   return (
     <>
@@ -88,8 +89,7 @@ export default function Home() {
 
         <main className="mx-auto w-full max-w-6xl space-y-20 px-4 py-20 sm:space-y-24 sm:px-6 sm:py-24 lg:space-y-32 lg:px-8 lg:py-32">
           <LoveStorySection />
-          <GalleryProvider />
-          <ScheduleSection />
+          <GalleryTeaserSection categories={categories} />
           <WeddingPartySection />
           <GiftSection />
           <VenueSection groomVenue={VENUE_GROOM} brideVenue={VENUE_BRIDE} />

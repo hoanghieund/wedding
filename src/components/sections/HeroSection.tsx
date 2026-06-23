@@ -5,7 +5,7 @@ import CountdownTimer from "@/components/ui/CountdownTimer";
 import ParticleCanvas from "@/components/ui/ParticleCanvas";
 import { useInView } from "@/hooks/useInView";
 import { COUPLE, EVENT_CONFIG, EVENT_DATA, HERO_IMAGE } from "@/lib/constants/event-data";
-import { formatEventDate } from "@/lib/formatters/date-format";
+import { formatDateTime } from "@/lib/formatters/date-format";
 
 const hiddenClass = "reveal-hidden";
 
@@ -66,7 +66,7 @@ export default function HeroSection() {
                   {EVENT_DATA.event.title}
                 </p>
                 <p className="text-xl leading-7 text-[var(--text-primary)] sm:text-2xl sm:leading-9">
-                  <time dateTime={EVENT_CONFIG.weddingDateISO}>{formatEventDate(EVENT_CONFIG.weddingDateISO)}</time>
+                  <time dateTime={EVENT_CONFIG.weddingDateISO}>{formatDateTime(EVENT_CONFIG.weddingDateISO)}</time>
                 </p>
               </div>
             </div>

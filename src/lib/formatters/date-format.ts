@@ -22,9 +22,6 @@ export function formatDateTime(isoStringOrDate: string | Date): string {
   return `${parts.year}/${parts.month}/${parts.day} ${parts.hour}:${parts.minute}`;
 }
 
-export function formatEventDate(isoString: string): string {
-  return formatDateTime(isoString);
-}
 
 export function formatTime(isoString: string): string {
   const date = new Date(isoString);

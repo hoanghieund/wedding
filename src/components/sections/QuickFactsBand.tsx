@@ -1,7 +1,7 @@
 "use client";
 
 import { EVENT_DATA, RSVP_DEADLINE_ISO, VENUE_GROOM, WEDDING_DATE_ISO } from "@/lib/constants/event-data";
-import { formatEventDate } from "@/lib/formatters/date-format";
+import { formatDateTime } from "@/lib/formatters/date-format";
 import { useInView } from "@/hooks/useInView";
 
 export function QuickFactsBand() {
@@ -14,7 +14,7 @@ export function QuickFactsBand() {
         </svg>
       ),
       label: EVENT_DATA.copy.quickFacts.dateLabel,
-      value: formatEventDate(WEDDING_DATE_ISO),
+      value: formatDateTime(WEDDING_DATE_ISO),
     },
     {
       icon: (
@@ -42,7 +42,7 @@ export function QuickFactsBand() {
         </svg>
       ),
       label: EVENT_DATA.copy.quickFacts.rsvpDeadlineLabel,
-      value: formatEventDate(RSVP_DEADLINE_ISO),
+      value: formatDateTime(RSVP_DEADLINE_ISO),
     },
   ];
 
