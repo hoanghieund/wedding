@@ -3,6 +3,7 @@ import HeroSection from "@/components/sections/HeroSection";
 import { QuickFactsBand } from "@/components/sections/QuickFactsBand";
 import FloatingControls from "@/components/sections/FloatingControls";
 import EnterInvitationOverlay from "@/components/sections/EnterInvitationOverlay";
+import { FooterSection } from "@/components/sections/FooterSection";
 import { FAQStructuredData } from "@/components/seo/StructuredData";
 import { EVENT_CONFIG, EVENT_DATA, VENUE_GROOM, VENUE_BRIDE } from "@/lib/constants/event-data";
 import { getGalleryData } from "@/lib/gallery-data";
@@ -87,7 +88,7 @@ export default async function Home() {
         <FloatingControls />
         <EnterInvitationOverlay />
 
-        <main className="mx-auto w-full max-w-6xl space-y-20 px-4 py-20 sm:space-y-24 sm:px-6 sm:py-24 lg:space-y-32 lg:px-8 lg:py-32">
+        <main id="main-content" className="mx-auto w-full max-w-6xl space-y-20 px-4 py-20 sm:space-y-24 sm:px-6 sm:py-24 lg:space-y-32 lg:px-8 lg:py-32">
           <LoveStorySection />
           <GalleryTeaserSection categories={categories} />
           <WeddingPartySection />
@@ -101,6 +102,7 @@ export default async function Home() {
         </main>
 
         <RsvpBand />
+        <FooterSection />
       </div>
     </>
   );

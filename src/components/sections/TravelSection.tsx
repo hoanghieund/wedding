@@ -18,9 +18,6 @@ export function TravelSection() {
       className="space-y-8 rounded-[1.75rem] transition-all duration-500"
     >
       <div className="space-y-2">
-        <p className={`section-label ${isInView ? "animate-fade-down" : "reveal-hidden"}`}>
-          {EVENT_DATA.copy.sections.travelChapter}
-        </p>
         <h2 id="travel-heading" className={`chapter-title text-3xl sm:text-4xl ${isInView ? "animate-fade-up" : "reveal-hidden"}`}>
           {EVENT_DATA.copy.sections.travelTitle}
         </h2>

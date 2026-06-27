@@ -17,7 +17,7 @@ export default function HeroSection() {
       ref={ref}
       id="hero"
       aria-labelledby="hero-heading"
-      className="relative min-h-screen w-full overflow-hidden"
+      className="relative min-h-dvh w-full overflow-hidden"
     >
       <Image
         src={HERO_IMAGE.src}
@@ -31,7 +31,7 @@ export default function HeroSection() {
 
       <div className="absolute inset-0 bg-gradient-to-b from-[#0a0e27]/60 via-transparent to-[#0a0e27]/90" />
 
-      <div className="relative flex min-h-screen items-center justify-center">
+      <div className="relative flex min-h-dvh items-center justify-center">
         <div className="z-10 mx-auto w-full max-w-4xl px-6 text-center sm:px-10 lg:px-14">
           <div className="space-y-10 lg:space-y-12">
             <div className="space-y-5 lg:space-y-6">
@@ -90,16 +90,6 @@ export default function HeroSection() {
         </div>
       </div>
 
-      <div
-        className={`absolute bottom-8 left-1/2 -translate-x-1/2 ${
-          isInView ? "animate-fade-up stagger-5" : "opacity-0"
-        }`}
-      >
-        <div className="flex flex-col items-center gap-2 text-[var(--accent-soft)]/60">
-          <span className="font-mono text-[10px] uppercase tracking-[0.3em]">{EVENT_DATA.copy.hero.scrollLabel}</span>
-          <div className="h-10 w-px animate-pulse bg-gradient-to-b from-[var(--accent-soft)]/60 to-transparent" />
-        </div>
-      </div>
     </section>
   );
 }

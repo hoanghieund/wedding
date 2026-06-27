@@ -120,7 +120,6 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
       className="space-y-12"
     >
       <div className={`space-y-3 text-center ${isInView ? "animate-fade-up" : "reveal-hidden"}`}>
-        <p className="section-label">Chương 4</p>
         <h2
           id="gallery-heading"
           className="chapter-title text-4xl sm:text-5xl"

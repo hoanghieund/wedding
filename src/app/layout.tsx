@@ -81,6 +81,12 @@ export default function RootLayout({
       lang={EVENT_DATA.site.language}
       className={`h-full antialiased ${playfairDisplay.variable} ${cormorantGaramond.variable} ${greatVibes.variable} ${jetBrainsMono.variable}`}
     >
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:inset-x-0 focus:top-0 focus:z-[9999] focus:block focus:w-auto focus:bg-[var(--accent)] focus:px-6 focus:py-3 focus:text-center focus:text-sm focus:text-[var(--bg)]"
+      >
+        Chuyển đến nội dung chính
+      </a>
       <body className="min-h-full flex flex-col bg-[var(--bg)] font-sans text-[var(--text-primary)]">{children}</body>
     </html>
   );

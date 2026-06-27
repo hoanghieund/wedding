@@ -26,7 +26,6 @@ export function FaqSection() {
       }`}
     >
       <div className="space-y-2">
-        <p className="section-label">{EVENT_DATA.copy.sections.faqChapter}</p>
         <h2 id="faq-heading" className="chapter-title text-3xl sm:text-4xl">
           {EVENT_DATA.copy.sections.faqTitle}
         </h2>

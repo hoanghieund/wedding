@@ -17,7 +17,6 @@
   --font-script: 'Great Vibes', 'Dancing Script', cursive;
   --font-mono: 'JetBrains Mono', 'Courier New', monospace;
 }
-
 @theme {
   --font-sans: var(--font-body);
   --font-serif: var(--font-display);
@@ -26,16 +25,12 @@
 * {
   box-sizing: border-box;
 }
-
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  min-height: 100vh;
-  background:
-    radial-gradient(circle at top, rgba(212, 165, 116, 0.08), transparent 32%),
-    linear-gradient(180deg, #0a0e27 0%, #11182b 45%, #0d1323 100%);
+  background: var(--bg);
   color: var(--text-primary);
   font-family: var(--font-body);
   line-height: 1.6;
@@ -59,10 +54,12 @@ body {
 .chapter-title {
   font-family: var(--font-display);
   color: var(--accent);
+  text-wrap: balance;
 }
 
 .copy-muted {
   color: var(--text-secondary);
+  max-width: 65ch;
 }
 
 .font-script {

@@ -189,7 +189,6 @@ export function VenueSection({ groomVenue, brideVenue }: VenueSectionProps) {
       className="space-y-10"
     >
       <div className="space-y-3 text-center">
-        <p className={`section-label ${isInView ? "animate-fade-down" : "reveal-hidden"}`}>Chương 8</p>
         <h2 id="venue-heading" className={`chapter-title text-4xl sm:text-5xl ${isInView ? "animate-fade-up" : "reveal-hidden"}`}>
           Nơi hân hạnh đón tiếp quý vị
         </h2>

@@ -16,9 +16,6 @@ export default function GiftSection() {
       className="space-y-12"
     >
       <div className="space-y-3 text-center">
-        <p className={`section-label ${isInView ? "animate-fade-down" : "reveal-hidden"}`}>
-          {EVENT_DATA.copy.sections.giftChapter}
-        </p>
         <h2 id="gift-heading" className={`chapter-title text-4xl sm:text-5xl ${isInView ? "animate-fade-up" : "reveal-hidden"}`}>
           {EVENT_DATA.copy.sections.giftTitle}
         </h2>
