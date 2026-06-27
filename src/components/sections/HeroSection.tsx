@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import CountdownTimer from "@/components/ui/CountdownTimer";
-import ParticleCanvas from "@/components/ui/ParticleCanvas";
 import { useInView } from "@/hooks/useInView";
 import { COUPLE, EVENT_CONFIG, EVENT_DATA, HERO_IMAGE } from "@/lib/constants/event-data";
 import { formatDateTime } from "@/lib/formatters/date-format";
@@ -25,7 +24,7 @@ export default function HeroSection() {
         sizes="100vw"
         className="object-cover opacity-25"
       />
-      <ParticleCanvas />
+
 
       {/* Deep vignette overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#0a0e27]/70 via-[#0a0e27]/20 to-[#0a0e27]/95" />

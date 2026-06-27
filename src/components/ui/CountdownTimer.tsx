@@ -6,10 +6,10 @@ import { WEDDING_DATE_ISO } from "@/lib/constants/event-data";
 const TARGET_DATE = new Date(WEDDING_DATE_ISO).getTime();
 
 type TimeLeft = {
-  days: string;
-  hours: string;
-  mins: string;
-  secs: string;
+  days: number;
+  hours: number;
+  mins: number;
+  secs: number;
 };
 
 function calculateTimeLeft(): TimeLeft {
@@ -19,15 +19,13 @@ function calculateTimeLeft(): TimeLeft {
   const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
   const mins = Math.floor((difference / (1000 * 60)) % 60);
   const secs = Math.floor((difference / 1000) % 60);
-
   return {
-    days: String(days).padStart(2, "0"),
-    hours: String(hours).padStart(2, "0"),
-    mins: String(mins).padStart(2, "0"),
-    secs: String(secs).padStart(2, "0"),
+    days,
+    hours,
+    mins,
+    secs,
   };
 }
-
 const countdownItems = [
   { key: "days", label: "NGÀY" },
   { key: "hours", label: "GIỜ" },
@@ -55,7 +53,7 @@ export default function CountdownTimer() {
           style={{ animationDelay: `${(index + 5) * 100}ms` }}
         >
           <div className="text-5xl leading-none font-display-serif font-semibold text-[var(--accent)] sm:text-6xl">
-            {timeLeft[item.key]}
+            {String(timeLeft[item.key]).padStart(2, "0")}
           </div>
           <div className="mt-3 font-mono text-[0.65rem] tracking-[0.3em] text-[var(--accent-soft)] sm:text-xs">
             {item.label}

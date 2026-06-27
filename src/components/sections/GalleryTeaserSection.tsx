@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useMemo, useState, useRef } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useInView } from "@/hooks/useInView";
 
 import type { GalleryCategory } from "@/lib/gallery-data";
@@ -71,23 +71,6 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
     };
   }, [lightboxIndex]);
 
-  // Touch navigation for mobile
-  const touchStart = useRef<number | null>(null);
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStart.current = e.touches[0].clientX;
-  };
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    if (touchStart.current === null) return;
-    const diff = touchStart.current - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) {
-      if (diff > 0) {
-        handleNext();
-      } else {
-        handlePrev();
-      }
-    }
-    touchStart.current = null;
-  };
 
   if (categories.length === 0 || total === 0) {
     return (
@@ -185,8 +168,6 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
         <div
           className="fixed inset-0 z-50 bg-[var(--bg-deep)]/95 backdrop-blur-md flex items-center justify-center select-none"
           onClick={handleClose}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
         >
           {/* Controls - Stop propagation to avoid closing lightbox on click */}
           <div
