@@ -7,10 +7,8 @@ import { useInView } from "@/hooks/useInView";
 import { COUPLE, EVENT_CONFIG, EVENT_DATA, HERO_IMAGE } from "@/lib/constants/event-data";
 import { formatDateTime } from "@/lib/formatters/date-format";
 
-const hiddenClass = "reveal-hidden";
-
 export default function HeroSection() {
-  const { ref, isInView } = useInView(0.2);
+  const { ref, isInView } = useInView(0.15);
 
   return (
     <section
@@ -25,58 +23,85 @@ export default function HeroSection() {
         fill
         priority
         sizes="100vw"
-        className="object-cover opacity-30"
+        className="object-cover opacity-25"
       />
       <ParticleCanvas />
 
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0e27]/60 via-transparent to-[#0a0e27]/90" />
+      {/* Deep vignette overlay */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0a0e27]/70 via-[#0a0e27]/20 to-[#0a0e27]/95" />
 
-      <div className="relative flex min-h-dvh items-center justify-center">
-        <div className="z-10 mx-auto w-full max-w-4xl px-6 text-center sm:px-10 lg:px-14">
-          <div className="space-y-10 lg:space-y-12">
-            <div className="space-y-5 lg:space-y-6">
-              <p
-                className={`font-mono text-xs uppercase tracking-[0.35em] text-[var(--accent-soft)] ${
-                  isInView ? "animate-fade-down" : hiddenClass
-                }`}
-              >
-                {EVENT_DATA.copy.hero.invitation}
-              </p>
-              <h1
-                id="hero-heading"
-                className={`font-display-serif ${
-                  isInView ? "animate-fade-up-soft" : hiddenClass
-                }`}
-              >
-                <span className="block text-6xl font-semibold tracking-tight text-[var(--accent)] sm:text-7xl md:text-8xl lg:text-[7rem] xl:text-[7.75rem]">{COUPLE.groom.name}</span>
-                <span className="block my-1.5 text-4xl sm:my-2 sm:text-5xl md:text-6xl lg:text-7xl font-script text-[var(--accent-soft)]">&</span>
-                <span className="block -mt-1 pl-4 text-4xl font-medium tracking-[0.04em] text-[var(--accent)]/90 sm:pl-6 sm:text-5xl md:pl-8 md:text-6xl lg:-mt-2 lg:pl-10 lg:text-[5.5rem] xl:text-[6rem]">{COUPLE.bride.name}</span>
-              </h1>
-              <div
-                className={`mx-auto h-px w-40 section-divider ${
-                  isInView ? "animate-fade-up stagger-2" : hiddenClass
-                }`}
-              />
-              <div
-                className={`mx-auto max-w-2xl space-y-3 ${
-                  isInView ? "animate-fade-up stagger-3" : hiddenClass
-                }`}
-              >
-                <p className="text-lg uppercase tracking-[0.2em] text-[var(--text-secondary)] sm:text-xl">
-                  {EVENT_DATA.event.title}
+      {/* Decorative background script watermark */}
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none select-none text-[10rem] sm:text-[16rem] md:text-[20rem] font-script text-[var(--accent)]/4 leading-none z-0">
+        {COUPLE.groom.name} &amp; {COUPLE.bride.name}
+      </div>
+
+      <div className="relative z-10 flex min-h-dvh items-center">
+        <div className="mx-auto w-full max-w-7xl px-6 sm:px-12 lg:px-16">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 lg:gap-16">
+            {/* Left: Names lockup — bold asymmetric typography */}
+            <div className="flex-1 max-w-3xl">
+              <div className="space-y-4 lg:space-y-6">
+                {/* Invitation label — small and quiet */}
+                <p
+                  className={`font-mono text-xs uppercase tracking-[0.35em] text-[var(--accent-soft)] transition-all duration-700 ${
+                    isInView ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+                  }`}
+                >
+                  {EVENT_DATA.copy.hero.invitation}
                 </p>
-                <p className="text-xl leading-7 text-[var(--text-primary)] sm:text-2xl sm:leading-9">
-                  <time dateTime={EVENT_CONFIG.weddingDateISO}>{formatDateTime(EVENT_CONFIG.weddingDateISO)}</time>
-                </p>
+
+                {/* Monumental groom name */}
+                <h1 id="hero-heading" className="relative">
+                  <span
+                    className={`block text-7xl sm:text-8xl md:text-9xl lg:text-[8rem] xl:text-[10rem] font-bold tracking-tight text-[var(--accent)] leading-[0.85] transition-all duration-700 delay-150 ${
+                      isInView ? "translate-x-0 opacity-100" : "-translate-x-12 opacity-0"
+                    }`}
+                  >
+                    {COUPLE.groom.name}
+                  </span>
+
+                  {/* Decorative script "&" — overlapping and floating */}
+                  <span
+                    className={`block relative -mt-4 sm:-mt-6 lg:-mt-8 xl:-mt-10 text-7xl sm:text-8xl md:text-9xl lg:text-[9rem] xl:text-[11rem] font-script text-[var(--accent-soft)] leading-none transition-all duration-700 delay-300 ${
+                      isInView ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
+                    }`}
+                  >
+                    &amp;
+                  </span>
+
+                  {/* Bride name — right-aligned for tension */}
+                  <span
+                    className={`block -mt-4 sm:-mt-6 lg:-mt-8 xl:-mt-10 text-right text-5xl sm:text-6xl md:text-7xl lg:text-[6rem] xl:text-[7.5rem] font-display-serif font-medium tracking-tight text-[var(--text-primary)] leading-[0.9] transition-all duration-700 delay-500 ${
+                      isInView ? "translate-x-0 opacity-100" : "translate-x-12 opacity-0"
+                    }`}
+                  >
+                    {COUPLE.bride.name}
+                  </span>
+                </h1>
               </div>
             </div>
 
-            <div className={`pt-4 ${isInView ? "animate-fade-up stagger-4" : hiddenClass}`}>
-              <p className="mb-6 font-mono text-xs uppercase tracking-[0.35em] text-[var(--accent-soft)]/70">
-                {EVENT_DATA.copy.hero.countdownLabel}
-              </p>
-              <CountdownTimer />
-              <div className="mt-8 flex justify-center">
+            {/* Right: Event details + CTA — pushed right */}
+            <div
+              className={`flex-shrink-0 lg:self-end space-y-8 lg:pb-6 lg:pl-8 transition-all duration-700 delay-700 ${
+                isInView ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
+              }`}
+            >
+              <div className="text-left">
+                <div className="mx-0 h-px w-24 section-divider mb-4" />
+                <p className="font-mono text-xs uppercase tracking-[0.25em] text-[var(--accent-soft)]">
+                  {EVENT_DATA.event.title}
+                </p>
+                <p className="mt-3 text-xl sm:text-2xl font-body-serif leading-relaxed text-[var(--text-primary)]">
+                  <time dateTime={EVENT_CONFIG.weddingDateISO}>{formatDateTime(EVENT_CONFIG.weddingDateISO)}</time>
+                </p>
+              </div>
+
+              <div className="space-y-5">
+                <p className="font-mono text-xs uppercase tracking-[0.35em] text-[var(--accent-soft)]/70">
+                  {EVENT_DATA.copy.hero.countdownLabel}
+                </p>
+                <CountdownTimer />
                 <a
                   href="#rsvp"
                   className="group inline-flex items-center gap-3 rounded-full border border-[var(--border-soft)] bg-[var(--surface)] px-8 py-4 font-body-serif text-lg tracking-[0.15em] text-[var(--accent)] shadow-[var(--glow-soft)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_62px_rgba(244,228,193,0.26)] hover:border-[var(--accent-soft)]"
@@ -89,7 +114,6 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
-
     </section>
   );
 }

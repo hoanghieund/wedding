@@ -90,6 +90,7 @@ export default async function Home() {
 
         <main id="main-content" className="mx-auto w-full max-w-6xl space-y-20 px-4 py-20 sm:space-y-24 sm:px-6 sm:py-24 lg:space-y-32 lg:px-8 lg:py-32">
           <LoveStorySection />
+          <ScheduleSection />
           <GalleryTeaserSection categories={categories} />
           <WeddingPartySection />
           <GiftSection />

@@ -3,6 +3,23 @@
 import { EVENT_DATA, TRAVEL_GUIDANCE } from "@/lib/constants/event-data";
 import { useInView } from "@/hooks/useInView";
 
+const TRAVEL_ICONS: Record<string, string> = {
+  "hà nội": "🚗",
+  "bay": "✈️",
+  "xe": "🚖",
+  "tàu": "🚂",
+  "xe máy": "🏍️",
+  "taxi": "🚕",
+};
+
+function getIcon(title: string): string {
+  const lower = title.toLowerCase();
+  for (const [key, icon] of Object.entries(TRAVEL_ICONS)) {
+    if (lower.includes(key)) return icon;
+  }
+  return "🚗";
+}
+
 export function TravelSection() {
   const { ref, isInView } = useInView(0.1);
 
@@ -15,26 +32,53 @@ export function TravelSection() {
       ref={ref}
       id="travel"
       aria-labelledby="travel-heading"
-      className="space-y-8 rounded-[1.75rem] transition-all duration-500"
+      className="space-y-8"
     >
       <div className="space-y-2">
-        <h2 id="travel-heading" className={`chapter-title text-3xl sm:text-4xl ${isInView ? "animate-fade-up" : "reveal-hidden"}`}>
+        <h2
+          id="travel-heading"
+          className={`chapter-title text-3xl sm:text-4xl transition-all duration-700 ${
+            isInView ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+          }`}
+        >
           {EVENT_DATA.copy.sections.travelTitle}
         </h2>
       </div>
 
-      <div className="space-y-6">
+      <div className="space-y-5">
         {TRAVEL_GUIDANCE.map((item, index) => (
           <article
             key={item.title}
-            className={`section-shell rounded-2xl p-6 ${
-              isInView ? "animate-fade-up" : "reveal-hidden"
-            } stagger-${Math.min(index + 1, 6)}`}
+            className={`relative overflow-hidden rounded-2xl border border-[var(--border-soft)] bg-[var(--surface)] p-6 transition-all duration-500 hover:border-[var(--accent-soft)]/30 hover:shadow-[var(--glow-soft)] ${
+              isInView
+                ? "translate-y-0 opacity-100"
+                : "translate-y-8 opacity-0"
+            }`}
+            style={{ transitionDelay: `${index * 120}ms`, transitionProperty: "transform, opacity, border-color, box-shadow" }}
           >
-            <h3 className="text-xl font-display-serif text-[var(--accent)]">{item.title}</h3>
-            <p className="mt-2 text-sm font-mono uppercase tracking-[0.18em] text-[var(--accent-soft)]">{item.summary}</p>
-            <p className="copy-muted mt-3 text-base leading-7">{item.details}</p>
+            {/* Emoji + Title row */}
+            <div className="flex items-start gap-4">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[var(--bg-elevated)] text-2xl border border-[var(--border-soft)]" aria-hidden="true">
+                {getIcon(item.title)}
+              </span>
+              <div className="min-w-0 flex-1">
+                <h3 className="text-xl font-display-serif font-medium text-[var(--accent)] leading-tight">
+                  {item.title}
+                </h3>
+                {item.summary && (
+                  <p className="mt-1 font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--accent-soft)]">
+                    {item.summary}
+                  </p>
+                )}
+              </div>
+            </div>
 
+            {/* Description */}
+            <p className="mt-4 text-base leading-7 text-[var(--text-secondary)] font-body-serif">
+              {item.details}
+            </p>
+
+            {/* Link */}
             {item.link && (
               <a
                 href={item.link.href}

@@ -1,46 +1,24 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState, useRef } from "react";
 import { useInView } from "@/hooks/useInView";
 
 import type { GalleryCategory } from "@/lib/gallery-data";
 
-
-type AnimationPreset = {
-  name: string;
-  className: string;
-};
-
-const ANIMATIONS: AnimationPreset[] = [
-  { name: "Ken Burns", className: "animate-[kenburns_10s_ease-in-out_infinite_alternate]" },
-  { name: "Pan Left", className: "animate-[panLeft_10s_ease-in-out_infinite]" },
-  { name: "Pan Up", className: "animate-[panUp_10s_ease-in-out_infinite]" },
-  { name: "Zoom In", className: "animate-[zoomIn_10s_ease-in-out_infinite]" },
-  { name: "Pulse", className: "animate-[pulse_3s_ease-in-out_infinite]" },
-  { name: "Rotate", className: "animate-[rotateSlow_20s_linear_infinite]" },
-  { name: "Shake", className: "animate-[shake_4s_ease-in-out_infinite]" },
-  { name: "Glow Pulse", className: "animate-[glowPulse_3s_ease-in-out_infinite]" },
-];
-
-const SLIDE_INTERVAL_MS = 4000;
-
-const isEditableTarget = (target: EventTarget | null) =>
-  target instanceof HTMLElement && (target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName));
-
 type GalleryTeaserSectionProps = {
   categories: GalleryCategory[];
 };
+
+const ASPECT_RATIOS = ["aspect-[3/4]", "aspect-[4/5]", "aspect-[3/2]", "aspect-[2/3]", "aspect-[1/1]"];
 
 export default function GalleryTeaserSection({ categories }: GalleryTeaserSectionProps) {
   const { ref, isInView } = useInView(0.1);
   const sectionRef = ref as React.RefObject<HTMLElement>;
 
   const [selectedSlug, setSelectedSlug] = useState<string>(categories[0]?.slug ?? "");
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [progressKey, setProgressKey] = useState(0);
-  const [animIndex, setAnimIndex] = useState(0);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [isZoomed, setIsZoomed] = useState(false);
 
   const activeCategory = useMemo(
     () => categories.find((c) => c.slug === selectedSlug),
@@ -49,83 +27,99 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
 
   const images = activeCategory?.images ?? [];
   const total = images.length;
-  const currentAnim = ANIMATIONS[animIndex % ANIMATIONS.length];
 
-  const goTo = useCallback((index: number) => {
-    setCurrentIndex(index);
-    setProgressKey((k) => k + 1);
+  const handlePrev = useCallback(() => {
+    if (lightboxIndex === null) return;
+    setLightboxIndex((prev) => (prev !== null ? (prev - 1 + total) % total : null));
+    setIsZoomed(false);
+  }, [lightboxIndex, total]);
+
+  const handleNext = useCallback(() => {
+    if (lightboxIndex === null) return;
+    setLightboxIndex((prev) => (prev !== null ? (prev + 1) % total : null));
+    setIsZoomed(false);
+  }, [lightboxIndex, total]);
+
+  const handleClose = useCallback(() => {
+    setLightboxIndex(null);
+    setIsZoomed(false);
   }, []);
 
-  const goPrev = useCallback(() => {
-    setAnimIndex((i) => i + 1);
-    goTo((currentIndex - 1 + total) % total);
-    setIsPlaying(false);
-  }, [currentIndex, goTo, total]);
-
-  const goNext = useCallback(() => {
-    setAnimIndex((i) => i + 1);
-    goTo((currentIndex + 1) % total);
-    setIsPlaying(false);
-  }, [currentIndex, goTo, total]);
-
+  // Keyboard navigation
   useEffect(() => {
-    if (!isPlaying || total === 0) return;
+    if (lightboxIndex === null) return;
 
-    const timer = window.setInterval(() => {
-      const nextIndex = (currentIndex + 1) % total;
-
-      if (nextIndex === 0) {
-        const currentCatIndex = categories.findIndex((c) => c.slug === selectedSlug);
-        const nextCategory = categories[(currentCatIndex + 1) % categories.length];
-
-        if (nextCategory) {
-          setSelectedSlug(nextCategory.slug);
-          setCurrentIndex(0);
-          setProgressKey((k) => k + 1);
-        }
-      } else {
-        setAnimIndex((i) => i + 1);
-        setCurrentIndex(nextIndex);
-        setProgressKey((k) => k + 1);
-      }
-    }, SLIDE_INTERVAL_MS);
-
-    return () => window.clearInterval(timer);
-  }, [isPlaying, total, currentIndex, categories, selectedSlug]);
-
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (isEditableTarget(e.target)) return;
-
-      if (e.key === "ArrowLeft") goPrev();
-      if (e.key === "ArrowRight") goNext();
-      if (e.key === " ") {
-        e.preventDefault();
-        setIsPlaying((v) => !v);
-        setProgressKey((k) => k + 1);
-      }
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") handleClose();
+      if (e.key === "ArrowLeft") handlePrev();
+      if (e.key === "ArrowRight") handleNext();
     };
 
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  }, [goPrev, goNext]);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [lightboxIndex, handleClose, handlePrev, handleNext]);
 
-  if (total === 0) return null;
+  // Prevent scroll when lightbox is open
+  useEffect(() => {
+    if (lightboxIndex !== null) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [lightboxIndex]);
+
+  // Touch navigation for mobile
+  const touchStart = useRef<number | null>(null);
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStart.current = e.touches[0].clientX;
+  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStart.current === null) return;
+    const diff = touchStart.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+    }
+    touchStart.current = null;
+  };
+
+  if (categories.length === 0 || total === 0) {
+    return (
+      <section
+        ref={sectionRef}
+        id="gallery"
+        aria-label="Wedding Photo Gallery"
+        className="py-16 text-center"
+      >
+        <div className="space-y-3 text-center mb-12">
+          <h2 className="chapter-title text-4xl sm:text-5xl">Khoảnh Khắc</h2>
+          <div className="mx-auto h-px w-24 section-divider" />
+        </div>
+        <div className="border border-dashed border-[var(--border-soft)] py-16 px-4 rounded-2xl bg-[var(--surface)]">
+          <p className="text-[var(--text-secondary)] font-body-serif text-lg italic">
+            Hình ảnh sẽ được cập nhật sớm trong thời gian tới.
+          </p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
       ref={sectionRef}
       id="gallery"
-      aria-labelledby="gallery-heading"
-      className="space-y-12"
+      role="region"
+      aria-label="Wedding Photo Gallery"
+      className="space-y-12 py-8"
     >
       <div className={`space-y-3 text-center ${isInView ? "animate-fade-up" : "reveal-hidden"}`}>
-        <h2
-          id="gallery-heading"
-          className="chapter-title text-4xl sm:text-5xl"
-        >
-          Khoảnh Khắc
-        </h2>
+        <h2 className="chapter-title text-4xl sm:text-5xl">Khoảnh Khắc</h2>
         <div className="mx-auto h-px w-24 section-divider" />
       </div>
 
@@ -140,10 +134,9 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
               key={cat.slug}
               onClick={() => {
                 setSelectedSlug(cat.slug);
-                setCurrentIndex(0);
-                setProgressKey((k) => k + 1);
+                setIsZoomed(false);
               }}
-              className={`rounded-full border px-6 py-3 font-mono text-xs uppercase tracking-widest transition-all duration-300 sm:px-5 sm:py-2 ${
+              className={`rounded-full border px-5 py-2 font-mono text-xs uppercase tracking-widest transition-all duration-300 ${
                 selectedSlug === cat.slug
                   ? "border-[var(--accent-soft)] bg-[var(--accent)] text-[var(--bg)] shadow-[var(--glow-soft)]"
                   : "border-[var(--border-soft)] bg-[var(--surface)] text-[var(--text-secondary)] hover:border-[var(--accent-soft)] hover:text-[var(--text-primary)]"
@@ -155,136 +148,111 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
         </div>
       )}
 
+      {/* Masonry Grid Layout */}
       <div
-        className={`relative mx-auto w-full max-w-5xl ${
+        className={`columns-1 sm:columns-2 lg:columns-3 gap-6 ${
           isInView ? "animate-fade-up stagger-2" : "reveal-hidden"
         }`}
       >
-        <div className="relative aspect-[4/5] sm:aspect-[3/2] md:aspect-[16/10] overflow-hidden rounded-[2rem] border border-[var(--border-soft)] bg-[var(--surface-strong)] shadow-[var(--glow-soft)]">
-          {images.map((img, i) => (
+        {images.map((img, index) => {
+          const aspectClass = ASPECT_RATIOS[index % ASPECT_RATIOS.length];
+          return (
             <div
               key={img.src}
-              className={`absolute inset-0 transition-opacity duration-700 ${
-                i === currentIndex
-                  ? `z-10 opacity-100 ${currentAnim?.className ?? ""}`
-                  : "z-0 opacity-0"
-              }`}
+              onClick={() => setLightboxIndex(index)}
+              className={`break-inside-avoid mb-6 relative overflow-hidden rounded-xl border border-[var(--border-soft)] bg-[var(--surface-strong)] transition-all duration-300 hover:scale-[1.01] hover:shadow-[var(--glow-soft)] group cursor-pointer ${aspectClass}`}
             >
               <Image
                 src={img.src}
-                alt={img.alt}
+                alt={img.alt || `Ảnh trong album ${activeCategory?.name}`}
                 fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1024px"
-                className="object-contain"
-                quality={85}
-                loading={i < 2 ? "eager" : "lazy"}
-                priority={i === 0}
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[rgba(10,14,39,0.82)] via-transparent to-[rgba(10,14,39,0.28)]" />
-              {i === currentIndex && (
-                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,transparent_0%,rgba(244,228,193,0.12)_45%,transparent_60%)] animate-[hologramSweep_3.5s_ease-in-out_infinite] mix-blend-screen" />
-              )}
+              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                <span className="text-[var(--accent)] font-mono text-xs uppercase tracking-widest border border-[var(--accent)] px-3 py-1.5 rounded bg-black/40 backdrop-blur-sm">
+                  Xem ảnh
+                </span>
+              </div>
             </div>
-          ))}
-
-          <button
-            onClick={goPrev}
-            className="absolute left-2 top-1/2 z-10 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--border-soft)] bg-[var(--surface)] text-xl text-[var(--accent)] backdrop-blur-md transition hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)] sm:left-4 sm:h-12 sm:w-12 sm:text-base"
-            aria-label="Ảnh trước"
-          >
-            ←
-          </button>
-          <button
-            onClick={goNext}
-            className="absolute right-2 top-1/2 z-10 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-full border border-[var(--border-soft)] bg-[var(--surface)] text-xl text-[var(--accent)] backdrop-blur-md transition hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)] sm:right-4 sm:h-12 sm:w-12 sm:text-base"
-            aria-label="Ảnh sau"
-          >
-            →
-          </button>
-
-          <button
-            onClick={() => setAnimIndex((i) => i + 1)}
-            className="absolute left-2 bottom-2 z-10 flex items-center gap-1.5 rounded-full border border-[var(--border-soft)] bg-[var(--surface)] px-4 py-2.5 font-mono text-[10px] uppercase tracking-wider text-[var(--accent)] backdrop-blur-md transition hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)] sm:left-4 sm:bottom-4 sm:px-3 sm:py-1.5"
-            title="Đổi hiệu ứng"
-          >
-            ✦ {currentAnim?.name ?? "FX"}
-          </button>
-
-          <button
-            onClick={() => {
-              setIsPlaying((v) => !v);
-              setProgressKey((k) => k + 1);
-            }}
-            className="absolute bottom-2 right-2 z-10 flex h-12 w-12 items-center justify-center rounded-full border border-[var(--border-soft)] bg-[var(--surface)] font-mono text-sm text-[var(--accent)] backdrop-blur-md transition hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)] sm:bottom-4 sm:right-4 sm:h-10 sm:w-10 sm:text-xs"
-            aria-label={isPlaying ? "Tạm dừng" : "Phát"}
-          >
-            {isPlaying ? "⏸" : "▶"}
-          </button>
-
-          <div className="absolute bottom-4 left-1/2 z-10 -translate-x-1/2 rounded-full border border-[var(--border-soft)] bg-[var(--surface-strong)] px-4 py-1.5 font-mono text-xs uppercase tracking-[0.18em] text-[var(--accent)] backdrop-blur-xl">
-            {String(currentIndex + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
-          </div>
-        </div>
-
-        <div className="absolute bottom-0 left-0 z-50 h-1 w-full overflow-hidden rounded-full bg-white/10">
-          <div
-            key={progressKey}
-            className={`h-full origin-left bg-[var(--accent-soft)] transition-transform ${
-              isPlaying
-                ? "animate-[slideProgress_4s_linear_forwards] shadow-[0_0_12px_rgba(212,165,116,0.65)]"
-                : "scale-x-0 opacity-40"
-            }`}
-          />
-        </div>
+          );
+        })}
       </div>
 
-      <style jsx>{`
-        @keyframes kenburns {
-          0% { transform: scale(1) translate3d(0,0,0); }
-          100% { transform: scale(1.12) translate3d(-2%,-2%,0); }
-        }
-        @keyframes panLeft {
-          0% { transform: scale(1.15) translateX(3%); }
-          100% { transform: scale(1.15) translateX(-3%); }
-        }
-        @keyframes panUp {
-          0% { transform: scale(1.1) translateY(3%); }
-          100% { transform: scale(1.1) translateY(-3%); }
-        }
-        @keyframes zoomIn {
-          0% { transform: scale(1); filter: brightness(1); }
-          50% { transform: scale(1.2); filter: brightness(1.08); }
-          100% { transform: scale(1); filter: brightness(1); }
-        }
-        @keyframes pulse {
-          0%, 100% { transform: scale(1); filter: brightness(1) saturate(1); }
-          50% { transform: scale(1.06); filter: brightness(1.05) saturate(1.05); }
-        }
-        @keyframes rotateSlow {
-          0% { transform: scale(1.05) rotate(0deg); }
-          100% { transform: scale(1.05) rotate(360deg); }
-        }
-        @keyframes shake {
-          0%, 100% { transform: translateX(0) translateY(0); }
-          20% { transform: translateX(-2px) translateY(1px); }
-          40% { transform: translateX(2px) translateY(-1px); }
-          60% { transform: translateX(-1px) translateY(2px); }
-          80% { transform: translateX(1px) translateY(-2px); }
-        }
-        @keyframes glowPulse {
-          0%, 100% { filter: brightness(1) drop-shadow(0 0 0px rgba(212,165,116,0)); }
-          50% { filter: brightness(1.1) drop-shadow(0 0 25px rgba(212,165,116,0.45)); }
-        }
-        @keyframes hologramSweep {
-          0% { transform: translateX(-120%); opacity: 0; }
-          35% { opacity: 1; }
-          100% { transform: translateX(120%); opacity: 0; }
-        }
-        @keyframes slideProgress {
-          from { transform: scaleX(0); }
-          to { transform: scaleX(1); }
-        }
-      `}</style>
+      {/* Lightbox Overlay */}
+      {lightboxIndex !== null && (
+        <div
+          className="fixed inset-0 z-50 bg-[var(--bg-deep)]/95 backdrop-blur-md flex items-center justify-center select-none"
+          onClick={handleClose}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
+          {/* Controls - Stop propagation to avoid closing lightbox on click */}
+          <div
+            className="absolute inset-0 flex items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={handleClose}
+              className="absolute top-4 right-4 z-50 flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border-soft)] bg-[var(--surface)] text-xl text-[var(--accent)] hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)] transition duration-200"
+              aria-label="Đóng"
+            >
+              ✕
+            </button>
+
+            {/* Zoom Button */}
+            <button
+              onClick={() => setIsZoomed(!isZoomed)}
+              className="absolute top-4 right-16 z-50 flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border-soft)] bg-[var(--surface)] text-xl text-[var(--accent)] hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)] transition duration-200"
+              aria-label={isZoomed ? "Thu nhỏ" : "Phóng to"}
+            >
+              {isZoomed ? "⊖" : "⊕"}
+            </button>
+
+            {/* Left Control */}
+            <button
+              onClick={handlePrev}
+              className="absolute left-4 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-[var(--border-soft)] bg-[var(--surface)] text-xl text-[var(--accent)] hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)] transition duration-200"
+              aria-label="Ảnh trước"
+            >
+              ←
+            </button>
+
+            {/* Image Container */}
+            <div
+              className={`relative max-w-[90vw] max-h-[80vh] w-full h-full flex items-center justify-center transition-transform duration-300 ${
+                isZoomed ? "scale-125 cursor-zoom-out" : "cursor-zoom-in"
+              }`}
+              onClick={() => setIsZoomed(!isZoomed)}
+            >
+              <Image
+                src={images[lightboxIndex].src}
+                alt={images[lightboxIndex].alt || "Ảnh cưới phóng to"}
+                width={1200}
+                height={900}
+                className="max-w-full max-h-full object-contain rounded-lg"
+                priority
+              />
+            </div>
+
+            {/* Right Control */}
+            <button
+              onClick={handleNext}
+              className="absolute right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-[var(--border-soft)] bg-[var(--surface)] text-xl text-[var(--accent)] hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)] transition duration-200"
+              aria-label="Ảnh sau"
+            >
+              →
+            </button>
+
+            {/* Status Indicator */}
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full border border-[var(--border-soft)] bg-[var(--surface-strong)] px-4 py-1.5 font-mono text-xs uppercase tracking-[0.18em] text-[var(--accent)]">
+              {String(lightboxIndex + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

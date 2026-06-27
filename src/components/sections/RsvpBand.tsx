@@ -21,14 +21,22 @@ const initialFormState: RsvpFormState = {
   website: "",
 };
 
+const STATUS_ICONS: Record<AttendanceStatus, string> = {
+  attending: "✅",
+  not_attending: "❌",
+  maybe: "🤔",
+};
+
 export function RsvpBand() {
   const [submitted, setSubmitted] = useState(false);
   const [formState, setFormState] = useState<RsvpFormState>(initialFormState);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
-  const { ref, isInView } = useInView();
+  const { ref, isInView } = useInView(0.1);
   const calendarUrl = buildGoogleCalendarUrl(CALENDAR_EVENT);
   const isNotAttending = formState.attendanceStatus === "not_attending";
+  const msgLength = formState.guestMessage.length;
+  const maxMsgLength = EVENT_DATA.rsvp.validation.maxMessageLength;
 
   const updateFormField = <Field extends keyof RsvpFormState>(
     field: Field,
@@ -42,29 +50,52 @@ export function RsvpBand() {
       id="rsvp"
       aria-labelledby="rsvp-heading"
       ref={ref}
-      className={`border-t border-[var(--border-soft)] py-20 sm:py-24 lg:py-28 reveal-hidden ${isInView ? "animate-fade-up" : ""}`}
+      className="relative overflow-hidden border-t border-[var(--border-soft)] py-20 sm:py-24 lg:py-28"
     >
-      <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
-        <div className="space-y-4 text-center">
-          <p className="section-label">{EVENT_DATA.copy.sections.rsvpChapter}</p>
+      {/* Decorative script watermark */}
+      <div className="absolute left-1/2 top-0 -translate-x-1/2 pointer-events-none select-none text-[8rem] sm:text-[14rem] font-script text-[var(--accent)]/5 whitespace-nowrap z-0">
+        Xác Nhận
+      </div>
+
+      <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Section heading */}
+        <div className={`space-y-4 text-center transition-all duration-700 ${
+          isInView ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+        }`}>
+          <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--accent-soft)]">
+            {EVENT_DATA.copy.sections.rsvpChapter}
+          </p>
           <h2
             id="rsvp-heading"
             className="font-script text-5xl text-[var(--accent)] sm:text-6xl"
           >
             {EVENT_DATA.copy.sections.rsvpTitle}
           </h2>
-          <p className="copy-muted text-lg leading-8">{EVENT_DATA.copy.sections.rsvpDescription}</p>
+          <div className="mx-auto h-px w-24 section-divider" />
+          <p className="copy-muted text-lg leading-8 max-w-lg mx-auto">{EVENT_DATA.copy.sections.rsvpDescription}</p>
         </div>
 
-        <div className="section-shell mt-10 rounded-[2rem] p-8 shadow-[var(--glow-soft)] sm:p-10">
+        {/* Form card */}
+        <div className={`mt-10 rounded-[2rem] border border-[var(--border-soft)] bg-[var(--surface)] p-8 shadow-[var(--glow-soft)] sm:p-10 transition-all duration-700 delay-200 ${
+          isInView ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+        }`}>
           {submitted ? (
-            <div className="text-center">
-              <p className="section-label">{EVENT_DATA.copy.sections.rsvpSuccessLabel}</p>
-              <p className="mt-4 text-lg leading-7 text-[var(--text-primary)]">{EVENT_DATA.copy.sections.rsvpSuccessMessage}</p>
+            /* ——— Success state ——— */
+            <div className="text-center py-8">
+              <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[var(--accent)]/10 border-2 border-[var(--accent-soft)]/30">
+                <span className="text-4xl" aria-hidden="true">💌</span>
+              </div>
+              <p className="font-display-serif text-2xl text-[var(--accent)] mb-3">
+                {EVENT_DATA.copy.sections.rsvpSuccessLabel}
+              </p>
+              <p className="copy-muted text-lg leading-7 max-w-md mx-auto">
+                {EVENT_DATA.copy.sections.rsvpSuccessMessage}
+              </p>
             </div>
           ) : (
+            /* ——— Form ——— */
             <form
-              className="space-y-5"
+              className="space-y-6"
               onSubmit={async (event) => {
                 event.preventDefault();
                 setSubmitting(true);
@@ -82,9 +113,7 @@ export function RsvpBand() {
                   const result = (await response.json()) as { ok?: boolean; error?: string };
 
                   if (!response.ok || !result.ok) {
-                    setError(
-                      result.error || EVENT_DATA.rsvp.errors.submitFailed,
-                    );
+                    setError(result.error || EVENT_DATA.rsvp.errors.submitFailed);
                     return;
                   }
 
@@ -96,6 +125,7 @@ export function RsvpBand() {
                 }
               }}
             >
+              {/* Honeypot */}
               <label className="hidden">
                 <span>{EVENT_DATA.rsvp.labels.honeypot}</span>
                 <input
@@ -107,8 +137,14 @@ export function RsvpBand() {
                 />
               </label>
 
-              <label className="block">
-                <span className="section-label text-[10px]">{EVENT_DATA.rsvp.labels.guestName}</span>
+              {/* Guest name */}
+              <fieldset className="space-y-1.5">
+                <label className="flex items-center gap-2">
+                  <span aria-hidden="true">👤</span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--accent-soft)]">
+                    {EVENT_DATA.rsvp.labels.guestName}
+                  </span>
+                </label>
                 <input
                   type="text"
                   required
@@ -117,34 +153,58 @@ export function RsvpBand() {
                   value={formState.guestName}
                   onChange={(event) => updateFormField("guestName", event.target.value)}
                   placeholder={EVENT_DATA.rsvp.placeholders.guestName}
-                  className="focus-ring-accent mt-2 w-full rounded-xl border border-[var(--border-soft)] bg-[var(--surface)] px-4 py-3 text-[var(--text-primary)] outline-none transition placeholder:text-[var(--text-secondary)]"
+                  className="focus-ring-accent w-full rounded-xl border border-[var(--border-soft)] bg-[var(--bg)] px-4 py-3.5 text-[var(--text-primary)] outline-none transition placeholder:text-[var(--text-secondary)]/60 focus:border-[var(--accent-soft)]/40"
                 />
-              </label>
+              </fieldset>
 
-              <label className="block">
-                <span className="section-label text-[10px]">{EVENT_DATA.rsvp.labels.attendanceStatus}</span>
-                <select
-                  value={formState.attendanceStatus}
-                  onChange={(event) =>
-                    updateFormField("attendanceStatus", event.target.value as AttendanceStatus)
-                  }
-                  className="focus-ring-accent mt-2 w-full rounded-xl border border-[var(--border-soft)] bg-[var(--surface)] px-4 py-3 text-[var(--text-primary)] outline-none transition"
-                >
-                  {Object.entries(EVENT_DATA.rsvp.attendanceStatuses).map(([value, label]) => (
-                    <option key={value} className="bg-[#0a0e27]" value={value}>
-                      {label}
-                    </option>
+              {/* Attendance status */}
+              <fieldset className="space-y-1.5">
+                <label className="flex items-center gap-2">
+                  <span aria-hidden="true">💬</span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--accent-soft)]">
+                    {EVENT_DATA.rsvp.labels.attendanceStatus}
+                  </span>
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  {(Object.entries(EVENT_DATA.rsvp.attendanceStatuses) as [AttendanceStatus, string][]).map(([value, label]) => (
+                    <button
+                      key={value}
+                      type="button"
+                      onClick={() => updateFormField("attendanceStatus", value)}
+                      className={`flex flex-col items-center gap-1 rounded-xl border px-3 py-3 text-xs transition-all duration-300 ${
+                        formState.attendanceStatus === value
+                          ? "border-[var(--accent-soft)] bg-[var(--accent)]/10 text-[var(--accent)]"
+                          : "border-[var(--border-soft)] bg-[var(--bg)] text-[var(--text-secondary)] hover:border-[var(--border-soft)]/80"
+                      }`}
+                    >
+                      <span className="text-lg">{STATUS_ICONS[value]}</span>
+                      <span className="font-mono text-[10px] uppercase tracking-[0.1em]">
+                        {label}
+                      </span>
+                    </button>
                   ))}
-                </select>
-              </label>
+                </div>
+              </fieldset>
 
-              <label className="block">
-                <span className="section-label text-[10px]">{EVENT_DATA.rsvp.labels.attendeeCount}</span>
+              {/* Attendee count */}
+              <fieldset className="space-y-1.5">
+                <label className="flex items-center gap-2">
+                  <span aria-hidden="true">👥</span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--accent-soft)]">
+                    {EVENT_DATA.rsvp.labels.attendeeCount}
+                  </span>
+                </label>
                 <select
                   disabled={isNotAttending}
                   value={isNotAttending ? "0" : formState.attendeeCount}
                   onChange={(event) => updateFormField("attendeeCount", event.target.value)}
-                  className="focus-ring-accent mt-2 w-full rounded-xl border border-[var(--border-soft)] bg-[var(--surface)] px-4 py-3 text-[var(--text-primary)] outline-none transition disabled:cursor-not-allowed disabled:opacity-50"
+                  className="focus-ring-accent w-full rounded-xl border border-[var(--border-soft)] bg-[var(--bg)] px-4 py-3.5 text-[var(--text-primary)] outline-none transition disabled:cursor-not-allowed disabled:opacity-40 appearance-none"
+                  style={{
+                    backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23d4a574' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
+                    backgroundPosition: `right 1rem center`,
+                    backgroundRepeat: `no-repeat`,
+                    backgroundSize: `1.25rem`,
+                  }}
                 >
                   {Array.from(
                     { length: EVENT_DATA.rsvp.validation.maxAttendeeCount + 1 },
@@ -155,45 +215,74 @@ export function RsvpBand() {
                     ),
                   )}
                 </select>
-              </label>
+              </fieldset>
 
-              <label className="block">
-                <span className="section-label text-[10px]">{EVENT_DATA.rsvp.labels.guestMessage}</span>
+              {/* Guest message */}
+              <fieldset className="space-y-1.5">
+                <label className="flex items-center gap-2">
+                  <span aria-hidden="true">💌</span>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--accent-soft)]">
+                    {EVENT_DATA.rsvp.labels.guestMessage}
+                  </span>
+                </label>
                 <textarea
-                  maxLength={EVENT_DATA.rsvp.validation.maxMessageLength}
+                  maxLength={maxMsgLength}
                   value={formState.guestMessage}
                   onChange={(event) => updateFormField("guestMessage", event.target.value)}
                   placeholder={EVENT_DATA.rsvp.placeholders.guestMessage}
-                  className="focus-ring-accent mt-2 min-h-28 w-full rounded-xl border border-[var(--border-soft)] bg-[var(--surface)] px-4 py-3 text-[var(--text-primary)] outline-none transition placeholder:text-[var(--text-secondary)]"
+                  className="focus-ring-accent min-h-28 w-full rounded-xl border border-[var(--border-soft)] bg-[var(--bg)] px-4 py-3.5 text-[var(--text-primary)] outline-none transition placeholder:text-[var(--text-secondary)]/60 focus:border-[var(--accent-soft)]/40 resize-y"
                 />
-              </label>
+                <div className="flex justify-end">
+                  <span className={`font-mono text-[10px] tracking-wider ${
+                    msgLength > maxMsgLength * 0.9
+                      ? "text-red-400"
+                      : "text-[var(--text-secondary)]/50"
+                  }`}>
+                    {msgLength}/{maxMsgLength}
+                  </span>
+                </div>
+              </fieldset>
 
+              {/* Error */}
               {error ? (
                 <p className="rounded-xl border border-red-300/30 bg-red-950/30 px-4 py-3 text-sm leading-6 text-red-100">
                   {error}
                 </p>
               ) : null}
 
+              {/* Submit */}
               <button
                 type="submit"
                 disabled={submitting}
-                className={`w-full rounded-full border border-[var(--accent-soft)] bg-gradient-to-r from-[var(--accent-soft)] to-[var(--accent)] px-8 py-4 font-body-serif text-lg tracking-[0.15em] text-[var(--bg)] shadow-[0_18px_50px_rgba(212,165,116,0.28)] transition hover:-translate-y-1 hover:shadow-[0_22px_60px_rgba(244,228,193,0.26)] reveal-hidden ${
-                  isInView ? "animate-zoom-in stagger-1" : ""
-                } disabled:cursor-not-allowed disabled:opacity-70`}
+                className="group w-full rounded-full border border-[var(--accent-soft)] bg-gradient-to-r from-[var(--accent-soft)] to-[var(--accent)] px-8 py-4 font-display-serif text-lg tracking-[0.15em] text-[var(--bg)] shadow-[0_18px_50px_rgba(212,165,116,0.28)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_22px_60px_rgba(244,228,193,0.26)] disabled:cursor-not-allowed disabled:opacity-60"
               >
-                {submitting ? EVENT_DATA.rsvp.labels.submitting : EVENT_DATA.rsvp.labels.submit}
+                {submitting ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                    </svg>
+                    {EVENT_DATA.rsvp.labels.submitting}
+                  </span>
+                ) : (
+                  EVENT_DATA.rsvp.labels.submit
+                )}
               </button>
             </form>
           )}
 
+          {/* Calendar link */}
           <div className="mt-6 text-center">
             <a
               href={calendarUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--accent-soft)] underline decoration-[var(--accent-soft)]/30 underline-offset-4 transition hover:text-[var(--accent)] hover:decoration-[var(--accent-soft)]"
+              className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-[var(--accent-soft)] transition hover:text-[var(--accent)]"
             >
-              Thêm vào lịch
+              <span aria-hidden="true">📅</span>
+              <span className="underline decoration-[var(--accent-soft)]/30 underline-offset-4 group-hover:decoration-[var(--accent)]/50">
+                Thêm vào lịch
+              </span>
             </a>
           </div>
         </div>

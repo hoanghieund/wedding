@@ -1,0 +1,194 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-27T00:00:00Z",
+  "title": "Design System: Wedding Site",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Champagne Shimmer",
+        "canonical": "oklch(91.7% 0.057 85.8)",
+        "tonalRamp": [
+          "#fdfbf7",
+          "#faf5eb",
+          "#f7efdf",
+          "#f4e4c1",
+          "#e3cb9f",
+          "#cfae79",
+          "#b38d53"
+        ]
+      },
+      "secondary": {
+        "role": "secondary",
+        "displayName": "Warm Bronze",
+        "canonical": "oklch(74.6% 0.106 75.9)",
+        "tonalRamp": [
+          "#fcf8f4",
+          "#f8eee3",
+          "#f2dfcb",
+          "#d4a574",
+          "#bd8853",
+          "#9d6833",
+          "#74461a"
+        ]
+      },
+      "neutral-bg": {
+        "role": "neutral",
+        "displayName": "Midnight Navy",
+        "canonical": "oklch(14.8% 0.046 268.4)"
+      },
+      "neutral-bg-elevated": {
+        "role": "neutral",
+        "displayName": "Navy Elevated",
+        "canonical": "oklch(22.8% 0.038 259.5)"
+      },
+      "neutral-bg-deep": {
+        "role": "neutral",
+        "displayName": "Navy Deep",
+        "canonical": "oklch(17.9% 0.034 263.2)"
+      },
+      "neutral-text": {
+        "role": "neutral",
+        "displayName": "Warm Silk White",
+        "canonical": "oklch(98.1% 0.015 88.5)"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero title, names."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "General description and invitation details."
+      }
+    },
+    "shadows": [
+      {
+        "name": "glow-soft",
+        "value": "0 18px 60px rgba(212, 165, 116, 0.18)",
+        "purpose": "Soft shimmer light under card elements."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-standard",
+        "value": "cubic-bezier(0.4, 0, 0.2, 1)",
+        "purpose": "Standard transitions for interactive states."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Photo Gallery",
+      "kind": "custom",
+      "refersTo": "photo-gallery",
+      "description": "Responsive photo gallery with lazy loaded images and accessibility landmarks.",
+      "html": "<section class=\"photo-gallery\" role=\"region\" aria-label=\"Wedding Photo Gallery\"><div class=\"gallery-grid\"><div class=\"gallery-item\"><img src=\"/images/sample-1.jpg\" alt=\"Bride and Groom walking down the aisle\" loading=\"lazy\" width=\"600\" height=\"800\" /></div><div class=\"gallery-item\"><img src=\"/images/sample-2.jpg\" alt=\"Close up of wedding rings on champagne glass\" loading=\"lazy\" width=\"600\" height=\"400\" /></div></div></section>",
+      "css": ".photo-gallery { padding: 4rem 1rem; width: 100%; max-width: 1200px; margin: 0 auto; } .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; } @media (min-width: 768px) { .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); } } .gallery-item { border-radius: 8px; overflow: hidden; border: 1px solid rgba(244, 228, 193, 0.14); transition: transform 0.3s ease, box-shadow 0.3s ease; aspect-ratio: auto; } .gallery-item:hover { transform: translateY(-4px); box-shadow: 0 18px 60px rgba(212, 165, 116, 0.18); } .gallery-item img { width: 100%; height: auto; display: block; object-fit: cover; }"
+    },
+    {
+      "name": "Photo Gallery Empty",
+      "kind": "custom",
+      "refersTo": "photo-gallery-empty",
+      "description": "Fallback state for the photo gallery when no photos are available.",
+      "html": "<section class=\"photo-gallery-empty\" role=\"region\" aria-label=\"Wedding Photo Gallery\"><div class=\"empty-state-container\"><p class=\"empty-state-message\">Hình ảnh sẽ được cập nhật sớm trong thời gian tới.</p></div></section>",
+      "css": ".photo-gallery-empty { padding: 6rem 1rem; text-align: center; max-width: 1200px; margin: 0 auto; } .empty-state-container { border: 1px dashed rgba(244, 228, 193, 0.2); padding: 4rem 2rem; border-radius: 8px; background: rgba(26, 35, 50, 0.4); } .empty-state-message { color: rgba(255, 248, 238, 0.6); font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.25rem; font-style: italic; }"
+    },
+    {
+      "name": "Wedding Party",
+      "kind": "custom",
+      "refersTo": "wedding-party",
+      "description": "Bold asymmetric wedding party cards with overlapping rotated gold frames.",
+      "html": "<section class=\"wedding-party\" role=\"region\" aria-label=\"Ban đại diện\"><div class=\"party-grid\"><article class=\"party-card\"><div class=\"avatar-frame\"><div class=\"frame-rot-1\"></div><div class=\"frame-rot-2\"></div><div class=\"avatar-bubble\">🤵</div></div><p class=\"role-label\">Phù rể chính</p><h3 class=\"member-name\">Phạm Văn A</h3><p class=\"member-duty\">&ldquo;Đồng hành cùng chú rể&rdquo;</p></article></div></section>",
+      "css": ".wedding-party { padding: 4rem 1rem; } .party-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem; } .party-card { position: relative; background: rgba(12,18,35,0.84); border: 1px solid rgba(244,228,193,0.14); padding: 2.5rem 2rem; text-align: center; border-radius: 3.5rem 3.5rem 12px 12px; transition: transform .3s, box-shadow .3s; } .party-card:hover { transform: scale(1.02); box-shadow: 0 18px 60px rgba(212,165,116,.18); } .avatar-frame { position: relative; width: 112px; height: 112px; margin: 0 auto 2rem; } .frame-rot-1 { position: absolute; inset: 0; border: 1px solid rgba(212,165,116,.3); border-radius: 16px; transform: rotate(6deg); transition: transform .5s; } .frame-rot-2 { position: absolute; inset: 0; border: 1px solid rgba(244,228,193,.5); border-radius: 16px; transform: rotate(-6deg); transition: transform .5s; } .party-card:hover .frame-rot-1 { transform: rotate(12deg); } .party-card:hover .frame-rot-2 { transform: rotate(-12deg); } .avatar-bubble { position: relative; width: 96px; height: 96px; margin: 8px; background: linear-gradient(135deg,#1a2332,#0a0e27); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 2.25rem; box-shadow: inset 0 2px 8px rgba(244,228,193,.1); } .role-label { font-family: monospace; font-size: 10px; letter-spacing: .25em; text-transform: uppercase; color: #d4a574; } .member-name { font-family: 'Playfair Display', Georgia, serif; font-size: 1.75rem; font-weight: 500; color: #fff8ee; margin: .5rem 0; } .party-card:hover .member-name { color: #f4e4c1; } .member-duty { color: rgba(255,248,238,.7); font-size: 1rem; line-height: 1.75; font-style: italic; }"
+    },
+    {
+      "name": "Hero Section",
+      "kind": "custom",
+      "refersTo": "hero-section",
+      "description": "Bold asymmetric editorial hero with monumental typography, overlapping script ampersand, and right-aligned event details.",
+      "html": "<section class=\"hero\" aria-labelledby=\"hero-heading\"><div class=\"hero-inner\"><div class=\"hero-left\"><p class=\"hero-kicker\">Save The Date</p><h1 id=\"hero-heading\"><span class=\"groom-name\">Hoàng Hiếu</span><span class=\"ampersand\">&amp;</span><span class=\"bride-name\">Kim Liên</span></h1></div><div class=\"hero-right\"><p class=\"event-title\">Lễ Thành Hôn</p><time>25.10.2026</time></div></div></section>",
+      "css": ".hero { position: relative; min-height: 100dvh; overflow: hidden; } .hero-inner { position: relative; z-index: 10; display: flex; min-height: 100dvh; align-items: center; max-width: 1280px; margin: 0 auto; padding: 0 3rem; flex-direction: column; gap: 2rem; } @media (min-width: 1024px) { .hero-inner { flex-direction: row; align-items: flex-end; justify-content: space-between; } } .hero-left { flex: 1; max-width: 48rem; } .hero-kicker { font-family: monospace; font-size: .75rem; letter-spacing: .35em; text-transform: uppercase; color: #d4a574; margin-bottom: 1.5rem; } .groom-name { display: block; font-family: 'Playfair Display', Georgia, serif; font-size: clamp(4rem, 10vw, 10rem); font-weight: 700; letter-spacing: -.03em; color: #f4e4c1; line-height: .85; } .ampersand { display: block; font-family: 'Great Vibes', cursive; font-size: clamp(4rem, 11vw, 11rem); color: #d4a574; line-height: 1; margin-top: -0.25em; } .bride-name { display: block; text-align: right; font-family: 'Playfair Display', Georgia, serif; font-size: clamp(2.5rem, 7.5vw, 7.5rem); font-weight: 500; letter-spacing: -.02em; color: #fff8ee; line-height: .9; } .hero-right { flex-shrink: 0; text-align: left; } @media (min-width: 1024px) { .hero-right { align-self: flex-end; padding-bottom: 1.5rem; padding-left: 2rem; } } .event-title { font-family: monospace; font-size: .75rem; letter-spacing: .25em; text-transform: uppercase; color: #d4a574; } .hero-right time { display: block; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.5rem; color: #fff8ee; margin-top: .5rem; }"
+    },
+    {
+      "name": "Love Story Timeline",
+      "kind": "custom",
+      "refersTo": "love-story",
+      "description": "Bold asymmetrical zigzag love story timeline with editorial typography and numbered milestone watermarks.",
+      "html": "<section class=\"love-story\" aria-labelledby=\"story-heading\"><h2 id=\"story-heading\">Câu Chuyện Tình Yêu</h2><div class=\"timeline-zigzag\"><article class=\"milestone-card\"><div class=\"milestone-number\">01</div><div class=\"milestone-emoji\">💫</div><p class=\"milestone-date\">2022 // FIRST_SPARK</p><h3>Năm Ấy, Chúng Mình Bắt Đầu</h3><p class=\"milestone-desc\">&ldquo;Chúng mình bước vào cuộc đời nhau.&rdquo;</p></article><article class=\"milestone-card\"><div class=\"milestone-number\">02</div><div class=\"milestone-emoji\">✈️</div><p class=\"milestone-date\">2023 // THE_DEPARTURE</p><h3>Ngày Em Sang Nhật</h3><p class=\"milestone-desc\">&ldquo;Học cách thương một người qua màn hình điện thoại.&rdquo;</p></article></div></section>",
+      "css": ".love-story { padding: 4rem 1rem; position: relative; } .timeline-zigzag { max-width: 72rem; margin: 0 auto; display: flex; flex-direction: column; gap: 4rem; } .milestone-card { position: relative; background: rgba(26,35,50,0.72); border: 1px solid rgba(244,228,193,0.14); border-radius: 2rem; padding: 2.5rem; width: 100%; max-width: 42rem; transition: border-color .3s, box-shadow .3s; } @media (min-width: 768px) { .milestone-card:nth-child(odd) { margin-right: auto; } .milestone-card:nth-child(even) { margin-left: auto; } } .milestone-card:hover { border-color: rgba(244,228,193,0.4); } .milestone-number { position: absolute; top: -1rem; right: .5rem; font-family: 'Great Vibes', cursive; font-size: 6rem; line-height: 1; color: rgba(244,228,193,0.08); pointer-events: none; user-select: none; } @media (min-width: 640px) { .milestone-number { font-size: 8rem; } } .milestone-emoji { font-size: 1.5rem; margin-bottom: 1rem; display: block; } .milestone-date { font-family: monospace; font-size: 10px; letter-spacing: .25em; text-transform: uppercase; color: #d4a574; margin-bottom: 1.25rem; } .milestone-card h3 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.5rem; font-weight: 500; color: #fff8ee; line-height: 1.3; } @media (min-width: 768px) { .milestone-card h3 { font-size: 1.75rem; } } .milestone-desc { margin-top: 1rem; color: rgba(255,248,238,.7); font-size: 1rem; line-height: 1.75; font-style: italic; max-width: 65ch; }"
+    },
+    {
+      "name": "Schedule Timeline",
+      "kind": "custom",
+      "refersTo": "schedule",
+      "description": "Bold schedule timeline with ceremonial icons, vertical connector line, and editorial time display.",
+      "html": "<section class=\"schedule\" aria-labelledby=\"schedule-heading\"><h2>Lịch Trình Trong Ngày</h2><div class=\"schedule-timeline\"><div class=\"schedule-item\"><div class=\"schedule-dot\">🏮</div><div class=\"schedule-content\"><p class=\"schedule-time\">07:00 - 08:30</p><div class=\"schedule-card\"><h3>Lễ Vu Quy tại nhà gái</h3><p>Cô dâu từ giã tổ tiên và gia đình.</p></div></div></div></div></section>",
+      "css": ".schedule { padding: 4rem 1rem; } .schedule-timeline { max-width: 56rem; margin: 0 auto; } .schedule-item { display: flex; gap: 1.5rem; align-items: flex-start; } @media (min-width: 768px) { .schedule-item { gap: 2.5rem; } } .schedule-dot { position: relative; z-index: 10; display: flex; width: 56px; height: 56px; align-items: center; justify-content: center; border-radius: 9999px; border: 1px solid var(--accent-soft); background: var(--bg); font-size: 1.25rem; flex-shrink: 0; } @media (min-width: 768px) { .schedule-dot { width: 64px; height: 64px; font-size: 1.5rem; } } .schedule-content { flex: 1; padding-bottom: 2rem; } .schedule-time { font-family: monospace; font-size: .75rem; letter-spacing: .2em; text-transform: uppercase; color: #d4a574; margin-bottom: .75rem; } .schedule-card { background: rgba(26,35,50,0.72); border: 1px solid rgba(244,228,193,0.14); border-radius: 1rem; padding: 1.5rem; transition: border-color .3s; } @media (min-width: 768px) { .schedule-card { padding: 2rem; } } .schedule-card:hover { border-color: rgba(212,165,116,0.3); } .schedule-card h3 { font-family: 'Playfair Display', Georgia, serif; font-weight: 500; line-height: 1.3; color: #fff8ee; font-size: 1.25rem; } @media (min-width: 768px) { .schedule-card h3 { font-size: 1.5rem; } } .schedule-card p { color: rgba(255,248,238,0.7); margin-top: .75rem; line-height: 1.7; }"
+    },
+    {
+      "name": "Venue Section",
+      "kind": "custom",
+      "refersTo": "venue",
+      "description": "Bold venue cards with decorative top bar, embedded Google Maps, and directions CTA.",
+      "html": "<section class=\"venue-section\" aria-labelledby=\"venue-heading\"><h2>Nơi hân hạnh đón tiếp</h2><div class=\"venue-grid\"><div class=\"venue-card\"><div class=\"venue-bar\"></div><h3>Tư gia nhà gái</h3><div class=\"venue-divider\"></div><p class=\"venue-address\">An Lạc, Vụ Bản, Ninh Bình</p><a class=\"venue-link\">Xem chỉ dẫn đường đi</a></div></div></section>",
+      "css": ".venue-section { padding: 4rem 1rem; } .venue-grid { display: grid; gap: 2rem; } @media (min-width: 768px) { .venue-grid { grid-template-columns: 1fr 1fr; } } .venue-card { position: relative; overflow: hidden; border: 1px solid rgba(244,228,193,0.14); border-radius: 2rem; background: rgba(26,35,50,0.72); padding: 2rem; transition: border-color .3s, box-shadow .3s; } .venue-card:hover { border-color: rgba(212,165,116,0.3); box-shadow: 0 18px 60px rgba(212,165,116,.18); } .venue-bar { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, rgba(212,165,116,0.6), transparent); } .venue-card h3 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.5rem; font-weight: 500; color: #f4e4c1; } @media (min-width: 768px) { .venue-card h3 { font-size: 1.75rem; } } .venue-divider { height: 1px; width: 4rem; background: rgba(212,165,116,0.3); margin: 1.25rem 0; } .venue-address { color: rgba(255,248,238,0.7); font-family: 'Cormorant Garamond', Georgia, serif; line-height: 1.75; } .venue-link { display: inline-flex; align-items: center; gap: .5rem; margin-top: 1.5rem; padding: .75rem 1.5rem; border-radius: 9999px; border: 1px solid rgba(244,228,193,0.14); background: #0a0e27; color: #f4e4c1; font-size: .875rem; transition: all .3s; text-decoration: none; } .venue-link:hover { border-color: #d4a574; background: #f4e4c1; color: #0a0e27; }"
+    },
+    {
+      "name": "Travel Guidance",
+      "kind": "custom",
+      "refersTo": "travel",
+      "description": "Travel guidance cards with icon badges, summary labels, and hover effects.",
+      "html": "<section class=\"travel-section\" aria-labelledby=\"travel-heading\"><h2>Di chuyển & Lưu trú</h2><div class=\"travel-stack\"><article class=\"travel-card\"><div class=\"travel-icon\">🚖</div><div><h3>Di chuyển bằng xe riêng</h3><p class=\"travel-summary\">NINH BÌNH</p></div><p class=\"travel-desc\">Xe từ Hà Nội đi Ninh Bình mất khoảng 1.5 tiếng.</p></article></div></section>",
+      "css": ".travel-section { } .travel-stack { display: flex; flex-direction: column; gap: 1.25rem; } .travel-card { position: relative; overflow: hidden; border: 1px solid rgba(244,228,193,0.14); border-radius: 1rem; background: rgba(26,35,50,0.72); padding: 1.5rem; transition: border-color .3s, box-shadow .3s; } .travel-card:hover { border-color: rgba(212,165,116,0.3); box-shadow: 0 18px 60px rgba(212,165,116,.18); } .travel-icon { display: flex; width: 2.5rem; height: 2.5rem; align-items: center; justify-content: center; border-radius: .75rem; background: #1a2332; border: 1px solid rgba(244,228,193,0.14); font-size: 1.125rem; } .travel-card h3 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.25rem; font-weight: 500; color: #f4e4c1; } .travel-summary { font-family: monospace; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: #d4a574; margin-top: .25rem; } .travel-desc { color: rgba(255,248,238,.7); font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1rem; line-height: 1.75; margin-top: 1rem; }"
+    },
+    {
+      "name": "Gift Section",
+      "kind": "custom",
+      "refersTo": "gift",
+      "description": "Bold gift cards with QR code, emoji label, decorative top bar, and bank details.",
+      "html": "<section class=\"gift-section\" aria-labelledby=\"gift-heading\"><h2>Mừng Cưới</h2><div class=\"gift-grid\"><article class=\"gift-card\"><div class=\"gift-bar\"></div><div class=\"gift-header\"><span>🤵</span><span class=\"gift-label\">Mừng cưới chú rể</span></div><div class=\"gift-qr\"><img src=\"/api/qr\" alt=\"QR\" width=\"220\" height=\"266\" /></div><div class=\"gift-divider\"></div><p class=\"gift-bank\">VIETCOMBANK</p><div class=\"gift-account-box\"><span class=\"gift-account-number\">1012 880 445</span></div><p class=\"gift-name\">HOÀNG HIẾU</p></article></div></section>",
+      "css": ".gift-section { padding: 4rem 1rem; position: relative; } .gift-grid { display: grid; gap: 2rem; } @media (min-width: 768px) { .gift-grid { grid-template-columns: 1fr 1fr; } } .gift-card { position: relative; overflow: hidden; border: 1px solid rgba(244,228,193,0.14); border-radius: 2rem; background: rgba(26,35,50,0.72); padding: 2rem; text-align: center; transition: border-color .3s, box-shadow .3s; } .gift-card:hover { border-color: rgba(212,165,116,0.3); box-shadow: 0 18px 60px rgba(212,165,116,.18); } .gift-bar { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, rgba(212,165,116,0.6), transparent); } .gift-header { display: flex; align-items: center; gap: .75rem; justify-content: center; margin-bottom: 1.5rem; } .gift-label { font-family: monospace; font-size: 10px; letter-spacing: .25em; text-transform: uppercase; color: #d4a574; } .gift-qr { display: inline-flex; padding: .75rem; border: 1px solid rgba(244,228,193,0.14); border-radius: 1rem; background: rgba(255,255,255,.05); margin-bottom: 1.5rem; } .gift-qr:hover { box-shadow: 0 0 40px rgba(244,228,193,.15); } .gift-qr img { width: 220px; max-width: 100%; border-radius: .5rem; } .gift-divider { height: 1px; width: 4rem; margin: 1.25rem auto; background: rgba(212,165,116,0.3); } .gift-bank { font-family: 'Playfair Display', Georgia, serif; font-size: 1.25rem; color: #fff8ee; } .gift-account-box { display: inline-flex; align-items: center; gap: .75rem; border-radius: 9999px; border: 1px solid rgba(244,228,193,0.14); background: #0a0e27; padding: .5rem 1.25rem; margin: .75rem 0; } .gift-account-number { font-family: monospace; font-size: .875rem; letter-spacing: .15em; color: #f4e4c1; } .gift-name { font-family: monospace; font-size: .75rem; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,248,238,.7); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Midnight Champagne & Starry Sky",
+    "overview": "Một phong cách thiết kế lãng mạn, sang trọng và giàu cảm xúc dành cho trang thông tin lễ cưới. Hệ thống kết hợp giữa sắc xanh sâu thẳm của bầu trời đêm (Midnight Navy) làm nền và ánh vàng champagne lung linh, ấm áp làm điểm nhấn.",
+    "keyCharacteristics": [
+      "Sự tương phản lung linh giữa vàng champagne và đêm tối sâu thẳm",
+      "Tính tối giản tinh tế giống như thiệp mời cao cấp",
+      "Hòa quyện tự nhiên với hiệu ứng chuyển động mượt mà"
+    ],
+    "rules": [
+      {
+        "name": "The Contrast Rule",
+        "body": "Mọi văn bản chính phải đạt độ tương phản tối thiểu 4.5:1 so với nền. Không sử dụng màu xám nhạt khó đọc trên nền tối.",
+        "section": "colors"
+      }
+    ],
+    "dos": [
+      "Đảm bảo văn bản chính luôn sử dụng màu Warm Silk White để có độ tương phản xuất sắc.",
+      "Tận dụng khoảng trống lớn (white space) giữa các phần để thiết kế có nhịp điệu."
+    ],
+    "donts": [
+      "Không sử dụng viền màu nổi bật ở một bên làm điểm nhấn cho các card thông tin.",
+      "Không sử dụng hiệu ứng chữ gradient.",
+      "Không lạm dụng glassmorphism quá đà trên toàn bộ trang web."
+    ]
+  }
+}
