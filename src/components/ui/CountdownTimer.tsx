@@ -52,7 +52,10 @@ export default function CountdownTimer() {
           className={`section-shell rounded-xl px-3 py-5 text-center sm:px-5 sm:py-7 reveal-hidden animate-fade-up`}
           style={{ animationDelay: `${(index + 5) * 100}ms` }}
         >
-          <div className="text-5xl leading-none font-display-serif font-semibold text-[var(--accent)] sm:text-6xl">
+          <div
+            suppressHydrationWarning
+            className="text-5xl leading-none font-display-serif font-semibold text-[var(--accent)] sm:text-6xl"
+          >
             {String(timeLeft[item.key]).padStart(2, "0")}
           </div>
           <div className="mt-3 font-mono text-[0.65rem] tracking-[0.3em] text-[var(--accent-soft)] sm:text-xs">

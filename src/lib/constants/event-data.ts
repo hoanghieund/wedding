@@ -37,6 +37,7 @@ const COUPLE_INFO = {
   brideGiftName: "KIM LIÊN",
   brideFullName: "Trần Thị Liên",
   combinedName: "Hoàng Hiếu & Kim Liên",
+  initials: "H&K",
 } as const;
 const TRANSFER_NOTE = "Mung cuoi Hoang Hieu Kim Lien";
 
@@ -79,6 +80,7 @@ export const EVENT_DATA = {
       name: COUPLE_INFO.brideName,
     },
     combinedName: COUPLE_INFO.combinedName,
+    initials: COUPLE_INFO.initials,
   },
   event: {
     name: `Lễ thành hôn ${COUPLE_INFO.combinedName}`,
@@ -167,6 +169,12 @@ export const EVENT_DATA = {
       heading: "Xem chỉ đường từ nhà trai đến nhà gái",
       description:
         "Mở Google Maps để xem lộ trình di chuyển chi tiết giữa hai địa điểm",
+    },
+    footer: {
+      thankYouEyebrow: "Lời Cảm Ơn",
+      thankYouMessage:
+        "Gia đình chúng tôi xin chân thành cảm ơn quý vị đã dành thời gian quý báu đến chung vui trong ngày trọng đại.",
+      backToTop: "Lên đầu trang",
     },
   },
   details: {
@@ -258,6 +266,7 @@ export const EVENT_DATA = {
   ],
   gifts: [
     {
+      type: "groom",
       title: "Mừng cưới chú rể",
       bank: "VIETCOMBANK",
       name: COUPLE_INFO.groomGiftName,
@@ -267,6 +276,7 @@ export const EVENT_DATA = {
       transferNote: TRANSFER_NOTE,
     },
     {
+      type: "bride",
       title: "Mừng cưới cô dâu",
       bank: "VIB",
       name: COUPLE_INFO.brideGiftName,

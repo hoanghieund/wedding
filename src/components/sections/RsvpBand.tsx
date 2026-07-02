@@ -110,7 +110,8 @@ export function RsvpBand() {
                       attendeeCount: Number(formState.attendeeCount),
                     }),
                   });
-                  const result = (await response.json()) as { ok?: boolean; error?: string };
+                  const rawResult = await response.json();
+                  const result = rawResult && typeof rawResult === "object" ? (rawResult as { ok?: boolean; error?: string }) : {};
 
                   if (!response.ok || !result.ok) {
                     setError(result.error || EVENT_DATA.rsvp.errors.submitFailed);

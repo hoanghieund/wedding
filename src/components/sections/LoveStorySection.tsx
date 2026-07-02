@@ -84,9 +84,6 @@ export default function LoveStorySection() {
                     ${!isLast && isOdd ? "md:mr-auto" : ""}
                     ${!isLast && !isOdd ? "md:ml-auto" : ""}
                   `}
-                  style={{
-                    transform: isInView ? "none" : "",
-                  }}
                 >
                   {/* Decorative script number watermark */}
                   <div
@@ -111,7 +108,7 @@ export default function LoveStorySection() {
                     <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--accent-soft)]">
                       {milestone.date}
                       <span className="text-[var(--text-secondary)] ml-2">
-                        // {milestone.code}
+                        {"// "}{milestone.code}
                       </span>
                     </span>
                   </div>

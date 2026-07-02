@@ -38,7 +38,7 @@ export function FaqSection() {
       className="space-y-10 relative py-4"
     >
       {/* Decorative background script */}
-      <div className="absolute left-1/2 top-0 -translate-x-1/2 pointer-events-none select-none text-[8rem] sm:text-[12rem] font-script text-[var(--accent)]/5 whitespace-nowrap z-0">
+      <div aria-hidden="true" className="absolute left-1/2 top-0 -translate-x-1/2 pointer-events-none select-none text-[8rem] sm:text-[12rem] font-script text-[var(--accent)]/5 whitespace-nowrap z-0">
         Hỏi Đáp
       </div>
 

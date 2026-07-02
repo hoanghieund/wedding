@@ -48,7 +48,7 @@ export default function GiftSection() {
       {/* Gift cards — bold two-column */}
       <div className="grid gap-8 md:grid-cols-2 relative z-10">
         {gifts.map((account, index) => {
-          const isGroom = account.title.includes("chú rể");
+          const isGroom = account.type === "groom";
           return (
             <article
               key={account.title}

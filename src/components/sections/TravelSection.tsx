@@ -6,9 +6,9 @@ import { useInView } from "@/hooks/useInView";
 const TRAVEL_ICONS: Record<string, string> = {
   "hà nội": "🚗",
   "bay": "✈️",
+  "xe máy": "🏍️",
   "xe": "🚖",
   "tàu": "🚂",
-  "xe máy": "🏍️",
   "taxi": "🚕",
 };
 

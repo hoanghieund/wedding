@@ -7,19 +7,18 @@ export function FooterSection() {
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[var(--accent-soft)]/50 to-transparent" />
 
       {/* Decorative script watermark */}
-      <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none text-[10rem] sm:text-[16rem] font-script text-[var(--accent)]/3 whitespace-nowrap z-0 leading-none">
-        H&K
+      <div aria-hidden="true" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none text-[10rem] sm:text-[16rem] font-script text-[var(--accent)]/3 whitespace-nowrap z-0 leading-none">
+        {COUPLE.initials}
       </div>
-
       <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col items-center gap-6 text-center">
 
           {/* Thank you message */}
           <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--accent-soft)]">
-            Lời Cảm Ơn
+            {EVENT_DATA.copy.footer.thankYouEyebrow}
           </p>
           <p className="font-body-serif text-lg leading-8 text-[var(--text-secondary)] max-w-md">
-            Gia đình chúng tôi xin chân thành cảm ơn quý vị đã dành thời gian quý báu đến chung vui trong ngày trọng đại.
+            {EVENT_DATA.copy.footer.thankYouMessage}
           </p>
 
           {/* Decorative divider */}
@@ -47,7 +46,7 @@ export function FooterSection() {
             <svg className="h-3.5 w-3.5 -rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
-            Lên đầu trang
+            {EVENT_DATA.copy.footer.backToTop}
           </a>
 
           {/* Copyright */}

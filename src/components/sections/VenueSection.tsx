@@ -73,6 +73,30 @@ function VenueCard({ venue, animationClassName }: { venue: VenueInfo; animationC
   );
 }
 
+function MapCard({ venue, embedUrl }: { venue: VenueInfo; embedUrl: string }) {
+  return (
+    <div className="overflow-hidden rounded-xl border border-[var(--border-soft)]">
+      <div className="flex items-center justify-between px-4 py-3 bg-[var(--surface)] border-b border-[var(--border-soft)]">
+        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--accent-soft)]">
+          {venue.timeLabel}
+        </span>
+        <span className="font-display-serif text-sm text-[var(--accent)]">{venue.venueName}</span>
+      </div>
+      <div className="aspect-[16/9] w-full bg-[var(--bg-deep)]">
+        <iframe
+          title={venue.mapTitle}
+          src={embedUrl}
+          width="100%"
+          height="100%"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          className="w-full h-full border-0 min-h-[200px]"
+        />
+      </div>
+    </div>
+  );
+}
+
 export function VenueSection({ groomVenue, brideVenue }: VenueSectionProps) {
   const { ref, isInView } = useInView(0.1);
 
@@ -130,47 +154,8 @@ export function VenueSection({ groomVenue, brideVenue }: VenueSectionProps) {
         <div className="p-6 md:p-8 space-y-6">
           {/* Map grid */}
           <div className="grid gap-4 md:grid-cols-2">
-            <div className="overflow-hidden rounded-xl border border-[var(--border-soft)]">
-              <div className="flex items-center justify-between px-4 py-3 bg-[var(--surface)] border-b border-[var(--border-soft)]">
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--accent-soft)]">
-                  {brideVenue.timeLabel}
-                </span>
-                <span className="font-display-serif text-sm text-[var(--accent)]">{brideVenue.venueName}</span>
-              </div>
-              <div className="aspect-[16/9] w-full bg-[var(--bg-deep)]">
-                <iframe
-                  title={brideVenue.mapTitle}
-                  src={brideMapEmbedUrl}
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0, minHeight: "200px" }}
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  className="w-full h-full"
-                />
-              </div>
-            </div>
-
-            <div className="overflow-hidden rounded-xl border border-[var(--border-soft)]">
-              <div className="flex items-center justify-between px-4 py-3 bg-[var(--surface)] border-b border-[var(--border-soft)]">
-                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--accent-soft)]">
-                  {groomVenue.timeLabel}
-                </span>
-                <span className="font-display-serif text-sm text-[var(--accent)]">{groomVenue.venueName}</span>
-              </div>
-              <div className="aspect-[16/9] w-full bg-[var(--bg-deep)]">
-                <iframe
-                  title={groomVenue.mapTitle}
-                  src={groomMapEmbedUrl}
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0, minHeight: "200px" }}
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  className="w-full h-full"
-                />
-              </div>
-            </div>
+            <MapCard venue={brideVenue} embedUrl={brideMapEmbedUrl} />
+            <MapCard venue={groomVenue} embedUrl={groomMapEmbedUrl} />
           </div>
 
           {/* Directions CTA */}

@@ -29,16 +29,14 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
   const total = images.length;
 
   const handlePrev = useCallback(() => {
-    if (lightboxIndex === null) return;
     setLightboxIndex((prev) => (prev !== null ? (prev - 1 + total) % total : null));
     setIsZoomed(false);
-  }, [lightboxIndex, total]);
+  }, [total]);
 
   const handleNext = useCallback(() => {
-    if (lightboxIndex === null) return;
     setLightboxIndex((prev) => (prev !== null ? (prev + 1) % total : null));
     setIsZoomed(false);
-  }, [lightboxIndex, total]);
+  }, [total]);
 
   const handleClose = useCallback(() => {
     setLightboxIndex(null);
