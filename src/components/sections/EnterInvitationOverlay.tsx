@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { COUPLE_NAMES, EVENT_DATA, HERO_IMAGE } from "@/lib/constants/event-data";
 
 const PARTICLES = Array.from({ length: 30 }, (_, index) => ({
@@ -14,6 +14,7 @@ const PARTICLES = Array.from({ length: 30 }, (_, index) => ({
 export default function EnterInvitationOverlay() {
   const [opened, setOpened] = useState(false);
   const [prefersReduced, setPrefersReduced] = useState(false);
+  const openButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -40,6 +41,12 @@ export default function EnterInvitationOverlay() {
     };
   }, [opened]);
 
+  useEffect(() => {
+    if (!opened) {
+      openButtonRef.current?.focus();
+    }
+  }, [opened]);
+
   const handleOpen = () => {
     const audio = document.getElementById("bg-music") as HTMLAudioElement | null;
     if (audio) {
@@ -47,12 +54,28 @@ export default function EnterInvitationOverlay() {
     }
 
     setOpened(true);
+    requestAnimationFrame(() => {
+      document.getElementById("hero-heading")?.focus();
+    });
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Escape" || event.key === "Tab") {
+      event.preventDefault();
+      openButtonRef.current?.focus();
+    }
   };
 
   if (opened) return null;
 
   return (
-    <div className="fixed inset-0 z-[999] flex items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_top,rgba(244,228,193,0.08),transparent_30%),linear-gradient(180deg,#0a0e27_0%,#11182b_45%,#0d1323_100%)] px-6 text-center">
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="invitation-dialog-heading"
+      onKeyDown={handleKeyDown}
+      className="fixed inset-0 z-[999] flex items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_top,rgba(244,228,193,0.08),transparent_30%),linear-gradient(180deg,#0a0e27_0%,#11182b_45%,#0d1323_100%)] px-6 text-center"
+    >
       <div
         className={`absolute inset-0 bg-cover bg-center opacity-15 blur-sm ${prefersReduced ? "" : "animate-slow-zoom"}`}
         style={{ backgroundImage: `url(${HERO_IMAGE.src})` }}
@@ -85,7 +108,7 @@ export default function EnterInvitationOverlay() {
             </div>
 
             <div className={`space-y-3 ${prefersReduced ? "" : "animate-fade-in-up"}`} style={{ animationDelay: prefersReduced ? undefined : "0.4s" }}>
-              <h1 className="font-script text-5xl leading-[1.12] text-[var(--accent)] drop-shadow-[0_2px_20px_rgba(212,165,116,0.25)] sm:text-6xl">
+              <h1 id="invitation-dialog-heading" className="font-script text-5xl leading-[1.12] text-[var(--accent)] drop-shadow-[0_2px_20px_rgba(212,165,116,0.25)] sm:text-6xl">
                 {COUPLE_NAMES.split(" & ").map((part, i) => (
                   <span key={i} className="block text-center">{part}</span>
                 ))}
@@ -103,8 +126,9 @@ export default function EnterInvitationOverlay() {
 
             <button
               type="button"
+              ref={openButtonRef}
               onClick={handleOpen}
-              className={`group pointer-events-auto relative z-50 mx-auto mt-6 block cursor-pointer overflow-hidden rounded-full border border-[var(--accent-soft)] bg-gradient-to-br from-[var(--accent-soft)] to-[var(--accent)] px-10 py-4 font-body-serif text-base tracking-[0.15em] text-[var(--bg)] shadow-[0_0_40px_rgba(212,165,116,0.35)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_70px_rgba(244,228,193,0.35)] ${prefersReduced ? "" : "animate-pulse-button"}`}
+              className={`focus-ring-accent group pointer-events-auto relative z-50 mx-auto mt-6 block cursor-pointer overflow-hidden rounded-full border border-[var(--accent-soft)] bg-gradient-to-br from-[var(--accent-soft)] to-[var(--accent)] px-10 py-4 font-body-serif text-base tracking-[0.15em] text-[var(--bg)] shadow-[0_0_40px_rgba(212,165,116,0.35)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_70px_rgba(244,228,193,0.35)] ${prefersReduced ? "" : "animate-pulse-button"}`}
               style={{ animationDelay: prefersReduced ? undefined : "1s" }}
             >
               <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 group-hover:translate-x-full" />

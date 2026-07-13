@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useInView } from "@/hooks/useInView";
 import { CALENDAR_EVENT, EVENT_DATA, type AttendanceStatus } from "@/lib/constants/event-data";
 import { buildGoogleCalendarUrl } from "@/lib/formatters/calendar";
+import { WeddingIcon, type WeddingIconName } from "@/components/ui/WeddingIcon";
 
 type RsvpFormState = {
   guestName: string;
@@ -21,10 +22,10 @@ const initialFormState: RsvpFormState = {
   website: "",
 };
 
-const STATUS_ICONS: Record<AttendanceStatus, string> = {
-  attending: "✅",
-  not_attending: "❌",
-  maybe: "🤔",
+const STATUS_ICONS: Record<AttendanceStatus, WeddingIconName> = {
+  attending: "check",
+  not_attending: "cross",
+  maybe: "help",
 };
 
 export function RsvpBand() {
@@ -53,7 +54,7 @@ export function RsvpBand() {
       className="relative overflow-hidden border-t border-[var(--border-soft)] py-20 sm:py-24 lg:py-28"
     >
       {/* Decorative script watermark */}
-      <div className="absolute left-1/2 top-0 -translate-x-1/2 pointer-events-none select-none text-[8rem] sm:text-[14rem] font-script text-[var(--accent)]/5 whitespace-nowrap z-0">
+      <div aria-hidden="true" className="absolute left-1/2 top-0 -translate-x-1/2 pointer-events-none select-none text-[8rem] sm:text-[14rem] font-script text-[var(--accent)]/5 whitespace-nowrap z-0">
         Xác Nhận
       </div>
 
@@ -67,7 +68,7 @@ export function RsvpBand() {
           </p>
           <h2
             id="rsvp-heading"
-            className="font-script text-5xl text-[var(--accent)] sm:text-6xl"
+            className="chapter-title text-4xl sm:text-5xl"
           >
             {EVENT_DATA.copy.sections.rsvpTitle}
           </h2>
@@ -83,7 +84,7 @@ export function RsvpBand() {
             /* ——— Success state ——— */
             <div className="text-center py-8">
               <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[var(--accent)]/10 border-2 border-[var(--accent-soft)]/30">
-                <span className="text-4xl" aria-hidden="true">💌</span>
+                <WeddingIcon className="h-10 w-10" name="letter" />
               </div>
               <p className="font-display-serif text-2xl text-[var(--accent)] mb-3">
                 {EVENT_DATA.copy.sections.rsvpSuccessLabel}
@@ -96,6 +97,7 @@ export function RsvpBand() {
             /* ——— Form ——— */
             <form
               className="space-y-6"
+              aria-describedby={error ? "rsvp-submit-error" : undefined}
               onSubmit={async (event) => {
                 event.preventDefault();
                 setSubmitting(true);
@@ -140,13 +142,14 @@ export function RsvpBand() {
 
               {/* Guest name */}
               <fieldset className="space-y-1.5">
-                <label className="flex items-center gap-2">
-                  <span aria-hidden="true">👤</span>
+                <label htmlFor="rsvp-guest-name" className="flex items-center gap-2">
+                  <WeddingIcon className="h-4 w-4" name="person" />
                   <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--accent-soft)]">
                     {EVENT_DATA.rsvp.labels.guestName}
                   </span>
                 </label>
                 <input
+                  id="rsvp-guest-name"
                   type="text"
                   required
                   minLength={EVENT_DATA.rsvp.validation.minNameLength}
@@ -160,25 +163,27 @@ export function RsvpBand() {
 
               {/* Attendance status */}
               <fieldset className="space-y-1.5">
-                <label className="flex items-center gap-2">
-                  <span aria-hidden="true">💬</span>
+                <span id="rsvp-attendance-status" className="flex items-center gap-2">
+                  <WeddingIcon className="h-4 w-4" name="chat" />
                   <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--accent-soft)]">
                     {EVENT_DATA.rsvp.labels.attendanceStatus}
                   </span>
-                </label>
-                <div className="grid grid-cols-3 gap-2">
+                </span>
+                <div className="grid grid-cols-3 gap-2" role="radiogroup" aria-labelledby="rsvp-attendance-status">
                   {(Object.entries(EVENT_DATA.rsvp.attendanceStatuses) as [AttendanceStatus, string][]).map(([value, label]) => (
                     <button
                       key={value}
                       type="button"
+                      role="radio"
+                      aria-checked={formState.attendanceStatus === value}
                       onClick={() => updateFormField("attendanceStatus", value)}
-                      className={`flex flex-col items-center gap-1 rounded-xl border px-3 py-3 text-xs transition-all duration-300 ${
+                      className={`focus-ring-accent flex min-h-[44px] flex-col items-center gap-1 rounded-xl border px-3 py-3 text-xs transition-all duration-300 ${
                         formState.attendanceStatus === value
-                          ? "border-[var(--accent-soft)] bg-[var(--accent)]/10 text-[var(--accent)]"
+                          ? "border-[var(--accent-soft)] bg-[var(--accent)]/10 text-[var(--accent)] ring-1 ring-[var(--accent-soft)]/70"
                           : "border-[var(--border-soft)] bg-[var(--bg)] text-[var(--text-secondary)] hover:border-[var(--border-soft)]/80"
                       }`}
                     >
-                      <span className="text-lg">{STATUS_ICONS[value]}</span>
+                      <WeddingIcon className="h-5 w-5" name={STATUS_ICONS[value]} />
                       <span className="font-mono text-[10px] uppercase tracking-[0.1em]">
                         {label}
                       </span>
@@ -189,13 +194,14 @@ export function RsvpBand() {
 
               {/* Attendee count */}
               <fieldset className="space-y-1.5">
-                <label className="flex items-center gap-2">
-                  <span aria-hidden="true">👥</span>
+                <label htmlFor="rsvp-attendee-count" className="flex items-center gap-2">
+                  <WeddingIcon className="h-4 w-4" name="person" />
                   <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--accent-soft)]">
                     {EVENT_DATA.rsvp.labels.attendeeCount}
                   </span>
                 </label>
                 <select
+                  id="rsvp-attendee-count"
                   disabled={isNotAttending}
                   value={isNotAttending ? "0" : formState.attendeeCount}
                   onChange={(event) => updateFormField("attendeeCount", event.target.value)}
@@ -220,13 +226,14 @@ export function RsvpBand() {
 
               {/* Guest message */}
               <fieldset className="space-y-1.5">
-                <label className="flex items-center gap-2">
-                  <span aria-hidden="true">💌</span>
+                <label htmlFor="rsvp-message" className="flex items-center gap-2">
+                  <WeddingIcon className="h-4 w-4" name="gift" />
                   <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--accent-soft)]">
                     {EVENT_DATA.rsvp.labels.guestMessage}
                   </span>
                 </label>
                 <textarea
+                  id="rsvp-message"
                   maxLength={maxMsgLength}
                   value={formState.guestMessage}
                   onChange={(event) => updateFormField("guestMessage", event.target.value)}
@@ -234,19 +241,19 @@ export function RsvpBand() {
                   className="focus-ring-accent min-h-28 w-full rounded-xl border border-[var(--border-soft)] bg-[var(--bg)] px-4 py-3.5 text-[var(--text-primary)] outline-none transition placeholder:text-[var(--text-secondary)]/60 focus:border-[var(--accent-soft)]/40 resize-y"
                 />
                 <div className="flex justify-end">
-                  <span className={`font-mono text-[10px] tracking-wider ${
+                  <span aria-live="polite" className={`font-mono text-[10px] font-medium tracking-wider ${
                     msgLength > maxMsgLength * 0.9
                       ? "text-red-400"
                       : "text-[var(--text-secondary)]/50"
                   }`}>
-                    {msgLength}/{maxMsgLength}
+                    {msgLength}/{maxMsgLength} ký tự
                   </span>
                 </div>
               </fieldset>
 
               {/* Error */}
               {error ? (
-                <p className="rounded-xl border border-red-300/30 bg-red-950/30 px-4 py-3 text-sm leading-6 text-red-100">
+                <p id="rsvp-submit-error" role="alert" aria-live="assertive" className="rounded-xl border border-red-300/30 bg-red-950/30 px-4 py-3 text-sm leading-6 text-red-100">
                   {error}
                 </p>
               ) : null}
@@ -259,7 +266,7 @@ export function RsvpBand() {
               >
                 {submitting ? (
                   <span className="flex items-center justify-center gap-2">
-                    <svg className="h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none">
+                    <svg aria-hidden="true" className="h-5 w-5 animate-spin" viewBox="0 0 24 24" fill="none">
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                     </svg>
@@ -280,7 +287,7 @@ export function RsvpBand() {
               rel="noopener noreferrer"
               className="group inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-[var(--accent-soft)] transition hover:text-[var(--accent)]"
             >
-              <span aria-hidden="true">📅</span>
+              <WeddingIcon className="h-4 w-4" name="calendar" />
               <span className="underline decoration-[var(--accent-soft)]/30 underline-offset-4 group-hover:decoration-[var(--accent)]/50">
                 Thêm vào lịch
               </span>

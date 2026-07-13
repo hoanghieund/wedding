@@ -8,32 +8,50 @@ import { FAQStructuredData } from "@/components/seo/StructuredData";
 import { EVENT_CONFIG, EVENT_DATA, VENUE_GROOM, VENUE_BRIDE } from "@/lib/constants/event-data";
 import { getGalleryData } from "@/lib/gallery-data";
 
+function SectionPlaceholder({ className }: { className: string }) {
+  return (
+    <div
+      aria-hidden="true"
+      className={`section-shell rounded-[2rem] border border-[var(--border-soft)] bg-[var(--surface)] p-6 ${className}`}
+    >
+      <div className="mx-auto h-8 w-2/3 rounded bg-[var(--bg-elevated)]/70" />
+      <div className="mx-auto mt-6 h-px w-24 bg-[var(--border-soft)]" />
+      <div className="mx-auto mt-8 h-4 w-5/6 rounded bg-[var(--bg-elevated)]/60" />
+      <div className="mx-auto mt-3 h-4 w-2/3 rounded bg-[var(--bg-elevated)]/60" />
+      <div className="mt-10 grid gap-4 sm:grid-cols-2">
+        <div className="h-24 rounded-xl border border-[var(--border-soft)] bg-[var(--bg-elevated)]/40" />
+        <div className="h-24 rounded-xl border border-[var(--border-soft)] bg-[var(--bg-elevated)]/40" />
+      </div>
+    </div>
+  );
+}
+
 const LoveStorySection = dynamic(() => import("@/components/sections/LoveStorySection"), {
-  loading: () => <div className="h-40" />,
+  loading: () => <SectionPlaceholder className="h-[44rem] sm:h-[52rem]" />,
 });
 const GalleryTeaserSection = dynamic(() => import("@/components/sections/GalleryTeaserSection"), {
-  loading: () => <div className="h-40" />,
+  loading: () => <SectionPlaceholder className="h-[32rem] sm:h-[38rem]" />,
 });
 const ScheduleSection = dynamic(() => import("@/components/sections/ScheduleSection"), {
-  loading: () => <div className="h-40" />,
+  loading: () => <SectionPlaceholder className="h-[48rem] sm:h-[56rem]" />,
 });
 const WeddingPartySection = dynamic(() => import("@/components/sections/WeddingPartySection"), {
-  loading: () => <div className="h-40" />,
+  loading: () => <SectionPlaceholder className="h-[38rem] sm:h-[44rem]" />,
 });
 const GiftSection = dynamic(() => import("@/components/sections/GiftSection"), {
-  loading: () => <div className="h-40" />,
+  loading: () => <SectionPlaceholder className="h-[40rem] sm:h-[48rem]" />,
 });
 const VenueSection = dynamic(() => import("@/components/sections/VenueSection").then(m => ({ default: m.VenueSection })), {
-  loading: () => <div className="h-40" />,
+  loading: () => <SectionPlaceholder className="h-[42rem] sm:h-[50rem]" />,
 });
 const TravelSection = dynamic(() => import("@/components/sections/TravelSection").then(m => ({ default: m.TravelSection })), {
-  loading: () => <div className="h-40" />,
+  loading: () => <SectionPlaceholder className="h-[30rem] sm:h-[36rem]" />,
 });
 const FaqSection = dynamic(() => import("@/components/sections/FaqSection").then(m => ({ default: m.FaqSection })), {
-  loading: () => <div className="h-40" />,
+  loading: () => <SectionPlaceholder className="h-[32rem] sm:h-[40rem]" />,
 });
 const RsvpBand = dynamic(() => import("@/components/sections/RsvpBand").then(m => ({ default: m.RsvpBand })), {
-  loading: () => <div className="h-40" />,
+  loading: () => <SectionPlaceholder className="h-[42rem] sm:h-[50rem]" />,
 });
 export default async function Home() {
   const eventStructuredData = {

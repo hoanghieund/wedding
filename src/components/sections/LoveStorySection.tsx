@@ -2,14 +2,15 @@
 
 import { useInView } from "@/hooks/useInView";
 import { EVENT_DATA } from "@/lib/constants/event-data";
+import { WeddingIcon, type WeddingIconName } from "@/components/ui/WeddingIcon";
 
-const MILESTONE_EMOJIS: Record<string, string> = {
-  FIRST_SPARK: "💫",
-  THE_DEPARTURE: "✈️",
-  LONG_DISTANCE: "💌",
-  REUNION_TRIPS: "🗺️",
-  NEW_BEGINNING: "🌅",
-  WEDDING_DAY: "💍",
+const MILESTONE_ICONS: Record<string, WeddingIconName> = {
+  FIRST_SPARK: "sparkles",
+  THE_DEPARTURE: "plane",
+  LONG_DISTANCE: "letter",
+  REUNION_TRIPS: "map",
+  NEW_BEGINNING: "sunrise",
+  WEDDING_DAY: "ring",
 };
 
 export default function LoveStorySection() {
@@ -87,6 +88,7 @@ export default function LoveStorySection() {
                 >
                   {/* Decorative script number watermark */}
                   <div
+                    aria-hidden="true"
                     className={`
                       absolute pointer-events-none select-none font-script text-[6rem] sm:text-[8rem] md:text-[10rem] leading-none
                       ${isLast
@@ -100,11 +102,9 @@ export default function LoveStorySection() {
                     {String(index + 1).padStart(2, "0")}
                   </div>
 
-                  {/* Milestone emoji + date row */}
+                  {/* Milestone icon + date row */}
                   <div className="flex items-center gap-3 mb-5 relative z-10">
-                    <span className="text-2xl" aria-hidden="true">
-                      {MILESTONE_EMOJIS[milestone.code] ?? "✨"}
-                    </span>
+                    <WeddingIcon className="h-6 w-6" name={MILESTONE_ICONS[milestone.code] ?? "sparkles"} />
                     <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--accent-soft)]">
                       {milestone.date}
                       <span className="text-[var(--text-secondary)] ml-2">

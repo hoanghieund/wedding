@@ -2,6 +2,7 @@
 
 import { useInView } from "@/hooks/useInView";
 import { EVENT_DATA } from "@/lib/constants/event-data";
+import { WeddingIcon } from "@/components/ui/WeddingIcon";
 
 export default function WeddingPartySection() {
   const { ref, isInView } = useInView(0.1);
@@ -14,14 +15,14 @@ export default function WeddingPartySection() {
       className="space-y-16 py-12 relative overflow-hidden"
     >
       {/* Decorative background script */}
-      <div className="absolute left-1/2 top-0 -translate-x-1/2 pointer-events-none select-none text-[8rem] sm:text-[12rem] font-script text-[var(--accent)]/5 whitespace-nowrap z-0">
+      <div aria-hidden="true" className="absolute left-1/2 top-0 -translate-x-1/2 pointer-events-none select-none text-[8rem] sm:text-[12rem] font-script text-[var(--accent)]/5 whitespace-nowrap z-0">
         Wedding Party
       </div>
 
       <div className="mx-auto max-w-3xl space-y-4 text-center relative z-10">
         <h2
           id="party-heading"
-          className={`chapter-title text-4xl sm:text-5.5xl transition-all duration-700 ${
+          className={`chapter-title text-4xl sm:text-5xl transition-all duration-700 ${
             isInView ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
           }`}
         >
@@ -51,7 +52,7 @@ export default function WeddingPartySection() {
               }`}
               style={{ animationDelay: `${index * 0.15}s` }}
             >
-              {/* Overlapping stylized frame for avatar/emoji */}
+              {/* Overlapping stylized frame for avatar */}
               <div className="relative mx-auto mb-8 h-28 w-28 flex items-center justify-center">
                 {/* Decorative gold rotated frame */}
                 <div className="absolute inset-0 border border-[var(--accent-soft)]/30 rounded-2xl rotate-6 group-hover:rotate-12 transition-transform duration-500" />
@@ -59,9 +60,7 @@ export default function WeddingPartySection() {
                 
                 {/* Inner bubble */}
                 <div className="relative flex h-24 w-24 items-center justify-center rounded-2xl bg-gradient-to-br from-[var(--bg-elevated)] to-[var(--bg)] shadow-[inset_0_2px_8px_rgba(244,228,193,0.1)]">
-                  <span className="text-4xl filter drop-shadow-[0_4px_8px_rgba(10,14,39,0.5)] transform group-hover:scale-110 transition-transform duration-300">
-                    {member.emoji}
-                  </span>
+                  <WeddingIcon className="h-10 w-10 filter drop-shadow-[0_4px_8px_rgba(10,14,39,0.5)] transition-transform duration-300 group-hover:scale-110" name="person" />
                 </div>
               </div>
 
@@ -70,7 +69,7 @@ export default function WeddingPartySection() {
                 <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-[var(--accent-soft)]">
                   {member.role}
                 </p>
-                <h3 className="text-2.5xl font-display-serif font-medium text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors duration-300">
+                <h3 className="text-2xl font-display-serif font-medium text-[var(--text-primary)] group-hover:text-[var(--accent)] transition-colors duration-300">
                   {member.name}
                 </h3>
               </div>

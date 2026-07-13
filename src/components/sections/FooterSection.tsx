@@ -24,7 +24,7 @@ export function FooterSection() {
           {/* Decorative divider */}
           <div className="flex items-center gap-3">
             <span className="h-px w-12 bg-[var(--accent-soft)]/30" />
-            <span className="text-xs text-[var(--accent-soft)]/50">✦</span>
+            <span aria-hidden="true" className="text-xs text-[var(--accent-soft)]/50">✦</span>
             <span className="h-px w-12 bg-[var(--accent-soft)]/30" />
           </div>
 

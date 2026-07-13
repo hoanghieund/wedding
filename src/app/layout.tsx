@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Great_Vibes, JetBrains_Mono, Playfair_Display } from "next/font/google";
 import { EVENT_DATA } from "@/lib/constants/event-data";
 import "./globals.css";
@@ -7,25 +7,34 @@ const playfairDisplay = Playfair_Display({
   subsets: ["latin", "vietnamese"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-display-serif",
+  display: "swap",
 });
 
 const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin", "vietnamese"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-body-serif",
+  display: "swap",
 });
 
 const greatVibes = Great_Vibes({
   subsets: ["latin", "vietnamese"],
   weight: "400",
   variable: "--font-script",
+  display: "swap",
 });
 
 const jetBrainsMono = JetBrains_Mono({
   subsets: ["latin", "vietnamese"],
   weight: ["400", "500", "700"],
   variable: "--font-mono",
+  display: "swap",
 });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(EVENT_DATA.site.baseUrl),

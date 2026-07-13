@@ -3,19 +3,20 @@
 import { useState } from "react";
 import { useInView } from "@/hooks/useInView";
 import { EVENT_DATA, FAQ_DATA } from "@/lib/constants/event-data";
+import { WeddingIcon, type WeddingIconName } from "@/components/ui/WeddingIcon";
 
-const FAQ_ICONS: Record<string, string> = {
-  "trang phục": "👔",
-  "xác nhận": "📅",
-  "tham dự": "📅",
+const FAQ_ICONS: Record<string, WeddingIconName> = {
+  "trang phục": "shirt",
+  "xác nhận": "calendar",
+  "tham dự": "calendar",
 };
 
-function getFaqIcon(question: string): string {
+function getFaqIcon(question: string): WeddingIconName {
   const lower = question.toLowerCase();
   for (const [key, icon] of Object.entries(FAQ_ICONS)) {
     if (lower.includes(key)) return icon;
   }
-  return "💡";
+  return "help";
 }
 
 export function FaqSection() {
@@ -25,10 +26,6 @@ export function FaqSection() {
   const toggleFaq = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
-
-  if (!FAQ_DATA || FAQ_DATA.length === 0) {
-    return null;
-  }
 
   return (
     <section
@@ -60,13 +57,20 @@ export function FaqSection() {
       </div>
 
       {/* FAQ accordion list */}
-      <div className="space-y-4 relative z-10 mx-auto max-w-3xl">
-        {FAQ_DATA.map((faq, index) => {
+      {FAQ_DATA.length === 0 ? (
+        <div className="relative z-10 mx-auto max-w-3xl rounded-2xl border border-dashed border-[var(--border-soft)] bg-[var(--surface)] px-6 py-12 text-center">
+          <p className="font-body-serif text-lg italic text-[var(--text-secondary)]">
+            Câu hỏi thường gặp sẽ được cập nhật sớm.
+          </p>
+        </div>
+      ) : (
+        <div className="space-y-4 relative z-10 mx-auto max-w-3xl">
+          {FAQ_DATA.map((faq, index) => {
           const questionId = `faq-question-${index}`;
           const answerId = `faq-answer-${index}`;
           const isOpen = openIndex === index;
 
-          return (
+            return (
             <div
               key={faq.question}
               className={`relative overflow-hidden rounded-2xl border border-[var(--border-soft)] bg-[var(--surface)] transition-all duration-500 ${
@@ -90,14 +94,15 @@ export function FaqSection() {
 
               <button
                 id={questionId}
+                type="button"
                 onClick={() => toggleFaq(index)}
                 className="focus-ring-accent group flex min-h-[60px] w-full items-center gap-4 px-6 py-4 text-left transition-all"
                 aria-expanded={isOpen}
                 aria-controls={answerId}
               >
-                {/* Emoji icon */}
+                {/* Decorative icon */}
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[var(--bg-elevated)] text-lg border border-[var(--border-soft)]" aria-hidden="true">
-                  {getFaqIcon(faq.question)}
+                  <WeddingIcon className="h-5 w-5" name={getFaqIcon(faq.question)} />
                 </span>
 
                 {/* Question text */}
@@ -143,9 +148,10 @@ export function FaqSection() {
                 </div>
               </div>
             </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
+      )}
     </section>
   );
 }

@@ -249,19 +249,16 @@ export const EVENT_DATA = {
       name: "Phạm Văn A",
       role: "Phù rể chính",
       duty: "Đồng hành cùng chú rể, hỗ trợ đón khách và giữ không khí buổi tiệc thật vui vẻ.",
-      emoji: "🤵",
     },
     {
       name: "Nguyễn Thị B",
-      role: "Phù dâu chính",
+      role: "Phù dâu",
       duty: "Luôn bên cạnh cô dâu, hỗ trợ chuẩn bị trang phục, nghi thức và những khoảnh khắc quan trọng.",
-      emoji: "👰",
     },
     {
       name: "Trần Văn C",
       role: "Người hỗ trợ tiệc cưới",
       duty: "Giúp kết nối khách mời, hỗ trợ hậu cần và cùng gia đình chăm chút cho ngày vui trọn vẹn.",
-      emoji: "🤵",
     },
   ],
   gifts: [

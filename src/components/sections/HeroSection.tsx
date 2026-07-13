@@ -30,7 +30,7 @@ export default function HeroSection() {
       <div className="absolute inset-0 bg-gradient-to-b from-[#0a0e27]/70 via-[#0a0e27]/20 to-[#0a0e27]/95" />
 
       {/* Decorative background script watermark */}
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none select-none text-[10rem] sm:text-[16rem] md:text-[20rem] font-script text-[var(--accent)]/4 leading-none z-0">
+      <div aria-hidden="true" className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none select-none text-[10rem] sm:text-[16rem] md:text-[20rem] font-script text-[var(--accent)]/4 leading-none z-0">
         {COUPLE.groom.name} &amp; {COUPLE.bride.name}
       </div>
 
@@ -50,7 +50,7 @@ export default function HeroSection() {
                 </p>
 
                 {/* Monumental groom name */}
-                <h1 id="hero-heading" className="relative">
+                <h1 id="hero-heading" tabIndex={-1} className="relative">
                   <span
                     className={`block text-7xl sm:text-8xl md:text-9xl lg:text-[8rem] xl:text-[10rem] font-bold tracking-tight text-[var(--accent)] leading-[0.85] transition-all duration-700 delay-150 ${
                       isInView ? "translate-x-0 opacity-100" : "-translate-x-12 opacity-0"
@@ -61,6 +61,7 @@ export default function HeroSection() {
 
                   {/* Decorative script "&" — overlapping and floating */}
                   <span
+                    aria-hidden="true"
                     className={`block relative -mt-4 sm:-mt-6 lg:-mt-8 xl:-mt-10 text-7xl sm:text-8xl md:text-9xl lg:text-[9rem] xl:text-[11rem] font-script text-[var(--accent-soft)] leading-none transition-all duration-700 delay-300 ${
                       isInView ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
                     }`}
@@ -103,10 +104,10 @@ export default function HeroSection() {
                 <CountdownTimer />
                 <a
                   href="#rsvp"
-                  className="group inline-flex items-center gap-3 rounded-full border border-[var(--border-soft)] bg-[var(--surface)] px-8 py-4 font-body-serif text-lg tracking-[0.15em] text-[var(--accent)] shadow-[var(--glow-soft)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_62px_rgba(244,228,193,0.26)] hover:border-[var(--accent-soft)]"
+                  className="focus-ring-accent group inline-flex items-center gap-3 rounded-full border border-[var(--border-soft)] bg-[var(--surface)] px-8 py-4 font-body-serif text-lg tracking-[0.15em] text-[var(--accent)] shadow-[var(--glow-soft)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_62px_rgba(244,228,193,0.26)] hover:border-[var(--accent-soft)]"
                 >
                   {EVENT_DATA.copy.hero.rsvpLabel}
-                  <span className="text-xl transition group-hover:translate-y-0.5">↓</span>
+                  <span aria-hidden="true" className="text-xl transition group-hover:translate-y-0.5">↓</span>
                 </a>
               </div>
             </div>

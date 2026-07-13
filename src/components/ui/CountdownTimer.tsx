@@ -45,10 +45,16 @@ export default function CountdownTimer() {
   }, []);
 
   return (
-    <div className="grid grid-cols-4 gap-3 sm:gap-5 md:gap-8">
+    <div
+      role="timer"
+      tabIndex={0}
+      aria-label={`Còn ${timeLeft.days} ngày, ${timeLeft.hours} giờ, ${timeLeft.mins} phút và ${timeLeft.secs} giây`}
+      className="grid grid-cols-4 gap-3 rounded-2xl focus-ring-accent sm:gap-5 md:gap-8"
+    >
       {countdownItems.map((item, index) => (
         <div
           key={item.key}
+          aria-hidden="true"
           className={`section-shell rounded-xl px-3 py-5 text-center sm:px-5 sm:py-7 reveal-hidden animate-fade-up`}
           style={{ animationDelay: `${(index + 5) * 100}ms` }}
         >

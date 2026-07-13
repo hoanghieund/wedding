@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useInView } from "@/hooks/useInView";
 import { EVENT_DATA } from "@/lib/constants/event-data";
+import { WeddingIcon } from "@/components/ui/WeddingIcon";
 
 
 export default function GiftSection() {
@@ -17,7 +18,7 @@ export default function GiftSection() {
       className="space-y-12 py-4 relative"
     >
       {/* Decorative background script */}
-      <div className="absolute left-1/2 top-0 -translate-x-1/2 pointer-events-none select-none text-[8rem] sm:text-[12rem] font-script text-[var(--accent)]/5 whitespace-nowrap z-0">
+      <div aria-hidden="true" className="absolute left-1/2 top-0 -translate-x-1/2 pointer-events-none select-none text-[8rem] sm:text-[12rem] font-script text-[var(--accent)]/5 whitespace-nowrap z-0">
         Mừng Cưới
       </div>
 
@@ -64,9 +65,7 @@ export default function GiftSection() {
 
               {/* Card label */}
               <div className="flex items-center justify-center gap-3 mb-6">
-                <span className="text-2xl" aria-hidden="true">
-                  {isGroom ? "🤵" : "👰"}
-                </span>
+                <WeddingIcon className="h-6 w-6" name={isGroom ? "groom" : "bride"} />
                 <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--accent-soft)]">
                   {account.title}
                 </span>

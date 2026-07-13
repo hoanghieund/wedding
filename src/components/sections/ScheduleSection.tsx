@@ -2,19 +2,20 @@
 
 import { SCHEDULE_ITEMS } from "@/lib/constants/event-data";
 import { useInView } from "@/hooks/useInView";
+import { WeddingIcon, type WeddingIconName } from "@/components/ui/WeddingIcon";
 
-const SCHEDULE_ICONS: Record<string, string> = {
-  "Lễ Vu Quy": "🏮",
-  "Rước dâu": "🚗",
-  "Lễ Thành Hôn": "💐",
-  "Tiệc mừng": "🍷",
+const SCHEDULE_ICONS: Record<string, WeddingIconName> = {
+  "Lễ Vu Quy": "lantern",
+  "Rước dâu": "car",
+  "Lễ Thành Hôn": "flower",
+  "Tiệc mừng": "wine",
 };
 
-function getIcon(title: string): string {
+function getIcon(title: string): WeddingIconName {
   for (const [key, icon] of Object.entries(SCHEDULE_ICONS)) {
     if (title.includes(key)) return icon;
   }
-  return "✨";
+  return "sparkles";
 }
 
 export default function ScheduleSection() {
@@ -73,7 +74,7 @@ export default function ScheduleSection() {
                     }
                   `}
                 >
-                  <span className="text-xl md:text-2xl">{icon}</span>
+                  <WeddingIcon className="h-6 w-6 md:h-7 md:w-7" name={icon} />
                 </div>
 
                 {/* Vertical connector line — hidden on last item */}

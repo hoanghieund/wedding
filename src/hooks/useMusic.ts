@@ -6,26 +6,20 @@ export function useMusic() {
   const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
-    const checkAndPlay = () => {
-      const audio = document.getElementById("bg-music") as HTMLAudioElement | null;
-      if (!audio) {
-        setTimeout(checkAndPlay, 100);
-        return;
-      }
+    const audio = document.getElementById("bg-music") as HTMLAudioElement | null;
+    if (!audio) return;
 
-      const playAudio = async () => {
-        try {
-          await audio.play();
-          setPlaying(true);
-        } catch (error) {
-          console.log("Autoplay blocked:", error);
-        }
-      };
+    const syncPlaying = () => setPlaying(!audio.paused);
+    syncPlaying();
+    audio.addEventListener("play", syncPlaying);
+    audio.addEventListener("pause", syncPlaying);
+    audio.addEventListener("ended", syncPlaying);
 
-      void playAudio();
+    return () => {
+      audio.removeEventListener("play", syncPlaying);
+      audio.removeEventListener("pause", syncPlaying);
+      audio.removeEventListener("ended", syncPlaying);
     };
-
-    checkAndPlay();
   }, []);
 
   const toggle = () => {
@@ -36,11 +30,9 @@ export function useMusic() {
     }
 
     if (audio.paused) {
-      void audio.play();
-      setPlaying(true);
+      void audio.play().catch(() => setPlaying(false));
     } else {
       audio.pause();
-      setPlaying(false);
     }
   };
 
