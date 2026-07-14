@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { useInView } from "@/hooks/useInView";
 import { WeddingIcon } from "@/components/ui/WeddingIcon";
 
@@ -95,6 +96,35 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
   }, [lightboxIndex, handleClose, handlePrev, handleNext]);
 
   useEffect(() => {
+    // Isolate background page content while lightbox is open.
+    // Use MutationObserver because React's hydration reconciliation may revert attributes.
+    const el = document.getElementById("page-content");
+    const observer = el ? new MutationObserver(() => {
+      const shouldBeInert = lightboxIndex !== null;
+      const isInert = el.hasAttribute("inert");
+      if (shouldBeInert !== isInert) {
+        if (shouldBeInert) {
+          el.setAttribute("inert", "");
+          el.setAttribute("aria-hidden", "true");
+        } else {
+          el.removeAttribute("inert");
+          el.removeAttribute("aria-hidden");
+        }
+      }
+    }) : null;
+    if (observer && el) observer.observe(el, { attributes: true, attributeFilter: ["inert", "aria-hidden"] });
+
+    // Apply initial state
+    if (el) {
+      if (lightboxIndex !== null) {
+        el.setAttribute("inert", "");
+        el.setAttribute("aria-hidden", "true");
+      } else {
+        el.removeAttribute("inert");
+        el.removeAttribute("aria-hidden");
+      }
+    };
+
     const wasOpen = wasLightboxOpenRef.current;
 
     if (lightboxIndex !== null) {
@@ -116,6 +146,13 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
     wasLightboxOpenRef.current = lightboxIndex !== null;
 
     return () => {
+      // Restore isolation on cleanup (component unmount while lightbox open)
+      if (observer) observer.disconnect();
+      const el = document.getElementById("page-content");
+      if (el) {
+        el.removeAttribute("inert");
+        el.removeAttribute("aria-hidden");
+      }
       if (lightboxIndex !== null) {
         document.body.style.overflow = previousOverflowRef.current;
       }
@@ -227,7 +264,7 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
       )}
 
       {/* Lightbox Overlay */}
-      {lightboxIndex !== null && (
+      {lightboxIndex !== null && typeof document !== "undefined" && createPortal((
         <div
           role="dialog"
           aria-modal="true"
@@ -306,7 +343,7 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
             {String(lightboxIndex + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
           </div>
         </div>
-      )}
+      ), document.body)}
     </section>
   );
 }

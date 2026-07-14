@@ -16,6 +16,41 @@ export default function EnterInvitationOverlay() {
   const [prefersReduced, setPrefersReduced] = useState(false);
   const openButtonRef = useRef<HTMLButtonElement>(null);
 
+  // Isolate background page content while the invitation overlay is visible
+  useEffect(() => {
+    const el = document.getElementById("page-content");
+    if (!el) return;
+
+    const update = () => {
+      if (opened) {
+        el.removeAttribute("inert");
+        el.removeAttribute("aria-hidden");
+      } else {
+        el.setAttribute("inert", "");
+        el.setAttribute("aria-hidden", "true");
+      }
+    };
+
+    // React may revert inert/aria-hidden during hydration reconciliation.
+    // Use a MutationObserver to re-apply the attributes whenever React removes them.
+    const observer = new MutationObserver(() => {
+      const shouldBeActive = !opened;
+      const isActive = el.hasAttribute("inert");
+      if (shouldBeActive !== isActive) {
+        update();
+      }
+    });
+    observer.observe(el, { attributes: true, attributeFilter: ["inert", "aria-hidden"] });
+
+    // Initial application
+    update();
+
+    return () => {
+      observer.disconnect();
+      el.removeAttribute("inert");
+      el.removeAttribute("aria-hidden");
+    };
+  }, [opened]);
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     const updatePreference = () => {

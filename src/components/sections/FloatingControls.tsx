@@ -37,7 +37,7 @@ export default function FloatingControls() {
           <path strokeLinecap="round" strokeLinejoin="round" d="M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1014.625 7.5H12m0-2.625A2.625 2.625 0 119.375 7.5H12m0-2.625A2.625 2.625 0 119.375 7.5H12m3.75 0h6.375a1.5 1.5 0 010 3H22.5m-16.125 0H4.125a1.5 1.5 0 010-3h1.5m6.375 0v9m0-9H12m-2.625 0h5.25" />
         </svg>
       </a>
-      <audio id="bg-music" loop preload="auto">
+      <audio id="bg-music" loop preload="none">
         <source src="/audio/wedding-music.mp3" type="audio/mpeg" />
       </audio>
     </div>
