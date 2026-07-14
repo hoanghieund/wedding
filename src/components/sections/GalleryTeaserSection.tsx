@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useInView } from "@/hooks/useInView";
+import { setPageModalIsolation } from "@/lib/modal-isolation";
 import { WeddingIcon } from "@/components/ui/WeddingIcon";
 
 import type { GalleryCategory } from "@/lib/gallery-data";
@@ -97,33 +98,9 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
 
   useEffect(() => {
     // Isolate background page content while lightbox is open.
-    // Use MutationObserver because React's hydration reconciliation may revert attributes.
-    const el = document.getElementById("page-content");
-    const observer = el ? new MutationObserver(() => {
-      const shouldBeInert = lightboxIndex !== null;
-      const isInert = el.hasAttribute("inert");
-      if (shouldBeInert !== isInert) {
-        if (shouldBeInert) {
-          el.setAttribute("inert", "");
-          el.setAttribute("aria-hidden", "true");
-        } else {
-          el.removeAttribute("inert");
-          el.removeAttribute("aria-hidden");
-        }
-      }
-    }) : null;
-    if (observer && el) observer.observe(el, { attributes: true, attributeFilter: ["inert", "aria-hidden"] });
-
-    // Apply initial state
-    if (el) {
-      if (lightboxIndex !== null) {
-        el.setAttribute("inert", "");
-        el.setAttribute("aria-hidden", "true");
-      } else {
-        el.removeAttribute("inert");
-        el.removeAttribute("aria-hidden");
-      }
-    };
+    if (lightboxIndex !== null) {
+      setPageModalIsolation(true);
+    }
 
     const wasOpen = wasLightboxOpenRef.current;
 
@@ -146,12 +123,8 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
     wasLightboxOpenRef.current = lightboxIndex !== null;
 
     return () => {
-      // Restore isolation on cleanup (component unmount while lightbox open)
-      if (observer) observer.disconnect();
-      const el = document.getElementById("page-content");
-      if (el) {
-        el.removeAttribute("inert");
-        el.removeAttribute("aria-hidden");
+      if (lightboxIndex !== null) {
+        setPageModalIsolation(false);
       }
       if (lightboxIndex !== null) {
         document.body.style.overflow = previousOverflowRef.current;
