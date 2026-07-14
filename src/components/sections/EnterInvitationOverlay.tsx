@@ -74,7 +74,7 @@ export default function EnterInvitationOverlay() {
       aria-modal="true"
       aria-labelledby="invitation-dialog-heading"
       onKeyDown={handleKeyDown}
-      className="fixed inset-0 z-[999] flex items-center justify-center overflow-hidden bg-[radial-gradient(circle_at_top,rgba(244,228,193,0.08),transparent_30%),linear-gradient(180deg,#0a0e27_0%,#11182b_45%,#0d1323_100%)] px-6 text-center"
+      className="fixed inset-0 z-[999] min-h-dvh max-h-dvh overflow-y-auto overflow-x-hidden bg-[radial-gradient(circle_at_top,rgba(244,228,193,0.08),transparent_30%),linear-gradient(180deg,#0a0e27_0%,#11182b_45%,#0d1323_100%)] px-6 py-6 text-center sm:py-8"
     >
       <div
         className={`absolute inset-0 bg-cover bg-center opacity-15 blur-sm ${prefersReduced ? "" : "animate-slow-zoom"}`}
@@ -99,6 +99,7 @@ export default function EnterInvitationOverlay() {
 
       <div className={`pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(244,228,193,0.08),transparent_70%)] ${prefersReduced ? "" : "animate-pulse-slow"}`} />
 
+      <div className="relative flex min-h-[calc(100dvh-3rem)] items-center justify-center sm:min-h-[calc(100dvh-4rem)]">
       <div className={`relative w-full max-w-[420px] ${prefersReduced ? "" : "animate-card-entrance"}`} style={{ perspective: "1200px" }}>
         <div className={`section-shell relative rounded-[2.25rem] px-8 py-10 shadow-[0_0_120px_rgba(212,165,116,0.24)] backdrop-blur-xl sm:px-10 sm:py-11 ${prefersReduced ? "" : "animate-card-float"}`}>
           <div className="relative z-10 space-y-5">
@@ -122,7 +123,7 @@ export default function EnterInvitationOverlay() {
 
             <p className={`mx-auto max-w-[280px] font-body-serif text-base leading-7 text-[var(--text-secondary)] ${prefersReduced ? "" : "animate-fade-in-up"}`} style={{ animationDelay: prefersReduced ? undefined : "0.8s" }}>
               {EVENT_DATA.copy.overlay.description}
-            </p>
+              </p>
 
             <button
               type="button"
@@ -134,6 +135,7 @@ export default function EnterInvitationOverlay() {
               <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
               <span className="relative z-10">{EVENT_DATA.copy.overlay.openButton}</span>
             </button>
+            </div>
           </div>
         </div>
       </div>

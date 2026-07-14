@@ -14,7 +14,7 @@ export default function HeroSection() {
       ref={ref}
       id="hero"
       aria-labelledby="hero-heading"
-      className="relative min-h-dvh w-full overflow-hidden"
+      className="relative min-h-dvh w-full overflow-x-hidden"
     >
       <Image
         src={HERO_IMAGE.src}
@@ -34,7 +34,7 @@ export default function HeroSection() {
         {COUPLE.groom.name} &amp; {COUPLE.bride.name}
       </div>
 
-      <div className="relative z-10 flex min-h-dvh items-center">
+      <div className="relative z-10 flex min-h-dvh items-center py-8 landscape:min-h-[calc(100dvh+12rem)] landscape:py-12">
         <div className="mx-auto w-full max-w-7xl px-6 sm:px-12 lg:px-16">
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 lg:gap-16">
             {/* Left: Names lockup — bold asymmetric typography */}
@@ -52,7 +52,7 @@ export default function HeroSection() {
                 {/* Monumental groom name */}
                 <h1 id="hero-heading" tabIndex={-1} className="relative">
                   <span
-                    className={`block text-7xl sm:text-8xl md:text-9xl lg:text-[8rem] xl:text-[10rem] font-bold tracking-tight text-[var(--accent)] leading-[0.85] transition-all duration-700 delay-150 ${
+                    className={`block text-7xl sm:text-8xl md:text-8xl lg:text-[8rem] xl:text-[10rem] font-bold tracking-tight text-[var(--accent)] leading-[0.85] transition-all duration-700 delay-150 ${
                       isInView ? "translate-x-0 opacity-100" : "-translate-x-12 opacity-0"
                     }`}
                   >
@@ -62,7 +62,7 @@ export default function HeroSection() {
                   {/* Decorative script "&" — overlapping and floating */}
                   <span
                     aria-hidden="true"
-                    className={`block relative -mt-4 sm:-mt-6 lg:-mt-8 xl:-mt-10 text-7xl sm:text-8xl md:text-9xl lg:text-[9rem] xl:text-[11rem] font-script text-[var(--accent-soft)] leading-none transition-all duration-700 delay-300 ${
+                    className={`block relative -mt-4 sm:-mt-6 lg:-mt-8 xl:-mt-10 text-7xl sm:text-8xl md:text-8xl lg:text-[9rem] xl:text-[11rem] font-script text-[var(--accent-soft)] leading-none transition-all duration-700 delay-300 ${
                       isInView ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
                     }`}
                   >

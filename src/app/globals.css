@@ -133,6 +133,12 @@ section[id] {
 .selection-accent::-moz-selection {
   background: rgba(212, 165, 116, 0.26);
 }
+/* Narrow landscape: ensure hero content has breathing room */
+@media (orientation: landscape) and (max-height: 520px) {
+  #hero .flex-1 {
+    padding-bottom: 2rem;
+  }
+}
 
 /* Animation Keyframes */
 @keyframes fade-up {
