@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { EVENT_DATA, WEDDING_DATE_ISO } from "@/lib/constants/event-data";
+import { EVENT_DATA } from "@/lib/constants/event-data";
 import { formatDateTime } from "@/lib/formatters/date-format";
 
 export const runtime = "edge";
@@ -71,7 +71,7 @@ export default async function Image() {
               color: "#78716c",
             }}
           >
-            {formatDateTime(WEDDING_DATE_ISO)} · {EVENT_DATA.venues.groom.addressLocality}
+            {formatDateTime(EVENT_DATA.event.startTime)} · {EVENT_DATA.venues.groom.addressLocality}
           </p>
         </div>
         <div

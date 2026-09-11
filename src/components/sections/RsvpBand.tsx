@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useInView } from "@/hooks/useInView";
-import { CALENDAR_EVENT, EVENT_DATA, type AttendanceStatus } from "@/lib/constants/event-data";
+import { EVENT_DATA, type AttendanceStatus } from "@/lib/constants/event-data";
 import { buildGoogleCalendarUrl } from "@/lib/formatters/calendar";
 import { WeddingIcon, type WeddingIconName } from "@/components/ui/WeddingIcon";
 
@@ -34,7 +34,7 @@ export function RsvpBand() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const { ref, isInView } = useInView(0.1);
-  const calendarUrl = buildGoogleCalendarUrl(CALENDAR_EVENT);
+  const calendarUrl = buildGoogleCalendarUrl(EVENT_DATA.calendar.event);
   const isNotAttending = formState.attendanceStatus === "not_attending";
   const msgLength = formState.guestMessage.length;
   const maxMsgLength = EVENT_DATA.rsvp.validation.maxMessageLength;

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useInView } from "@/hooks/useInView";
-import { EVENT_DATA, FAQ_DATA } from "@/lib/constants/event-data";
+import { EVENT_DATA } from "@/lib/constants/event-data";
 import { WeddingIcon, type WeddingIconName } from "@/components/ui/WeddingIcon";
 
 const FAQ_ICONS: Record<string, WeddingIconName> = {
@@ -57,7 +57,7 @@ export function FaqSection() {
       </div>
 
       {/* FAQ accordion list */}
-      {FAQ_DATA.length === 0 ? (
+      {EVENT_DATA.faq.length === 0 ? (
         <div className="relative z-10 mx-auto max-w-3xl rounded-2xl border border-dashed border-[var(--border-soft)] bg-[var(--surface)] px-6 py-12 text-center">
           <p className="font-body-serif text-lg italic text-[var(--text-secondary)]">
             Câu hỏi thường gặp sẽ được cập nhật sớm.
@@ -65,7 +65,7 @@ export function FaqSection() {
         </div>
       ) : (
         <div className="space-y-4 relative z-10 mx-auto max-w-3xl">
-          {FAQ_DATA.map((faq, index) => {
+          {EVENT_DATA.faq.map((faq, index) => {
           const questionId = `faq-question-${index}`;
           const answerId = `faq-answer-${index}`;
           const isOpen = openIndex === index;

@@ -1,7 +1,6 @@
 "use client";
-
-import { useMemo } from "react";
 import { useInView } from "@/hooks/useInView";
+
 
 interface VenueInfo {
   venueName: string;
@@ -100,14 +99,9 @@ function MapCard({ venue, embedUrl }: { venue: VenueInfo; embedUrl: string }) {
 export function VenueSection({ groomVenue, brideVenue }: VenueSectionProps) {
   const { ref, isInView } = useInView(0.1);
 
-  const directionsUrl = useMemo(
-    () =>
-      `https://www.google.com/maps/dir/?api=1&origin=${brideVenue.coordinates.lat},${brideVenue.coordinates.lng}&destination=${groomVenue.coordinates.lat},${groomVenue.coordinates.lng}&travelmode=driving`,
-    [brideVenue.coordinates, groomVenue.coordinates],
-  );
-
-  const brideMapEmbedUrl = useMemo(() => buildMapEmbedUrl(brideVenue.coordinates), [brideVenue.coordinates]);
-  const groomMapEmbedUrl = useMemo(() => buildMapEmbedUrl(groomVenue.coordinates), [groomVenue.coordinates]);
+  const directionsUrl = `https://www.google.com/maps/dir/?api=1&origin=${brideVenue.coordinates.lat},${brideVenue.coordinates.lng}&destination=${groomVenue.coordinates.lat},${groomVenue.coordinates.lng}&travelmode=driving`;
+  const brideMapEmbedUrl = buildMapEmbedUrl(brideVenue.coordinates);
+  const groomMapEmbedUrl = buildMapEmbedUrl(groomVenue.coordinates);
 
   return (
     <section

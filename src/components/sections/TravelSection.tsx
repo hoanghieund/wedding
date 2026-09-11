@@ -1,6 +1,6 @@
 "use client";
 
-import { EVENT_DATA, TRAVEL_GUIDANCE } from "@/lib/constants/event-data";
+import { EVENT_DATA } from "@/lib/constants/event-data";
 import { useInView } from "@/hooks/useInView";
 import { WeddingIcon, type WeddingIconName } from "@/components/ui/WeddingIcon";
 
@@ -43,7 +43,7 @@ export function TravelSection() {
         <div className="h-px w-24 section-divider" />
       </div>
 
-      {TRAVEL_GUIDANCE.length === 0 ? (
+      {EVENT_DATA.travel.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-[var(--border-soft)] bg-[var(--surface)] px-6 py-12 text-center">
           <p className="font-body-serif text-lg italic text-[var(--text-secondary)]">
             Thông tin di chuyển sẽ được cập nhật sớm.
@@ -51,7 +51,7 @@ export function TravelSection() {
         </div>
       ) : (
         <div className="space-y-5">
-          {TRAVEL_GUIDANCE.map((item, index) => (
+          {EVENT_DATA.travel.map((item, index) => (
             <article
               key={item.title}
               className={`relative overflow-hidden rounded-2xl border border-[var(--border-soft)] bg-[var(--surface)] p-6 transition-all duration-500 hover:border-[var(--accent-soft)]/30 hover:shadow-[var(--glow-soft)] ${

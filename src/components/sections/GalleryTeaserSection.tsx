@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useInView } from "@/hooks/useInView";
 import { setPageModalIsolation } from "@/lib/modal-isolation";
@@ -30,10 +30,7 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
   const previousOverflowRef = useRef("");
   const wasLightboxOpenRef = useRef(false);
 
-  const activeCategory = useMemo(
-    () => categories.find((c) => c.slug === selectedSlug),
-    [categories, selectedSlug],
-  );
+  const activeCategory = categories.find((c) => c.slug === selectedSlug);
 
   const images = activeCategory?.images ?? [];
   const total = images.length;

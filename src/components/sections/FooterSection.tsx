@@ -1,4 +1,4 @@
-import { COUPLE, EVENT_DATA } from "@/lib/constants/event-data";
+import { EVENT_DATA } from "@/lib/constants/event-data";
 
 export function FooterSection() {
   return (
@@ -8,7 +8,7 @@ export function FooterSection() {
 
       {/* Decorative script watermark */}
       <div aria-hidden="true" className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none select-none text-[10rem] sm:text-[16rem] font-script text-[var(--accent)]/3 whitespace-nowrap z-0 leading-none">
-        {COUPLE.initials}
+        {EVENT_DATA.couple.initials}
       </div>
       <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex flex-col items-center gap-6 text-center">
@@ -30,7 +30,7 @@ export function FooterSection() {
 
           {/* Couple names in script */}
           <p className="font-script text-3xl text-[var(--accent)] sm:text-4xl">
-            {COUPLE.combinedName}
+            {EVENT_DATA.couple.combinedName}
           </p>
 
           {/* Wedding date */}
@@ -51,7 +51,7 @@ export function FooterSection() {
 
           {/* Copyright */}
           <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-[var(--text-secondary)]/40 mt-2">
-            &copy; {new Date().getFullYear()} {COUPLE.combinedName}
+            &copy; {new Date().getFullYear()} {EVENT_DATA.couple.combinedName}
           </p>
         </div>
       </div>

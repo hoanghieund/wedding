@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { setPageModalIsolation } from "@/lib/modal-isolation";
-import { COUPLE_NAMES, EVENT_DATA, HERO_IMAGE } from "@/lib/constants/event-data";
+import { EVENT_DATA } from "@/lib/constants/event-data";
 
 const PARTICLES = Array.from({ length: 30 }, (_, index) => ({
   left: `${(index * 37) % 100}%`,
@@ -86,7 +86,7 @@ export default function EnterInvitationOverlay() {
     >
       <div
         className={`absolute inset-0 bg-cover bg-center opacity-15 blur-sm ${prefersReduced ? "" : "animate-slow-zoom"}`}
-        style={{ backgroundImage: `url(${HERO_IMAGE.src})` }}
+        style={{ backgroundImage: `url(${EVENT_DATA.media.heroImage.src})` }}
       />
 
       <div className="pointer-events-none absolute inset-0">
@@ -118,7 +118,7 @@ export default function EnterInvitationOverlay() {
 
             <div className={`space-y-3 ${prefersReduced ? "" : "animate-fade-in-up"}`} style={{ animationDelay: prefersReduced ? undefined : "0.4s" }}>
               <h1 id="invitation-dialog-heading" className="font-script text-5xl leading-[1.12] text-[var(--accent)] drop-shadow-[0_2px_20px_rgba(212,165,116,0.25)] sm:text-6xl">
-                {COUPLE_NAMES.split(" & ").map((part, i) => (
+                {EVENT_DATA.couple.combinedName.split(" & ").map((part, i) => (
                   <span key={i} className="block text-center">{part}</span>
                 ))}
               </h1>

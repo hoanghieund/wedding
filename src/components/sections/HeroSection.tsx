@@ -3,7 +3,7 @@
 import Image from "next/image";
 import CountdownTimer from "@/components/ui/CountdownTimer";
 import { useInView } from "@/hooks/useInView";
-import { COUPLE, EVENT_CONFIG, EVENT_DATA, HERO_IMAGE } from "@/lib/constants/event-data";
+import { EVENT_DATA } from "@/lib/constants/event-data";
 import { formatDateTime } from "@/lib/formatters/date-format";
 
 export default function HeroSection() {
@@ -17,8 +17,8 @@ export default function HeroSection() {
       className="relative min-h-dvh w-full overflow-x-hidden"
     >
       <Image
-        src={HERO_IMAGE.src}
-        alt={HERO_IMAGE.alt}
+        src={EVENT_DATA.media.heroImage.src}
+        alt={EVENT_DATA.media.heroImage.alt}
         fill
         priority
         sizes="100vw"
@@ -31,7 +31,7 @@ export default function HeroSection() {
 
       {/* Decorative background script watermark */}
       <div aria-hidden="true" className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none select-none text-[10rem] sm:text-[16rem] md:text-[20rem] font-script text-[var(--accent)]/4 leading-none z-0">
-        {COUPLE.groom.name} &amp; {COUPLE.bride.name}
+        {EVENT_DATA.couple.groom.name} &amp; {EVENT_DATA.couple.bride.name}
       </div>
 
       <div className="relative z-10 flex min-h-dvh items-center py-8 landscape:min-h-[calc(100dvh+12rem)] landscape:py-12">
@@ -56,7 +56,7 @@ export default function HeroSection() {
                       isInView ? "translate-x-0 opacity-100" : "-translate-x-12 opacity-0"
                     }`}
                   >
-                    {COUPLE.groom.name}
+                    {EVENT_DATA.couple.groom.name}
                   </span>
 
                   {/* Decorative script "&" — overlapping and floating */}
@@ -75,7 +75,7 @@ export default function HeroSection() {
                       isInView ? "translate-x-0 opacity-100" : "translate-x-12 opacity-0"
                     }`}
                   >
-                    {COUPLE.bride.name}
+                    {EVENT_DATA.couple.bride.name}
                   </span>
                 </h1>
               </div>
@@ -93,7 +93,7 @@ export default function HeroSection() {
                   {EVENT_DATA.event.title}
                 </p>
                 <p className="mt-3 text-xl sm:text-2xl font-body-serif leading-relaxed text-[var(--text-primary)]">
-                  <time dateTime={EVENT_CONFIG.weddingDateISO}>{formatDateTime(EVENT_CONFIG.weddingDateISO)}</time>
+                  <time dateTime={EVENT_DATA.event.startTime}>{formatDateTime(EVENT_DATA.event.startTime)}</time>
                 </p>
               </div>
 

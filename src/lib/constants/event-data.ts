@@ -85,6 +85,9 @@ export const EVENT_DATA = {
   event: {
     name: `Lễ thành hôn ${COUPLE_INFO.combinedName}`,
     title: "Lễ Thành Hôn",
+    startTime: EVENT_START_ISO,
+    endTime: EVENT_END_ISO,
+    validFrom: VALID_FROM_ISO,
     timeZone: WEDDING_TIME_ZONE,
     attendanceMode: "https://schema.org/OfflineEventAttendanceMode",
     status: "https://schema.org/EventScheduled",
@@ -314,8 +317,18 @@ export const EVENT_DATA = {
   },
   calendar: {
     ctaLabel: "Thêm vào lịch",
+    event: {
+      title: `Lễ Thành Hôn ${COUPLE_INFO.combinedName}`,
+      location: "Tư gia nhà trai, An Lạc, Xã Vụ Bản, Tỉnh Ninh Bình",
+      startTime: EVENT_START_ISO,
+      endTime: EVENT_END_ISO,
+      description:
+        "Gia đình chúng tôi trân trọng kính mời quý vị đến chung vui trong ngày trọng đại.",
+      ctaLabel: "Thêm vào lịch",
+    },
   },
   rsvp: {
+    deadline: RSVP_DEADLINE_ISO_VALUE,
     source: "wedding_site",
     sourceLabel: "Website thiệp cưới",
     sheetName: "RSVP",
@@ -366,26 +379,3 @@ export const EVENT_DATA = {
   },
 } as const;
 
-export const COUPLE = EVENT_DATA.couple;
-export const EVENT_CONFIG = {
-  weddingDateISO: EVENT_START_ISO,
-  weddingEndISO: EVENT_END_ISO,
-  validFromISO: VALID_FROM_ISO,
-};
-export const COUPLE_NAMES = EVENT_DATA.couple.combinedName;
-export const WEDDING_DATE_ISO = EVENT_START_ISO;
-export const RSVP_DEADLINE_ISO = RSVP_DEADLINE_ISO_VALUE;
-export const VENUE_GROOM = EVENT_DATA.venues.groom;
-export const VENUE_BRIDE = EVENT_DATA.venues.bride;
-export const SCHEDULE_ITEMS: readonly ScheduleItem[] = EVENT_DATA.schedule;
-export const FAQ_DATA: readonly FAQItem[] = EVENT_DATA.faq;
-export const CALENDAR_EVENT = {
-  title: `${EVENT_DATA.event.title} ${EVENT_DATA.couple.combinedName}`,
-  location: `${VENUE_GROOM.venueName}, ${VENUE_GROOM.addressLines.join(", ")}`,
-  startTime: EVENT_START_ISO,
-  endTime: EVENT_END_ISO,
-  description: EVENT_DATA.event.description,
-  ctaLabel: EVENT_DATA.calendar.ctaLabel,
-};
-export const TRAVEL_GUIDANCE: readonly TravelItem[] = EVENT_DATA.travel;
-export const HERO_IMAGE = EVENT_DATA.media.heroImage;

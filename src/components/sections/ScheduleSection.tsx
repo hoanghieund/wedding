@@ -1,8 +1,8 @@
 "use client";
 
-import { SCHEDULE_ITEMS } from "@/lib/constants/event-data";
 import { useInView } from "@/hooks/useInView";
 import { WeddingIcon, type WeddingIconName } from "@/components/ui/WeddingIcon";
+import { EVENT_DATA } from "@/lib/constants/event-data";
 
 const SCHEDULE_ICONS: Record<string, WeddingIconName> = {
   "Lễ Vu Quy": "lantern",
@@ -20,7 +20,7 @@ function getIcon(title: string): WeddingIconName {
 
 export default function ScheduleSection() {
   const { ref, isInView } = useInView(0.1);
-  const total = SCHEDULE_ITEMS.length;
+  const total = EVENT_DATA.schedule.length;
 
   return (
     <section
@@ -48,7 +48,7 @@ export default function ScheduleSection() {
 
       {/* Timeline — each item is a large bold row */}
       <div>
-        {SCHEDULE_ITEMS.map((item, index) => {
+        {EVENT_DATA.schedule.map((item, index) => {
           const isLast = index === total - 1;
           const icon = getIcon(item.title);
 

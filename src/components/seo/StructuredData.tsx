@@ -1,10 +1,10 @@
-import { FAQ_DATA } from "@/lib/constants/event-data";
+import { EVENT_DATA } from "@/lib/constants/event-data";
 
 export function FAQStructuredData() {
   const faqStructuredData = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    mainEntity: FAQ_DATA.map((item) => ({
+    mainEntity: EVENT_DATA.faq.map((item) => ({
       "@type": "Question",
       name: item.question,
       acceptedAnswer: {

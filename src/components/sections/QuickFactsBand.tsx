@@ -1,6 +1,6 @@
 "use client";
 
-import { EVENT_DATA, RSVP_DEADLINE_ISO, VENUE_GROOM, WEDDING_DATE_ISO } from "@/lib/constants/event-data";
+import { EVENT_DATA } from "@/lib/constants/event-data";
 import { formatDateTime } from "@/lib/formatters/date-format";
 import { useInView } from "@/hooks/useInView";
 import { WeddingIcon, type WeddingIconName } from "@/components/ui/WeddingIcon";
@@ -8,10 +8,10 @@ import { WeddingIcon, type WeddingIconName } from "@/components/ui/WeddingIcon";
 export function QuickFactsBand() {
   const { ref, isInView } = useInView(0.2);
   const quickFacts = [
-    { icon: "calendar" as const, label: EVENT_DATA.copy.quickFacts.dateLabel, value: formatDateTime(WEDDING_DATE_ISO) },
-    { icon: "pin" as const, label: EVENT_DATA.copy.quickFacts.venueLabel, value: VENUE_GROOM.venueName },
+    { icon: "calendar" as const, label: EVENT_DATA.copy.quickFacts.dateLabel, value: formatDateTime(EVENT_DATA.event.startTime) },
+    { icon: "pin" as const, label: EVENT_DATA.copy.quickFacts.venueLabel, value: EVENT_DATA.venues.groom.venueName },
     { icon: "shirt" as const, label: EVENT_DATA.copy.quickFacts.dressCodeLabel, value: EVENT_DATA.details.dressCode },
-    { icon: "clock" as const, label: EVENT_DATA.copy.quickFacts.rsvpDeadlineLabel, value: formatDateTime(RSVP_DEADLINE_ISO) },
+    { icon: "clock" as const, label: EVENT_DATA.copy.quickFacts.rsvpDeadlineLabel, value: formatDateTime(EVENT_DATA.rsvp.deadline) },
   ];
 
   return (

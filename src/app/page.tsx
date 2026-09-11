@@ -1,74 +1,37 @@
-import dynamic from "next/dynamic";
 import HeroSection from "@/components/sections/HeroSection";
+import LoveStorySection from "@/components/sections/LoveStorySection";
+import GalleryTeaserSection from "@/components/sections/GalleryTeaserSection";
+import ScheduleSection from "@/components/sections/ScheduleSection";
+import WeddingPartySection from "@/components/sections/WeddingPartySection";
+import GiftSection from "@/components/sections/GiftSection";
+import { VenueSection } from "@/components/sections/VenueSection";
+import { TravelSection } from "@/components/sections/TravelSection";
+import { FaqSection } from "@/components/sections/FaqSection";
+import { RsvpBand } from "@/components/sections/RsvpBand";
 import { QuickFactsBand } from "@/components/sections/QuickFactsBand";
 import FloatingControls from "@/components/sections/FloatingControls";
 import EnterInvitationOverlay from "@/components/sections/EnterInvitationOverlay";
 import { FooterSection } from "@/components/sections/FooterSection";
 import { FAQStructuredData } from "@/components/seo/StructuredData";
-import { EVENT_CONFIG, EVENT_DATA, VENUE_GROOM, VENUE_BRIDE } from "@/lib/constants/event-data";
+import { EVENT_DATA } from "@/lib/constants/event-data";
 import { getGalleryData } from "@/lib/gallery-data";
 
-function SectionPlaceholder({ className }: { className: string }) {
-  return (
-    <div
-      aria-hidden="true"
-      className={`section-shell rounded-[2rem] border border-[var(--border-soft)] bg-[var(--surface)] p-6 ${className}`}
-    >
-      <div className="mx-auto h-8 w-2/3 rounded bg-[var(--bg-elevated)]/70" />
-      <div className="mx-auto mt-6 h-px w-24 bg-[var(--border-soft)]" />
-      <div className="mx-auto mt-8 h-4 w-5/6 rounded bg-[var(--bg-elevated)]/60" />
-      <div className="mx-auto mt-3 h-4 w-2/3 rounded bg-[var(--bg-elevated)]/60" />
-      <div className="mt-10 grid gap-4 sm:grid-cols-2">
-        <div className="h-24 rounded-xl border border-[var(--border-soft)] bg-[var(--bg-elevated)]/40" />
-        <div className="h-24 rounded-xl border border-[var(--border-soft)] bg-[var(--bg-elevated)]/40" />
-      </div>
-    </div>
-  );
-}
-
-const LoveStorySection = dynamic(() => import("@/components/sections/LoveStorySection"), {
-  loading: () => <SectionPlaceholder className="h-[44rem] sm:h-[52rem]" />,
-});
-const GalleryTeaserSection = dynamic(() => import("@/components/sections/GalleryTeaserSection"), {
-  loading: () => <SectionPlaceholder className="h-[32rem] sm:h-[38rem]" />,
-});
-const ScheduleSection = dynamic(() => import("@/components/sections/ScheduleSection"), {
-  loading: () => <SectionPlaceholder className="h-[48rem] sm:h-[56rem]" />,
-});
-const WeddingPartySection = dynamic(() => import("@/components/sections/WeddingPartySection"), {
-  loading: () => <SectionPlaceholder className="h-[38rem] sm:h-[44rem]" />,
-});
-const GiftSection = dynamic(() => import("@/components/sections/GiftSection"), {
-  loading: () => <SectionPlaceholder className="h-[40rem] sm:h-[48rem]" />,
-});
-const VenueSection = dynamic(() => import("@/components/sections/VenueSection").then(m => ({ default: m.VenueSection })), {
-  loading: () => <SectionPlaceholder className="h-[42rem] sm:h-[50rem]" />,
-});
-const TravelSection = dynamic(() => import("@/components/sections/TravelSection").then(m => ({ default: m.TravelSection })), {
-  loading: () => <SectionPlaceholder className="h-[30rem] sm:h-[36rem]" />,
-});
-const FaqSection = dynamic(() => import("@/components/sections/FaqSection").then(m => ({ default: m.FaqSection })), {
-  loading: () => <SectionPlaceholder className="h-[32rem] sm:h-[40rem]" />,
-});
-const RsvpBand = dynamic(() => import("@/components/sections/RsvpBand").then(m => ({ default: m.RsvpBand })), {
-  loading: () => <SectionPlaceholder className="h-[42rem] sm:h-[50rem]" />,
-});
 export default async function Home() {
   const eventStructuredData = {
     "@context": "https://schema.org",
     "@type": "Event",
     name: EVENT_DATA.event.name,
-    startDate: EVENT_CONFIG.weddingDateISO,
-    endDate: EVENT_CONFIG.weddingEndISO,
+    startDate: EVENT_DATA.event.startTime,
+    endDate: EVENT_DATA.event.endTime,
     eventAttendanceMode: EVENT_DATA.event.attendanceMode,
     eventStatus: EVENT_DATA.event.status,
     location: {
       "@type": "Place",
-      name: VENUE_GROOM.venueName,
+      name: EVENT_DATA.venues.groom.venueName,
       address: {
         "@type": "PostalAddress",
-        streetAddress: VENUE_GROOM.streetAddress,
-        addressLocality: VENUE_GROOM.addressLocality,
+        streetAddress: EVENT_DATA.venues.groom.streetAddress,
+        addressLocality: EVENT_DATA.venues.groom.addressLocality,
         addressCountry: EVENT_DATA.event.countryCode,
       },
     },
@@ -80,7 +43,7 @@ export default async function Home() {
       price: "0",
       priceCurrency: "VND",
       availability: "https://schema.org/InStock",
-      validFrom: EVENT_CONFIG.validFromISO,
+      validFrom: EVENT_DATA.event.validFrom,
     },
     performer: {
       "@type": "Person",
@@ -112,7 +75,7 @@ export default async function Home() {
           <GalleryTeaserSection categories={categories} />
           <WeddingPartySection />
           <GiftSection />
-          <VenueSection groomVenue={VENUE_GROOM} brideVenue={VENUE_BRIDE} />
+          <VenueSection groomVenue={EVENT_DATA.venues.groom} brideVenue={EVENT_DATA.venues.bride} />
 
           <div className="grid gap-12 lg:grid-cols-2">
             <TravelSection />
