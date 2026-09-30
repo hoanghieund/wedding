@@ -50,7 +50,11 @@ export default function HeroSection() {
                 </p>
 
                 {/* Monumental groom name */}
-                <h1 id="hero-heading" tabIndex={-1} className="relative">
+                <h1
+                  id="hero-heading"
+                  tabIndex={-1}
+                  className="relative outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+                >
                   <span
                     className={`block text-7xl sm:text-8xl md:text-8xl lg:text-[8rem] xl:text-[10rem] font-bold tracking-tight text-[var(--accent)] leading-[0.85] transition-all duration-700 delay-150 ${
                       isInView ? "translate-x-0 opacity-100" : "-translate-x-12 opacity-0"

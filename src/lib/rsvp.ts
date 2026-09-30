@@ -59,7 +59,12 @@ export function validateRsvpPayload(payload: RsvpPayload): RsvpValidationResult 
     fieldErrors.attendanceStatus = errors.attendanceStatus;
   }
 
-  if (!Number.isInteger(attendeeCount) || attendeeCount < 0 || attendeeCount > validation.maxAttendeeCount) {
+  if (
+    !Number.isInteger(attendeeCount) ||
+    attendeeCount < 0 ||
+    attendeeCount > validation.maxAttendeeCount ||
+    (attendanceStatus === "attending" && attendeeCount === 0)
+  ) {
     fieldErrors.attendeeCount = errors.attendeeCount;
   }
 

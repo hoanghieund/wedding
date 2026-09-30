@@ -16,14 +16,16 @@ export default async function Image() {
     (
       <div
         style={{
-          background: "linear-gradient(135deg, #fffaf6 0%, #fdf2f8 50%, #faf5ff 100%)",
+          background:
+            "radial-gradient(circle at 75% 20%, rgba(212, 165, 116, 0.16), transparent 38%), linear-gradient(135deg, #0a0e27 0%, #101728 58%, #1a2332 100%)",
           height: "100%",
           width: "100%",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          fontFamily: "system-ui, sans-serif",
+          fontFamily: "Georgia, serif",
+          color: "#fff8ee",
         }}
       >
         <div
@@ -37,7 +39,7 @@ export default async function Image() {
           <p
             style={{
               fontSize: 18,
-              color: "#be185d",
+              color: "#d4a574",
               letterSpacing: "0.2em",
               textTransform: "uppercase",
               marginBottom: 16,
@@ -49,7 +51,7 @@ export default async function Image() {
             style={{
               fontSize: 72,
               fontWeight: 700,
-              color: "#1c1917",
+              color: "#f4e4c1",
               letterSpacing: "-0.02em",
               marginBottom: 24,
             }}
@@ -59,7 +61,7 @@ export default async function Image() {
           <p
             style={{
               fontSize: 24,
-              color: "#57534e",
+              color: "#fff8ee",
               marginBottom: 48,
             }}
           >
@@ -68,7 +70,7 @@ export default async function Image() {
           <p
             style={{
               fontSize: 16,
-              color: "#78716c",
+              color: "#fff8ee",
             }}
           >
             {formatDateTime(EVENT_DATA.event.startTime)} · {EVENT_DATA.venues.groom.addressLocality}
@@ -86,10 +88,10 @@ export default async function Image() {
           <p
             style={{
               fontSize: 14,
-              color: "#a8a29e",
+              color: "#d4a574",
             }}
           >
-            {EVENT_DATA.rsvp.labels.submit} & Chi tiết
+            {EVENT_DATA.rsvp.labels.submit} · Chi tiết
           </p>
         </div>
       </div>

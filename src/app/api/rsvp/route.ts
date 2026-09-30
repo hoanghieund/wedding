@@ -38,7 +38,7 @@ export async function POST(request: Request) {
     console.error("Failed to append RSVP to Google Sheets:", error);
 
     return NextResponse.json(
-      { ok: false, error: EVENT_DATA.rsvp.errors.serverSubmitFailed },
+      { ok: false, error: EVENT_DATA.rsvp.errors.submitFailed },
       { status: 502 },
     );
   }

@@ -105,10 +105,10 @@ export default function LoveStorySection() {
                   {/* Milestone icon + date row */}
                   <div className="flex items-center gap-3 mb-5 relative z-10">
                     <WeddingIcon className="h-6 w-6" name={MILESTONE_ICONS[milestone.code] ?? "sparkles"} />
-                    <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--accent-soft)]">
+                    <span className="font-mono text-xs uppercase tracking-[0.25em] text-[var(--accent-soft)]">
                       {milestone.date}
                       <span className="text-[var(--text-secondary)] ml-2">
-                        {"// "}{milestone.code}
+                        {"// "}{milestone.label}
                       </span>
                     </span>
                   </div>

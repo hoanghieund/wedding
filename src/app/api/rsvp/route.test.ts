@@ -66,6 +66,43 @@ describe("POST /api/rsvp", () => {
     expect(mockedAppendRsvpSubmissionToSheet).not.toHaveBeenCalled();
   });
 
+  it("rejects zero guests when the response is attending", async () => {
+    const response = await postJson({
+      guestName: "Nguyen Van A",
+      attendanceStatus: "attending",
+      attendeeCount: 0,
+      guestMessage: "",
+      website: "",
+    });
+
+    expect(response.status).toBe(400);
+    await expect(response.json()).resolves.toMatchObject({
+      ok: false,
+      fieldErrors: { attendeeCount: EVENT_DATA.rsvp.errors.attendeeCount },
+    });
+    expect(mockedAppendRsvpSubmissionToSheet).not.toHaveBeenCalled();
+  });
+
+  it.each(["not_attending", "maybe"] as const)(
+    "preserves zero guest count for %s",
+    async (attendanceStatus) => {
+      mockedAppendRsvpSubmissionToSheet.mockResolvedValue(undefined);
+
+      const response = await postJson({
+        guestName: "Nguyen Van A",
+        attendanceStatus,
+        attendeeCount: 0,
+        guestMessage: "",
+        website: "",
+      });
+
+      expect(response.status).toBe(200);
+      expect(mockedAppendRsvpSubmissionToSheet).toHaveBeenCalledWith(
+        expect.objectContaining({ attendanceStatus, attendeeCount: 0 }),
+      );
+    },
+  );
+
   it("rejects honeypot submissions before appending to Google Sheets", async () => {
     const response = await postJson({
       guestName: "Nguyen Van A",
@@ -96,7 +133,7 @@ describe("POST /api/rsvp", () => {
 
     await expect(response.json()).resolves.toEqual({
       ok: false,
-      error: EVENT_DATA.rsvp.errors.serverSubmitFailed,
+      error: EVENT_DATA.rsvp.errors.submitFailed,
     });
     expect(response.status).toBe(502);
   });

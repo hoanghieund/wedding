@@ -14,6 +14,9 @@ type RsvpFormState = {
   website: string;
 };
 
+type RsvpField = "guestName" | "attendanceStatus" | "attendeeCount" | "guestMessage";
+type RsvpFieldErrors = Partial<Record<RsvpField, string>>;
+
 const initialFormState: RsvpFormState = {
   guestName: "",
   attendanceStatus: "attending",
@@ -31,19 +34,31 @@ const STATUS_ICONS: Record<AttendanceStatus, WeddingIconName> = {
 export function RsvpBand() {
   const [submitted, setSubmitted] = useState(false);
   const [formState, setFormState] = useState<RsvpFormState>(initialFormState);
+  const [fieldErrors, setFieldErrors] = useState<RsvpFieldErrors>({});
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const { ref, isInView } = useInView(0.1);
   const calendarUrl = buildGoogleCalendarUrl(EVENT_DATA.calendar.event);
   const isNotAttending = formState.attendanceStatus === "not_attending";
-  const msgLength = formState.guestMessage.length;
+  const minAttendeeCount = formState.attendanceStatus === "attending" ? 1 : 0;
   const maxMsgLength = EVENT_DATA.rsvp.validation.maxMessageLength;
+  const msgLength = formState.guestMessage.length;
+
+  const clearFieldError = (field: RsvpField) => {
+    setFieldErrors((current) => {
+      if (!current[field]) return current;
+      const next = { ...current };
+      delete next[field];
+      return next;
+    });
+  };
 
   const updateFormField = <Field extends keyof RsvpFormState>(
     field: Field,
     value: RsvpFormState[Field],
   ) => {
     setFormState((current) => ({ ...current, [field]: value }));
+    if (field !== "website") clearFieldError(field);
   };
 
   return (
@@ -63,7 +78,7 @@ export function RsvpBand() {
         <div className={`space-y-4 text-center transition-all duration-700 ${
           isInView ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
         }`}>
-          <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-[var(--accent-soft)]">
+          <p className="font-mono text-xs uppercase tracking-[0.25em] text-[var(--accent-soft)]">
             {EVENT_DATA.copy.sections.rsvpChapter}
           </p>
           <h2
@@ -82,7 +97,7 @@ export function RsvpBand() {
         }`}>
           {submitted ? (
             /* ——— Success state ——— */
-            <div className="text-center py-8">
+            <div role="status" className="text-center py-8">
               <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[var(--accent)]/10 border-2 border-[var(--accent-soft)]/30">
                 <WeddingIcon className="h-10 w-10" name="letter" />
               </div>
@@ -102,6 +117,7 @@ export function RsvpBand() {
                 event.preventDefault();
                 setSubmitting(true);
                 setError("");
+                setFieldErrors({});
 
                 try {
                   const response = await fetch("/api/rsvp", {
@@ -113,10 +129,18 @@ export function RsvpBand() {
                     }),
                   });
                   const rawResult = await response.json();
-                  const result = rawResult && typeof rawResult === "object" ? (rawResult as { ok?: boolean; error?: string }) : {};
+                  const result =
+                    rawResult && typeof rawResult === "object"
+                      ? (rawResult as {
+                          ok?: boolean;
+                          error?: string;
+                          fieldErrors?: RsvpFieldErrors;
+                        })
+                      : {};
 
                   if (!response.ok || !result.ok) {
                     setError(result.error || EVENT_DATA.rsvp.errors.submitFailed);
+                    setFieldErrors(result.fieldErrors ?? {});
                     return;
                   }
 
@@ -144,7 +168,7 @@ export function RsvpBand() {
               <fieldset className="space-y-1.5">
                 <label htmlFor="rsvp-guest-name" className="flex items-center gap-2">
                   <WeddingIcon className="h-4 w-4" name="person" />
-                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--accent-soft)]">
+                  <span className="font-medium font-mono text-xs uppercase tracking-[0.12em] text-[var(--accent-soft)]">
                     {EVENT_DATA.rsvp.labels.guestName}
                   </span>
                 </label>
@@ -157,46 +181,77 @@ export function RsvpBand() {
                   value={formState.guestName}
                   onChange={(event) => updateFormField("guestName", event.target.value)}
                   placeholder={EVENT_DATA.rsvp.placeholders.guestName}
+                  aria-invalid={Boolean(fieldErrors.guestName)}
+                  aria-describedby={fieldErrors.guestName ? "rsvp-guest-name-error" : undefined}
                   className="focus-ring-accent w-full rounded-xl border border-[var(--border-soft)] bg-[var(--bg)] px-4 py-3.5 text-[var(--text-primary)] outline-none transition placeholder:text-[var(--text-secondary)]/60 focus:border-[var(--accent-soft)]/40"
                 />
+                {fieldErrors.guestName ? (
+                  <p id="rsvp-guest-name-error" className="text-sm leading-6 text-red-100">
+                    {fieldErrors.guestName}
+                  </p>
+                ) : null}
               </fieldset>
 
               {/* Attendance status */}
-              <fieldset className="space-y-1.5">
-                <span id="rsvp-attendance-status" className="flex items-center gap-2">
+              <fieldset
+                className="space-y-1.5"
+                aria-describedby={fieldErrors.attendanceStatus ? "rsvp-attendance-error" : undefined}
+              >
+                <legend id="rsvp-attendance-status" className="flex items-center gap-2">
                   <WeddingIcon className="h-4 w-4" name="chat" />
-                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--accent-soft)]">
+                  <span className="font-medium font-mono text-xs uppercase tracking-[0.12em] text-[var(--accent-soft)]">
                     {EVENT_DATA.rsvp.labels.attendanceStatus}
                   </span>
-                </span>
-                <div className="grid grid-cols-3 gap-2" role="radiogroup" aria-labelledby="rsvp-attendance-status">
+                </legend>
+                <div className="grid grid-cols-3 gap-2">
                   {(Object.entries(EVENT_DATA.rsvp.attendanceStatuses) as [AttendanceStatus, string][]).map(([value, label]) => (
-                    <button
+                    <label
                       key={value}
-                      type="button"
-                      role="radio"
-                      aria-checked={formState.attendanceStatus === value}
-                      onClick={() => updateFormField("attendanceStatus", value)}
-                      className={`focus-ring-accent flex min-h-[44px] flex-col items-center gap-1 rounded-xl border px-3 py-3 text-xs transition-all duration-300 ${
+                      className={`focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[var(--accent)] flex min-h-[44px] cursor-pointer flex-col items-center gap-1 rounded-xl border px-3 py-3 text-xs transition-all duration-300 ${
                         formState.attendanceStatus === value
                           ? "border-[var(--accent-soft)] bg-[var(--accent)]/10 text-[var(--accent)] ring-1 ring-[var(--accent-soft)]/70"
                           : "border-[var(--border-soft)] bg-[var(--bg)] text-[var(--text-secondary)] hover:border-[var(--border-soft)]/80"
                       }`}
                     >
+                      <input
+                        className="sr-only"
+                        type="radio"
+                        name="attendanceStatus"
+                        value={value}
+                        checked={formState.attendanceStatus === value}
+                        aria-describedby={fieldErrors.attendanceStatus ? "rsvp-attendance-error" : undefined}
+                        onChange={() => {
+                          setFormState((current) => ({
+                            ...current,
+                            attendanceStatus: value,
+                            attendeeCount:
+                              value === "attending" && current.attendeeCount === "0"
+                                ? "1"
+                                : current.attendeeCount,
+                          }));
+                          clearFieldError("attendanceStatus");
+                          clearFieldError("attendeeCount");
+                        }}
+                      />
                       <WeddingIcon className="h-5 w-5" name={STATUS_ICONS[value]} />
-                      <span className="font-mono text-[10px] uppercase tracking-[0.1em]">
+                      <span className="font-mono text-xs uppercase tracking-[0.1em]">
                         {label}
                       </span>
-                    </button>
+                    </label>
                   ))}
                 </div>
+                {fieldErrors.attendanceStatus ? (
+                  <p id="rsvp-attendance-error" className="text-sm leading-6 text-red-100">
+                    {fieldErrors.attendanceStatus}
+                  </p>
+                ) : null}
               </fieldset>
 
               {/* Attendee count */}
               <fieldset className="space-y-1.5">
                 <label htmlFor="rsvp-attendee-count" className="flex items-center gap-2">
                   <WeddingIcon className="h-4 w-4" name="person" />
-                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--accent-soft)]">
+                  <span className="font-medium font-mono text-xs uppercase tracking-[0.12em] text-[var(--accent-soft)]">
                     {EVENT_DATA.rsvp.labels.attendeeCount}
                   </span>
                 </label>
@@ -205,7 +260,9 @@ export function RsvpBand() {
                   disabled={isNotAttending}
                   value={isNotAttending ? "0" : formState.attendeeCount}
                   onChange={(event) => updateFormField("attendeeCount", event.target.value)}
-                  className="focus-ring-accent w-full rounded-xl border border-[var(--border-soft)] bg-[var(--bg)] px-4 py-3.5 text-[var(--text-primary)] outline-none transition disabled:cursor-not-allowed disabled:opacity-40 appearance-none"
+                  aria-invalid={Boolean(fieldErrors.attendeeCount)}
+                  aria-describedby={fieldErrors.attendeeCount ? "rsvp-attendee-count-error" : undefined}
+                  className="focus-ring-accent w-full appearance-none rounded-xl border border-[var(--border-soft)] bg-[var(--bg)] px-4 py-3.5 text-[var(--text-primary)] outline-none transition disabled:cursor-not-allowed disabled:opacity-40"
                   style={{
                     backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23d4a574' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
                     backgroundPosition: `right 1rem center`,
@@ -214,21 +271,34 @@ export function RsvpBand() {
                   }}
                 >
                   {Array.from(
-                    { length: EVENT_DATA.rsvp.validation.maxAttendeeCount + 1 },
-                    (_, count) => (
-                      <option key={count} className="bg-[#0a0e27]" value={String(count)}>
-                        {count} người
-                      </option>
-                    ),
+                    {
+                      length:
+                        EVENT_DATA.rsvp.validation.maxAttendeeCount -
+                        minAttendeeCount +
+                        1,
+                    },
+                    (_, index) => {
+                      const count = minAttendeeCount + index;
+                      return (
+                        <option key={count} className="bg-[var(--bg)]" value={String(count)}>
+                          {count} người
+                        </option>
+                      );
+                    },
                   )}
                 </select>
+                {fieldErrors.attendeeCount ? (
+                  <p id="rsvp-attendee-count-error" className="text-sm leading-6 text-red-100">
+                    {fieldErrors.attendeeCount}
+                  </p>
+                ) : null}
               </fieldset>
 
               {/* Guest message */}
               <fieldset className="space-y-1.5">
                 <label htmlFor="rsvp-message" className="flex items-center gap-2">
                   <WeddingIcon className="h-4 w-4" name="gift" />
-                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--accent-soft)]">
+                  <span className="font-medium font-mono text-xs uppercase tracking-[0.12em] text-[var(--accent-soft)]">
                     {EVENT_DATA.rsvp.labels.guestMessage}
                   </span>
                 </label>
@@ -238,13 +308,20 @@ export function RsvpBand() {
                   value={formState.guestMessage}
                   onChange={(event) => updateFormField("guestMessage", event.target.value)}
                   placeholder={EVENT_DATA.rsvp.placeholders.guestMessage}
-                  className="focus-ring-accent min-h-28 w-full rounded-xl border border-[var(--border-soft)] bg-[var(--bg)] px-4 py-3.5 text-[var(--text-primary)] outline-none transition placeholder:text-[var(--text-secondary)]/60 focus:border-[var(--accent-soft)]/40 resize-y"
+                  aria-invalid={Boolean(fieldErrors.guestMessage)}
+                  aria-describedby={fieldErrors.guestMessage ? "rsvp-message-error" : undefined}
+                  className="focus-ring-accent min-h-28 w-full resize-y rounded-xl border border-[var(--border-soft)] bg-[var(--bg)] px-4 py-3.5 text-[var(--text-primary)] outline-none transition placeholder:text-[var(--text-secondary)]/60 focus:border-[var(--accent-soft)]/40"
                 />
+                {fieldErrors.guestMessage ? (
+                  <p id="rsvp-message-error" className="text-sm leading-6 text-red-100">
+                    {fieldErrors.guestMessage}
+                  </p>
+                ) : null}
                 <div className="flex justify-end">
-                  <span aria-live="polite" className={`font-mono text-[10px] font-medium tracking-wider ${
+                  <span aria-live="polite" className={`font-mono text-xs font-medium tracking-wider ${
                     msgLength > maxMsgLength * 0.9
                       ? "text-red-400"
-                      : "text-[var(--text-secondary)]/50"
+                      : "text-[var(--text-secondary)]"
                   }`}>
                     {msgLength}/{maxMsgLength} ký tự
                   </span>
@@ -257,7 +334,6 @@ export function RsvpBand() {
                   {error}
                 </p>
               ) : null}
-
               {/* Submit */}
               <button
                 type="submit"

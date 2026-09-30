@@ -1,27 +1,48 @@
 # Product
 
-## Register
+<!-- impeccable:product-schema 1 -->
 
-brand
+## Platform
+
+web
 
 ## Users
-Gia đình, bạn bè và người thân của cô dâu chú rể. Họ truy cập chủ yếu bằng điện thoại di động để xem thông tin tiệc cưới, thời gian, địa điểm, câu chuyện tình yêu và thực hiện RSVP trực tuyến.
+
+Gia đình, bạn bè và người thân của cô dâu chú rể. Họ truy cập chủ yếu bằng điện thoại để xem thông tin lễ cưới, lên kế hoạch di chuyển và xác nhận tham dự.
 
 ## Product Purpose
-Cung cấp thông tin chi tiết về lễ cưới, thời gian biểu, sơ đồ đường đi và hỗ trợ xác nhận tham dự (RSVP) trực tuyến một cách trực quan, nhanh chóng.
 
-## Brand Personality
-Lãng mạn, sang trọng, ấm áp. Mang lại cảm giác thanh lịch, lung linh như một đêm tiệc dưới ánh sao.
+Cung cấp thiệp mời trực tuyến với thông tin lễ cưới và công cụ RSVP để khách mời dễ dàng nắm lịch trình, địa điểm và phản hồi tham dự.
 
-## Anti-references
-- Các trang landing page kiểu SaaS với các khối hộp vuông vức, icon công nghệ, text gradient và số liệu metric nổi bật.
-- Các trang web dùng font chữ all-caps quá đà hoặc layout quá cứng nhắc.
+## Operating Context
 
-## Design Principles
-- **Thẩm mỹ lãng mạn & sang trọng**: Kết hợp phông chữ Serif trang nhã và chữ viết tay mềm mại trên nền tối huyền ảo với ánh vàng ấm.
-- **RSVP là ưu tiên hàng đầu**: Nút RSVP và biểu mẫu xác nhận phải luôn nổi bật, thao tác dễ dàng trên mọi thiết bị di động.
-- **Chuyển động có chiều sâu**: Sử dụng các hiệu ứng mượt mà như tuyết rơi nhẹ/hạt lấp lánh (particles) và chuyển tiếp dịu nhẹ để tăng tính nghệ thuật.
+Khách mời xem trang web trên thiết bị di động trước ngày cưới để nắm thông tin, tìm đường và gửi RSVP; trong ngày cưới, họ dùng lịch trình và chỉ đường để đến các địa điểm tổ chức.
+
+## Capabilities and Constraints
+
+- Trang công khai, ưu tiên truy cập trên di động; trình bày câu chuyện, lịch trình, địa điểm và chỉ đường, thư viện ảnh, thông tin quà mừng, FAQ và thông tin hữu ích.
+- RSVP thu thập tên khách, trạng thái tham dự, số người và lời nhắn; dữ liệu được lưu vào Google Sheets.
+- Phạm vi hiện tại không có cơ sở dữ liệu riêng, trang quản trị hoặc xác thực quản trị.
+- Nội dung sự kiện và cấu hình Google Sheets phải giữ chính xác; không tự tạo thông tin lễ cưới hoặc thay đổi dữ kiện thật.
+
+## Brand Commitments
+
+- Tên cặp đôi: Hoàng Hiếu & Kim Liên.
+- Tính cách thương hiệu đã ghi nhận: lãng mạn, sang trọng, ấm áp.
+
+## Evidence on Hand
+
+- Mã nguồn chứa tên cặp đôi, thời gian và lịch trình, thông tin hai địa điểm cùng liên kết bản đồ, nội dung câu chuyện/FAQ/di chuyển/quà mừng, ảnh và nhạc nền.
+- RSVP dùng Google Sheets; biến môi trường bắt buộc và lệnh kiểm tra API có Sheets mock nằm trong `README.md`. Bài kiểm tra không ghi dữ liệu vào bảng tính.
+- Chưa ghi nhận testimonial, số liệu sử dụng hoặc bằng chứng bên ngoài khác.
+
+## Product Principles
+
+- Giúp khách tìm nhanh lịch trình, địa điểm và đường đi.
+- Làm RSVP thành tác vụ trọng tâm, dễ hoàn tất trên điện thoại.
+- Chỉ trình bày dữ kiện sự kiện đã được xác nhận.
 
 ## Accessibility & Inclusion
-- Tương phản văn bản đạt chuẩn WCAG AA (tối thiểu 4.5:1) trên mọi nền màu.
-- Cung cấp tùy chọn tắt hiệu ứng động nếu người dùng bật chế độ giảm chuyển động.
+
+- Văn bản đạt tương phản WCAG AA tối thiểu 4.5:1.
+- Tôn trọng tùy chọn giảm chuyển động của hệ điều hành.

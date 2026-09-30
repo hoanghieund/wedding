@@ -131,6 +131,9 @@ export default function EnterInvitationOverlay() {
 
             <p className={`mx-auto max-w-[280px] font-body-serif text-base leading-7 text-[var(--text-secondary)] ${prefersReduced ? "" : "animate-fade-in-up"}`} style={{ animationDelay: prefersReduced ? undefined : "0.8s" }}>
               {EVENT_DATA.copy.overlay.description}
+              <span className="mt-2 block text-sm not-italic leading-6 text-[var(--accent-soft)]">
+                {EVENT_DATA.copy.overlay.contentsHint}
+              </span>
               </p>
 
             <button
@@ -179,7 +182,7 @@ export default function EnterInvitationOverlay() {
           0%, 100% { transform: scale(1); }
           50% { transform: scale(1.05); }
         }
-        .animate-card-entrance { animation: card-entrance 1s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .animate-card-entrance { animation: card-entrance 1s cubic-bezier(0.16, 1, 0.3, 1); }
         .animate-card-float { animation: card-float 6s ease-in-out infinite; }
         .animate-float-particle { animation: float-particle linear infinite; }
         .animate-fade-in-up { animation: fade-in-up 0.8s ease-out forwards; opacity: 0; }

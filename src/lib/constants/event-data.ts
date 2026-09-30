@@ -133,6 +133,8 @@ export const EVENT_DATA = {
       invitation: "Trân trọng kính mời",
       description:
         "Hân hạnh được đón tiếp Quý vị trong ngày trọng đại của chúng tôi",
+      contentsHint:
+        "Bên trong có lịch trình, chỉ đường và xác nhận tham dự.",
       openButton: "Mở Thiệp",
     },
     quickFacts: {
@@ -213,53 +215,59 @@ export const EVENT_DATA = {
     {
       date: "2022",
       code: "FIRST_SPARK",
+      label: "Tia đầu tiên",
       title: "Năm Ấy, Chúng Mình Bắt Đầu",
       desc: "Năm 2022, giữa những ngày rất bình thường, chúng mình bước vào cuộc đời nhau. Không ồn ào, không vội vã, chỉ là càng nói chuyện càng thấy hợp, càng gặp lại càng thấy thương.",
     },
     {
       date: "2023",
       code: "THE_DEPARTURE",
+      label: "Chuyến đi xa",
       title: "Ngày Em Sang Nhật",
       desc: "Khi tình yêu vừa đủ sâu, cô dâu bắt đầu hành trình 3 năm ở Nhật. Từ đây, yêu nhau không còn chỉ là những buổi hẹn gần bên, mà là học cách thương một người qua màn hình điện thoại.",
     },
     {
       date: "2023 - 2025",
       code: "LONG_DISTANCE",
+      label: "Yêu xa",
       title: "Ba Năm Giữ Một Lời Hứa",
       desc: "Có những ngày lệch múi giờ, những đêm nhớ nhau đến nghẹn lòng, những lần chỉ kịp hỏi 'hôm nay em ổn không?'. Nhưng sau tất cả, chúng mình vẫn chọn ở lại, chọn tin nhau, chọn đi tiếp.",
     },
     {
       date: "Mỗi Năm",
       code: "REUNION_TRIPS",
+      label: "Ngày đoàn tụ",
       title: "Những Chuyến Bay Về Và Những Chuyến Đi Chung",
       desc: "Mỗi năm cô dâu bay về Việt Nam, và mỗi lần gặp lại, chúng mình lại cùng nhau đi du lịch. Những chuyến đi ấy không chỉ để ngắm cảnh, mà để bù đắp những cái ôm còn thiếu và lưu lại bằng chứng rằng tình yêu này vẫn luôn ở đây.",
     },
     {
       date: "2026",
       code: "NEW_BEGINNING",
+      label: "Khởi đầu mới",
       title: "Không Còn Là Yêu Xa",
       desc: "Sau 4 năm yêu nhau, trong đó có 3 năm cách xa, chúng mình hiểu rằng người phù hợp không phải là người luôn ở cạnh từ đầu, mà là người dù xa đến đâu vẫn khiến mình muốn trở về.",
     },
     {
       date: "Hôm Nay",
       code: "WEDDING_DAY",
+      label: "Ngày cưới",
       title: "Về Chung Một Nhà",
       desc: "Hôm nay, chúng mình không còn đếm ngày gặp lại. Từ những tin nhắn xuyên đêm, những chuyến bay trở về, những hành trình đã đi cùng nhau - tất cả dẫn chúng mình đến khoảnh khắc này: nắm tay nhau, chính thức gọi nhau là gia đình.",
     },
   ],
   weddingParty: [
     {
-      name: "Phạm Văn A",
+      name: "Đỗ Minh Khang",
       role: "Phù rể chính",
       duty: "Đồng hành cùng chú rể, hỗ trợ đón khách và giữ không khí buổi tiệc thật vui vẻ.",
     },
     {
-      name: "Nguyễn Thị B",
+      name: "Bùi Ngọc Diệp",
       role: "Phù dâu",
       duty: "Luôn bên cạnh cô dâu, hỗ trợ chuẩn bị trang phục, nghi thức và những khoảnh khắc quan trọng.",
     },
     {
-      name: "Trần Văn C",
+      name: "Lê Gia Huy",
       role: "Người hỗ trợ tiệc cưới",
       duty: "Giúp kết nối khách mời, hỗ trợ hậu cần và cùng gia đình chăm chút cho ngày vui trọn vẹn.",
     },
@@ -365,16 +373,15 @@ export const EVENT_DATA = {
       maxMessageLength: 500,
     },
     errors: {
-      invalidSubmission: "Invalid submission.",
-      invalidRequestBody: "Invalid request body.",
-      checkFields: "Please check the highlighted fields.",
-      guestName: "Please enter a name between 2 and 80 characters.",
-      attendanceStatus: "Please choose a valid attendance status.",
-      attendeeCount: "Please choose a guest count between 0 and 10.",
-      guestMessage: "Please keep your message under 500 characters.",
+      invalidSubmission: "Yêu cầu không hợp lệ.",
+      invalidRequestBody: "Không đọc được nội dung gửi lên.",
+      checkFields: "Vui lòng kiểm tra các trường được đánh dấu.",
+      guestName: "Vui lòng nhập họ tên từ 2 đến 80 ký tự.",
+      attendanceStatus: "Vui lòng chọn trạng thái tham dự hợp lệ.",
+      attendeeCount: "Chọn từ 0 đến 10 khách; nếu tham dự, cần ít nhất 1 khách.",
+      guestMessage: "Lời nhắn không được dài quá 500 ký tự.",
       submitFailed:
         "Chưa gửi được xác nhận. Vui lòng thử lại sau hoặc liên hệ gia đình.",
-      serverSubmitFailed: "Unable to submit RSVP right now.",
     },
   },
 } as const;

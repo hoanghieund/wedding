@@ -43,7 +43,11 @@ GOOGLE_SHEETS_SPREADSHEET_ID=
 GOOGLE_SHEETS_SHEET_NAME=RSVP
 ```
 
-See `docs/google-sheets-rsvp.md` for the sheet schema and smoke test.
+Google Sheets columns and labels are defined in `EVENT_DATA.rsvp.sheetColumns` and `EVENT_DATA.rsvp.attendanceStatuses`. The focused API test uses a Sheets mock and does not write rows to a spreadsheet:
+
+```bash
+npm test -- src/app/api/rsvp/route.test.ts
+```
 
 ## Current Scope
 
