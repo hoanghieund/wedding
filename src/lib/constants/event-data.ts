@@ -319,7 +319,7 @@ export const EVENT_DATA = {
   ] satisfies TravelItem[],
   media: {
     heroImage: {
-      src: "/images/hero/HAR01404.jpg",
+      src: "/images/hero/HAR01404.webp",
       alt: "Ảnh cặp đôi - Hero background",
     },
   },

@@ -1,3 +1,4 @@
+/* Hallmark · checked: 2026-11-12 · genre: editorial · built: project · redesign: polish · v2.0.0 */
 @import "tailwindcss";
 
 :root {
@@ -12,6 +13,11 @@
   --text-secondary: rgba(255, 248, 238, 0.78);
   --border-soft: rgba(244, 228, 193, 0.14);
   --glow-soft: 0 18px 60px rgba(212, 165, 116, 0.18);
+  --shell-gradient-start: rgba(26, 35, 50, 0.72);
+  --shell-gradient-end: rgba(12, 18, 35, 0.78);
+  --hover-glow: 0 22px 60px rgba(212, 165, 116, 0.18);
+  --divider-color: rgba(212, 165, 116, 0.42);
+  --selection-color: rgba(212, 165, 116, 0.26);
 }
 @theme {
   --font-sans: var(--font-body-serif);
@@ -24,7 +30,7 @@
 html,
 body {
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
@@ -49,16 +55,13 @@ section[id] {
 
 .section-shell {
   border: 1px solid var(--border-soft);
-  background: linear-gradient(180deg, rgba(26, 35, 50, 0.72), rgba(12, 18, 35, 0.78));
-  box-shadow: var(--glow-soft);
+  background: linear-gradient(180deg, var(--shell-gradient-start), var(--shell-gradient-end));
   backdrop-filter: blur(18px);
 }
 
 .section-label {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
+  font-family: var(--font-body-serif);
+  font-size: 0.875rem;
   color: var(--accent-soft);
 }
 
@@ -123,11 +126,11 @@ section[id] {
 
 .hover-lift:hover {
   transform: translateY(-4px);
-  box-shadow: 0 22px 60px rgba(212, 165, 116, 0.18);
+  box-shadow: var(--hover-glow);
 }
 
 .section-divider {
-  background: linear-gradient(90deg, transparent, rgba(212, 165, 116, 0.42), transparent);
+  background: linear-gradient(90deg, transparent, var(--divider-color), transparent);
 }
 
 .focus-ring-accent:focus-visible {
@@ -136,11 +139,11 @@ section[id] {
 }
 
 .selection-accent::selection {
-  background: rgba(212, 165, 116, 0.26);
+  background: var(--selection-color);
 }
 
 .selection-accent::-moz-selection {
-  background: rgba(212, 165, 116, 0.26);
+  background: var(--selection-color);
 }
 /* Narrow landscape: ensure hero content has breathing room */
 @media (orientation: landscape) and (max-height: 520px) {
@@ -218,39 +221,6 @@ section[id] {
   }
 }
 
-@keyframes pulse-soft {
-  0%, 100% {
-    box-shadow: 0 15px 40px rgba(0, 229, 255, 0.4);
-  }
-  50% {
-    box-shadow: 0 20px 50px rgba(0, 229, 255, 0.6);
-  }
-}
-
-@keyframes champagne-pulse {
-  0%, 100% {
-    box-shadow: 0 14px 42px rgba(212, 165, 116, 0.18);
-  }
-  50% {
-    box-shadow: 0 20px 62px rgba(244, 228, 193, 0.26);
-  }
-}
-
-@keyframes shimmer-line {
-  0% {
-    opacity: 0.3;
-    transform: scaleY(0.2);
-  }
-  100% {
-    opacity: 1;
-    transform: scaleY(1);
-  }
-}
-
-.reveal-hidden {
-  opacity: 0;
-  transform: translateY(30px);
-}
 
 .animate-fade-up {
   animation: fade-up 0.8s ease-out forwards;
@@ -276,13 +246,6 @@ section[id] {
   animation: zoom-in 0.6s ease-out forwards;
 }
 
-.animate-pulse-soft {
-  animation: pulse-soft 2s ease-in-out infinite;
-}
-
-.animate-champagne-pulse {
-  animation: champagne-pulse 2.8s ease-in-out infinite;
-}
 
 .stagger-1 { animation-delay: 0.1s; }
 .stagger-2 { animation-delay: 0.2s; }
