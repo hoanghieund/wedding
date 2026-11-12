@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useInView } from "@/hooks/useInView";
 import { EVENT_DATA, type AttendanceStatus } from "@/lib/constants/event-data";
 import { buildGoogleCalendarUrl } from "@/lib/formatters/calendar";
+import { formatDateTime } from "@/lib/formatters/date-format";
 import { WeddingIcon, type WeddingIconName } from "@/components/ui/WeddingIcon";
 
 type RsvpFormState = {
@@ -16,6 +17,17 @@ type RsvpFormState = {
 
 type RsvpField = "guestName" | "attendanceStatus" | "attendeeCount" | "guestMessage";
 type RsvpFieldErrors = Partial<Record<RsvpField, string>>;
+
+const RSVP_FIELD_ORDER: RsvpField[] = [
+  "guestName",
+  "attendanceStatus",
+  "attendeeCount",
+  "guestMessage",
+];
+
+export function getFirstInvalidField(fieldErrors: RsvpFieldErrors) {
+  return RSVP_FIELD_ORDER.find((field) => Boolean(fieldErrors[field]));
+}
 
 const initialFormState: RsvpFormState = {
   guestName: "",
@@ -37,6 +49,16 @@ export function RsvpBand() {
   const [fieldErrors, setFieldErrors] = useState<RsvpFieldErrors>({});
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const guestNameRef = useRef<HTMLInputElement>(null);
+  const attendanceStatusRef = useRef<HTMLInputElement>(null);
+  const attendeeCountRef = useRef<HTMLSelectElement>(null);
+  const guestMessageRef = useRef<HTMLTextAreaElement>(null);
+  const fieldRefs = {
+    guestName: guestNameRef,
+    attendanceStatus: attendanceStatusRef,
+    attendeeCount: attendeeCountRef,
+    guestMessage: guestMessageRef,
+  };
   const { ref, isInView } = useInView(0.1);
   const calendarUrl = buildGoogleCalendarUrl(EVENT_DATA.calendar.event);
   const isNotAttending = formState.attendanceStatus === "not_attending";
@@ -110,8 +132,22 @@ export function RsvpBand() {
             </div>
           ) : (
             /* ——— Form ——— */
-            <form
-              className="space-y-6"
+            <>
+              <p className="mb-6 flex flex-wrap items-center justify-center gap-2 text-center text-sm leading-6 text-[var(--text-secondary)]">
+                <WeddingIcon
+                  className="h-4 w-4 text-[var(--accent-soft)]"
+                  name="calendar"
+                />
+                <span>{EVENT_DATA.copy.quickFacts.rsvpDeadlineLabel}:</span>
+                <time
+                  dateTime={EVENT_DATA.rsvp.deadline}
+                  className="font-medium text-[var(--text-primary)]"
+                >
+                  {formatDateTime(EVENT_DATA.rsvp.deadline)}
+                </time>
+              </p>
+              <form
+                className="space-y-6"
               aria-describedby={error ? "rsvp-submit-error" : undefined}
               onSubmit={async (event) => {
                 event.preventDefault();
@@ -139,8 +175,15 @@ export function RsvpBand() {
                       : {};
 
                   if (!response.ok || !result.ok) {
+                    const nextFieldErrors = result.fieldErrors ?? {};
                     setError(result.error || EVENT_DATA.rsvp.errors.submitFailed);
-                    setFieldErrors(result.fieldErrors ?? {});
+                    setFieldErrors(nextFieldErrors);
+                    const firstInvalidField = getFirstInvalidField(nextFieldErrors);
+                    if (firstInvalidField) {
+                      requestAnimationFrame(() => {
+                        fieldRefs[firstInvalidField].current?.focus();
+                      });
+                    }
                     return;
                   }
 
@@ -174,6 +217,7 @@ export function RsvpBand() {
                 </label>
                 <input
                   id="rsvp-guest-name"
+                  ref={guestNameRef}
                   type="text"
                   required
                   minLength={EVENT_DATA.rsvp.validation.minNameLength}
@@ -214,6 +258,11 @@ export function RsvpBand() {
                       }`}
                     >
                       <input
+                        ref={
+                          formState.attendanceStatus === value
+                            ? attendanceStatusRef
+                            : undefined
+                        }
                         className="sr-only"
                         type="radio"
                         name="attendanceStatus"
@@ -257,6 +306,7 @@ export function RsvpBand() {
                 </label>
                 <select
                   id="rsvp-attendee-count"
+                  ref={attendeeCountRef}
                   disabled={isNotAttending}
                   value={isNotAttending ? "0" : formState.attendeeCount}
                   onChange={(event) => updateFormField("attendeeCount", event.target.value)}
@@ -304,6 +354,7 @@ export function RsvpBand() {
                 </label>
                 <textarea
                   id="rsvp-message"
+                  ref={guestMessageRef}
                   maxLength={maxMsgLength}
                   value={formState.guestMessage}
                   onChange={(event) => updateFormField("guestMessage", event.target.value)}
@@ -351,8 +402,9 @@ export function RsvpBand() {
                 ) : (
                   EVENT_DATA.rsvp.labels.submit
                 )}
-              </button>
-            </form>
+                </button>
+              </form>
+            </>
           )}
 
           {/* Calendar link */}

@@ -67,6 +67,29 @@ export default async function Home() {
         <div id="page-content">
         <HeroSection />
         <QuickFactsBand />
+        <nav
+          aria-label="Lối tắt thông tin"
+          className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-center gap-3 px-4 py-6 sm:px-6 lg:px-8"
+        >
+          <a
+            href="#schedule"
+            className="focus-ring-accent inline-flex min-h-11 items-center rounded-full border border-[var(--border-soft)] bg-[var(--surface)] px-5 text-sm text-[var(--accent)] transition hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)]"
+          >
+            Lịch trình
+          </a>
+          <a
+            href="#venue"
+            className="focus-ring-accent inline-flex min-h-11 items-center rounded-full border border-[var(--border-soft)] bg-[var(--surface)] px-5 text-sm text-[var(--accent)] transition hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)]"
+          >
+            Địa điểm &amp; chỉ đường
+          </a>
+          <a
+            href="#rsvp"
+            className="focus-ring-accent inline-flex min-h-11 items-center rounded-full border border-[var(--border-soft)] bg-[var(--surface)] px-5 text-sm text-[var(--accent)] transition hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)]"
+          >
+            Xác nhận tham dự
+          </a>
+        </nav>
         <FloatingControls />
 
         <main id="main-content" className="mx-auto w-full max-w-6xl space-y-20 px-4 py-20 sm:space-y-24 sm:px-6 sm:py-24 lg:space-y-32 lg:px-8 lg:py-32">

@@ -1,6 +1,6 @@
 # Wedding Website
 
-A completed Next.js 16 wedding website for Hoang Hieu and Kim Lien. The site is a public, mobile-first invitation experience with cinematic sections, gallery content, venue details, schedule, gift information, FAQ, contact actions, music controls, and RSVP collection through Google Sheets.
+A completed Next.js 16 wedding website for Hoang Hieu and Kim Lien. The site is a public, mobile-first invitation experience with cinematic sections, gallery content, schedule and venue shortcuts, an RSVP deadline beside the form, gift information, FAQ, contact actions, music controls, and RSVP collection through Google Sheets.
 
 ## Getting Started
 

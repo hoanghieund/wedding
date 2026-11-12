@@ -8,6 +8,18 @@ import { WeddingIcon } from "@/components/ui/WeddingIcon";
 const controlClassName =
   "focus-ring-accent flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-[var(--border-soft)] bg-[var(--surface-strong)] text-[var(--accent)] backdrop-blur-md transition hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)] shadow-[var(--glow-soft)]";
 
+export function shouldHideMobileRail({
+  isRsvpVisible,
+  isLogisticsVisible,
+  hasFocusedControl,
+}: {
+  isRsvpVisible: boolean;
+  isLogisticsVisible: boolean;
+  hasFocusedControl: boolean;
+}) {
+  return (isRsvpVisible || isLogisticsVisible) && !hasFocusedControl;
+}
+
 export default function FloatingControls() {
   const { playing, toggle } = useMusic();
   const [isLogisticsVisible, setIsLogisticsVisible] = useState(false);
@@ -42,7 +54,11 @@ export default function FloatingControls() {
     return () => observer.disconnect();
   }, []);
 
-  const hideControls = isRsvpVisible && !hasFocusedControl;
+  const hideControls = shouldHideMobileRail({
+    isRsvpVisible,
+    isLogisticsVisible,
+    hasFocusedControl,
+  });
 
   return (
     <div
