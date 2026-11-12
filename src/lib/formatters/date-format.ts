@@ -12,7 +12,7 @@ const DATE_TIME_FORMAT_OPTIONS = {
 
 export function formatDateTime(isoStringOrDate: string | Date): string {
   const date = isoStringOrDate instanceof Date ? isoStringOrDate : new Date(isoStringOrDate);
-  return new Intl.DateTimeFormat("en-CA", DATE_TIME_FORMAT_OPTIONS).format(date).replace(/-/g, "/");
+  return new Intl.DateTimeFormat("vi-VN", DATE_TIME_FORMAT_OPTIONS).format(date);
 }
 
 

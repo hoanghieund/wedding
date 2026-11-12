@@ -129,7 +129,7 @@ export const EVENT_DATA = {
       scrollLabel: "Cuộn xuống",
     },
     overlay: {
-      eyebrow: "Wedding Invitation",
+      eyebrow: "Thiệp mời cưới",
       invitation: "Trân trọng kính mời",
       description:
         "Hân hạnh được đón tiếp Quý vị trong ngày trọng đại của chúng tôi",

@@ -56,7 +56,7 @@ export default function HeroSection() {
                   className="relative outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
                 >
                   <span
-                    className={`block text-7xl sm:text-8xl md:text-8xl lg:text-[8rem] xl:text-[10rem] font-bold tracking-tight text-[var(--accent)] leading-[0.85] transition-all duration-700 delay-150 ${
+                    className={`hero-name-groom block text-7xl sm:text-8xl md:text-8xl lg:text-[8rem] xl:text-[10rem] font-bold tracking-tight text-[var(--accent)] leading-[0.85] transition-all duration-700 delay-150 ${
                       isInView ? "translate-x-0 opacity-100" : "-translate-x-12 opacity-0"
                     }`}
                   >
@@ -75,7 +75,7 @@ export default function HeroSection() {
 
                   {/* Bride name — right-aligned for tension */}
                   <span
-                    className={`block -mt-4 sm:-mt-6 lg:-mt-8 xl:-mt-10 text-right text-5xl sm:text-6xl md:text-7xl lg:text-[6rem] xl:text-[7.5rem] font-display-serif font-medium tracking-tight text-[var(--text-primary)] leading-[0.9] transition-all duration-700 delay-500 ${
+                    className={`hero-name-bride block -mt-4 sm:-mt-6 lg:-mt-8 xl:-mt-10 text-5xl sm:text-6xl md:text-7xl lg:text-[6rem] xl:text-[7.5rem] font-display-serif font-medium tracking-tight text-[var(--text-primary)] leading-[0.9] transition-all duration-700 delay-500 ${
                       isInView ? "translate-x-0 opacity-100" : "translate-x-12 opacity-0"
                     }`}
                   >

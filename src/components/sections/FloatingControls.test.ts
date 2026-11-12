@@ -5,6 +5,7 @@ describe("FloatingControls mobile rail visibility", () => {
   it("hides the rail while schedule or venue content is on screen", () => {
     expect(
       shouldHideMobileRail({
+        isHeroVisible: false,
         isRsvpVisible: false,
         isLogisticsVisible: true,
         hasFocusedControl: false,
@@ -15,6 +16,7 @@ describe("FloatingControls mobile rail visibility", () => {
   it("hides the rail while RSVP content is on screen", () => {
     expect(
       shouldHideMobileRail({
+        isHeroVisible: false,
         isRsvpVisible: true,
         isLogisticsVisible: false,
         hasFocusedControl: false,
@@ -22,9 +24,21 @@ describe("FloatingControls mobile rail visibility", () => {
     ).toBe(true);
   });
 
-  it("shows the rail when neither RSVP nor logistics content is visible", () => {
+  it("hides the rail while the hero is on screen", () => {
     expect(
       shouldHideMobileRail({
+        isHeroVisible: true,
+        isRsvpVisible: false,
+        isLogisticsVisible: false,
+        hasFocusedControl: false,
+      }),
+    ).toBe(true);
+  });
+
+  it("shows the rail when no obstructed content is visible", () => {
+    expect(
+      shouldHideMobileRail({
+        isHeroVisible: false,
         isRsvpVisible: false,
         isLogisticsVisible: false,
         hasFocusedControl: false,
@@ -35,6 +49,7 @@ describe("FloatingControls mobile rail visibility", () => {
   it("keeps the rail visible while focus is inside it", () => {
     expect(
       shouldHideMobileRail({
+        isHeroVisible: false,
         isRsvpVisible: false,
         isLogisticsVisible: true,
         hasFocusedControl: true,

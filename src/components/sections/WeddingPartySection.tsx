@@ -16,7 +16,7 @@ export default function WeddingPartySection() {
     >
       {/* Decorative background script */}
       <div aria-hidden="true" className="absolute left-1/2 top-0 -translate-x-1/2 pointer-events-none select-none text-[8rem] sm:text-[12rem] font-script text-[var(--accent)]/5 whitespace-nowrap z-0">
-        Wedding Party
+        Đội Ngũ Đồng Hành
       </div>
 
       <div className="mx-auto max-w-3xl space-y-4 text-center relative z-10">

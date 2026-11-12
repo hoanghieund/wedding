@@ -9,19 +9,22 @@ const controlClassName =
   "focus-ring-accent flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-[var(--border-soft)] bg-[var(--surface-strong)] text-[var(--accent)] backdrop-blur-md transition hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)] shadow-[var(--glow-soft)]";
 
 export function shouldHideMobileRail({
+  isHeroVisible,
   isRsvpVisible,
   isLogisticsVisible,
   hasFocusedControl,
 }: {
+  isHeroVisible: boolean;
   isRsvpVisible: boolean;
   isLogisticsVisible: boolean;
   hasFocusedControl: boolean;
 }) {
-  return (isRsvpVisible || isLogisticsVisible) && !hasFocusedControl;
+  return (isHeroVisible || isRsvpVisible || isLogisticsVisible) && !hasFocusedControl;
 }
 
 export default function FloatingControls() {
   const { playing, toggle } = useMusic();
+  const [isHeroVisible, setIsHeroVisible] = useState(true);
   const [isLogisticsVisible, setIsLogisticsVisible] = useState(false);
   const [isRsvpVisible, setIsRsvpVisible] = useState(false);
   const [hasFocusedControl, setHasFocusedControl] = useState(false);
@@ -29,14 +32,18 @@ export default function FloatingControls() {
   const quickLinksTriggerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
+    const heroSection = document.getElementById("hero");
     const rsvpSection = document.getElementById("rsvp");
-    if (!rsvpSection) return;
+    if (!heroSection || !rsvpSection) return;
 
     const scheduleSection = document.getElementById("schedule");
     const venueSection = document.getElementById("venue");
     const visibleLogisticsSections = new Set<Element>();
     const observer = new IntersectionObserver((entries) => {
       for (const entry of entries) {
+        if (entry.target === heroSection) {
+          setIsHeroVisible(entry.isIntersecting);
+        }
         if (entry.target === rsvpSection) {
           setIsRsvpVisible(entry.isIntersecting);
         }
@@ -48,6 +55,7 @@ export default function FloatingControls() {
       setIsLogisticsVisible(visibleLogisticsSections.size > 0);
     });
 
+    observer.observe(heroSection);
     observer.observe(rsvpSection);
     if (scheduleSection) observer.observe(scheduleSection);
     if (venueSection) observer.observe(venueSection);
@@ -55,10 +63,12 @@ export default function FloatingControls() {
   }, []);
 
   const hideControls = shouldHideMobileRail({
+    isHeroVisible,
     isRsvpVisible,
     isLogisticsVisible,
     hasFocusedControl,
   });
+
 
   return (
     <div
