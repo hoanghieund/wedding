@@ -49,22 +49,21 @@ export default function CountdownTimer() {
       role="timer"
       tabIndex={0}
       aria-label={`Còn ${timeLeft.days} ngày, ${timeLeft.hours} giờ, ${timeLeft.mins} phút và ${timeLeft.secs} giây`}
-      className="grid grid-cols-4 gap-3 rounded-2xl focus-ring-accent sm:gap-5 md:gap-8"
+      className="grid w-full grid-cols-4 divide-x divide-[var(--border-soft)] focus-ring-accent"
     >
-      {countdownItems.map((item, index) => (
+      {countdownItems.map((item) => (
         <div
           key={item.key}
           aria-hidden="true"
-          className={`section-shell rounded-xl px-3 py-5 text-center sm:px-5 sm:py-7 reveal-hidden animate-fade-up`}
-          style={{ animationDelay: `${(index + 5) * 100}ms` }}
+          className="px-1.5 py-2 text-center sm:px-4"
         >
           <div
             suppressHydrationWarning
-            className="text-5xl leading-none font-display-serif font-semibold text-[var(--accent)] sm:text-6xl"
+            className="font-display-serif text-4xl leading-none tabular-nums text-[var(--accent)] sm:text-5xl"
           >
             {String(timeLeft[item.key]).padStart(2, "0")}
           </div>
-          <div className="mt-3 font-mono text-[0.65rem] tracking-[0.3em] text-[var(--accent-soft)] sm:text-xs">
+          <div className="mt-2 font-mono text-[0.6rem] tracking-[0.18em] text-[var(--accent-soft)] sm:text-xs">
             {item.label}
           </div>
         </div>

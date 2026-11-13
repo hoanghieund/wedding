@@ -247,11 +247,11 @@ export function RsvpBand() {
                     {EVENT_DATA.rsvp.labels.attendanceStatus}
                   </span>
                 </legend>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
                   {(Object.entries(EVENT_DATA.rsvp.attendanceStatuses) as [AttendanceStatus, string][]).map(([value, label]) => (
                     <label
                       key={value}
-                      className={`focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[var(--accent)] flex min-h-[44px] cursor-pointer flex-col items-center gap-1 rounded-xl border px-3 py-3 text-xs transition-all duration-300 ${
+                      className={`focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-[var(--accent)] flex min-h-[44px] cursor-pointer flex-row items-center justify-start gap-3 rounded-xl border px-4 py-3 text-sm transition-all duration-300 sm:flex-col sm:items-center sm:justify-center sm:gap-1 sm:px-3 sm:text-xs ${
                         formState.attendanceStatus === value
                           ? "border-[var(--accent-soft)] bg-[var(--accent)]/10 text-[var(--accent)] ring-1 ring-[var(--accent-soft)]/70"
                           : "border-[var(--border-soft)] bg-[var(--bg)] text-[var(--text-secondary)] hover:border-[var(--border-soft)]/80"

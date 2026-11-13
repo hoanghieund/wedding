@@ -1,5 +1,7 @@
 "use client";
 
+import { useState } from "react";
+
 import Image from "next/image";
 import { useInView } from "@/hooks/useInView";
 import { EVENT_DATA } from "@/lib/constants/event-data";
@@ -9,6 +11,20 @@ import { WeddingIcon } from "@/components/ui/WeddingIcon";
 export default function GiftSection() {
   const { ref, isInView } = useInView(0.1);
   const gifts = EVENT_DATA.gifts;
+  const [copyState, setCopyState] = useState<{
+    accountNumber: string;
+    result: "copied" | "failed";
+  } | null>(null);
+
+  const copyAccountNumber = async (accountNumber: string) => {
+    try {
+      await navigator.clipboard.writeText(accountNumber);
+      setCopyState({ accountNumber, result: "copied" });
+    } catch {
+      setCopyState({ accountNumber, result: "failed" });
+    }
+  };
+
 
   return (
     <section
@@ -50,6 +66,8 @@ export default function GiftSection() {
       <div className="grid gap-8 md:grid-cols-2 relative z-10">
         {gifts.map((account, index) => {
           const isGroom = account.type === "groom";
+          const copyResult =
+            copyState?.accountNumber === account.accountNumber ? copyState.result : null;
           return (
             <article
               key={account.title}
@@ -95,6 +113,30 @@ export default function GiftSection() {
                   <span className="font-mono text-sm tracking-[0.15em] text-[var(--accent)] select-all">
                     {account.accountNumber}
                   </span>
+                </div>
+                <div className="space-y-2">
+                  <button
+                    type="button"
+                    onClick={() => void copyAccountNumber(account.accountNumber)}
+                    aria-label={`Sao chép số tài khoản ${account.title}`}
+                    className="focus-ring-accent inline-flex min-h-11 items-center justify-center rounded-full border border-[var(--border-soft)] bg-[var(--bg)] px-5 text-sm text-[var(--accent)] transition hover:border-[var(--accent-soft)]"
+                  >
+                    Sao chép số tài khoản
+                  </button>
+                  {copyResult ? (
+                    <p
+                      role="status"
+                      className={`text-sm leading-6 ${
+                        copyResult === "failed"
+                          ? "text-red-100"
+                          : "text-[var(--accent-soft)]"
+                      }`}
+                    >
+                      {copyResult === "copied"
+                        ? "Đã sao chép."
+                        : "Không thể sao chép tự động. Hãy chọn số tài khoản và sao chép thủ công."}
+                    </p>
+                  ) : null}
                 </div>
                 <p className="font-mono text-xs uppercase tracking-[0.18em] text-[var(--text-secondary)]/70">
                   {account.name}

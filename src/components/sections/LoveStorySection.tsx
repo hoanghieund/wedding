@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useInView } from "@/hooks/useInView";
 import { EVENT_DATA } from "@/lib/constants/event-data";
 import { WeddingIcon, type WeddingIconName } from "@/components/ui/WeddingIcon";
@@ -13,7 +14,15 @@ const MILESTONE_ICONS: Record<string, WeddingIconName> = {
   WEDDING_DAY: "ring",
 };
 
-export default function LoveStorySection() {
+type StoryPhoto = { src: string; alt: string };
+type LoveStorySectionProps = {
+  photos: {
+    departure?: StoryPhoto;
+    reunion?: StoryPhoto;
+  };
+};
+
+export default function LoveStorySection({ photos }: LoveStorySectionProps) {
   const { ref, isInView } = useInView(0.1);
   const sectionRef = ref as React.RefObject<HTMLElement>;
   const timeline = EVENT_DATA.loveStoryTimeline;
@@ -46,6 +55,12 @@ export default function LoveStorySection() {
       {/* Timeline cards — zigzag asymmetric layout */}
       <div className="space-y-8 md:space-y-16">
         {timeline.map((milestone, index) => {
+          const photo =
+            milestone.code === "THE_DEPARTURE"
+              ? photos.departure
+              : milestone.code === "REUNION_TRIPS"
+                ? photos.reunion
+                : undefined;
           const isLast = index === lastIndex;
           const isOdd = index % 2 === 0; // odd items left, even items right
 
@@ -86,6 +101,18 @@ export default function LoveStorySection() {
                     ${!isLast && !isOdd ? "md:ml-auto" : ""}
                   `}
                 >
+
+                  {photo && (
+                    <div className="relative z-10 mb-7 aspect-[4/5] overflow-hidden rounded-2xl border border-[var(--border-soft)] sm:aspect-[3/2]">
+                      <Image
+                        src={photo.src}
+                        alt={photo.alt}
+                        fill
+                        sizes="(max-width: 640px) 100vw, 672px"
+                        className="object-cover object-[center_35%]"
+                      />
+                    </div>
+                  )}
                   {/* Decorative script number watermark */}
                   <div
                     aria-hidden="true"

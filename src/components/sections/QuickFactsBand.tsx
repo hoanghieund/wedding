@@ -5,11 +5,16 @@ import { formatDateTime } from "@/lib/formatters/date-format";
 import { useInView } from "@/hooks/useInView";
 import { WeddingIcon, type WeddingIconName } from "@/components/ui/WeddingIcon";
 
+const ceremonySummary = EVENT_DATA.schedule
+  .filter(({ title }) => title.includes("Lễ Vu Quy") || title.includes("Lễ Thành Hôn"))
+  .map(({ time, title }) => `${time} · ${title}`)
+  .join("\n");
+
 export function QuickFactsBand() {
   const { ref, isInView } = useInView(0.2);
   const quickFacts = [
     { icon: "calendar" as const, label: EVENT_DATA.copy.quickFacts.dateLabel, value: formatDateTime(EVENT_DATA.event.startTime) },
-    { icon: "pin" as const, label: EVENT_DATA.copy.quickFacts.venueLabel, value: EVENT_DATA.venues.groom.venueName },
+    { icon: "pin" as const, label: EVENT_DATA.copy.quickFacts.venueLabel, value: ceremonySummary },
     { icon: "shirt" as const, label: EVENT_DATA.copy.quickFacts.dressCodeLabel, value: EVENT_DATA.details.dressCode },
     { icon: "clock" as const, label: EVENT_DATA.copy.quickFacts.rsvpDeadlineLabel, value: formatDateTime(EVENT_DATA.rsvp.deadline) },
   ];
@@ -33,7 +38,7 @@ export function QuickFactsBand() {
             <p className="section-label text-[10px]">
               {fact.label}
             </p>
-            <p className="mt-2 text-base font-body-serif leading-7 text-[var(--text-primary)]">
+            <p className="mt-2 whitespace-pre-line text-base font-body-serif leading-7 text-[var(--text-primary)]">
               {fact.value}
             </p>
           </div>

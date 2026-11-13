@@ -248,11 +248,11 @@ export const EVENT_DATA = {
       desc: "Sau 4 năm yêu nhau, trong đó có 3 năm cách xa, chúng mình hiểu rằng người phù hợp không phải là người luôn ở cạnh từ đầu, mà là người dù xa đến đâu vẫn khiến mình muốn trở về.",
     },
     {
-      date: "Hôm Nay",
+      date: "Ngày Cưới",
       code: "WEDDING_DAY",
       label: "Ngày cưới",
       title: "Về Chung Một Nhà",
-      desc: "Hôm nay, chúng mình không còn đếm ngày gặp lại. Từ những tin nhắn xuyên đêm, những chuyến bay trở về, những hành trình đã đi cùng nhau - tất cả dẫn chúng mình đến khoảnh khắc này: nắm tay nhau, chính thức gọi nhau là gia đình.",
+      desc: "Trong ngày cưới, chúng mình sẽ không còn đếm ngày gặp lại. Từ những tin nhắn xuyên đêm, những chuyến bay trở về và những hành trình đã đi cùng nhau, tất cả sẽ đưa chúng mình đến khoảnh khắc nắm tay nhau và chính thức gọi nhau là gia đình.",
     },
   ],
   weddingParty: [

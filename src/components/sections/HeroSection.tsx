@@ -19,76 +19,63 @@ export default function HeroSection() {
         fill
         priority
         sizes="100vw"
-        className="object-cover opacity-25"
+        className="object-cover opacity-60"
       />
 
 
-      {/* Deep vignette overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)]/70 via-[var(--bg)]/20 to-[var(--bg)]/95" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[var(--bg)]/60 via-[var(--bg)]/45 to-[var(--bg)]/85 lg:bg-gradient-to-r lg:from-[var(--bg)]/90 lg:via-[var(--bg)]/65 lg:to-[var(--bg)]/35" />
 
-      {/* Decorative background script watermark */}
-      <div aria-hidden="true" className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none select-none text-[10rem] sm:text-[16rem] md:text-[20rem] font-script text-[var(--accent)]/4 leading-none z-0">
-        {EVENT_DATA.couple.groom.name} &amp; {EVENT_DATA.couple.bride.name}
-      </div>
 
-      <div className="relative z-10 flex min-h-dvh items-center py-8 landscape:min-h-[calc(100dvh+12rem)] landscape:py-12">
+      <div className="relative z-10 flex min-h-dvh items-center py-16 sm:py-20">
         <div className="mx-auto w-full max-w-7xl px-6 sm:px-12 lg:px-16">
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 lg:gap-16">
-            {/* Left: Names lockup — bold asymmetric typography */}
-            <div className="flex-1 max-w-3xl">
-              <div className="space-y-4 lg:space-y-6">
+          <div className="mx-auto max-w-2xl space-y-8 text-center sm:space-y-10 lg:mx-0 lg:text-left">
+            <h1
+              id="hero-heading"
+              tabIndex={-1}
+              className="outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
+            >
+              <span className="block font-display-serif text-5xl font-medium leading-[0.92] tracking-[-0.04em] text-[var(--accent)] sm:text-7xl md:text-8xl">
+                {EVENT_DATA.couple.groom.name}
+              </span>
+              <span
+                aria-hidden="true"
+                className="block font-script text-5xl leading-none text-[var(--accent-soft)] sm:text-7xl"
+              >
+                &amp;
+              </span>
+              <span className="block font-display-serif text-5xl font-medium leading-[0.92] tracking-[-0.04em] text-[var(--accent)] sm:text-7xl md:text-8xl">
+                {EVENT_DATA.couple.bride.name}
+              </span>
+            </h1>
 
-                {/* Monumental groom name */}
-                <h1
-                  id="hero-heading"
-                  tabIndex={-1}
-                  className="relative outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--accent)]"
-                >
-                  <span className="hero-name-groom block text-7xl sm:text-8xl md:text-8xl lg:text-[8rem] xl:text-[10rem] font-bold tracking-tight text-[var(--accent)] leading-[0.85]">
-                    {EVENT_DATA.couple.groom.name}
-                  </span>
+            <div className="mx-auto h-px w-24 section-divider lg:mx-0" aria-hidden="true" />
 
-                  {/* Decorative script "&" — overlapping and floating */}
-                  <span
-                    aria-hidden="true"
-                    className="block relative -mt-4 sm:-mt-6 lg:-mt-8 xl:-mt-10 text-7xl sm:text-8xl md:text-8xl lg:text-[9rem] xl:text-[11rem] font-script text-[var(--accent-soft)] leading-none"
-                  >
-                    &amp;
-                  </span>
-
-                  {/* Bride name — right-aligned for tension */}
-                  <span className="hero-name-bride block -mt-4 sm:-mt-6 lg:-mt-8 xl:-mt-10 text-5xl sm:text-6xl md:text-7xl lg:text-[6rem] xl:text-[7.5rem] font-display-serif font-medium tracking-tight text-[var(--text-primary)] leading-[0.9]">
-                    {EVENT_DATA.couple.bride.name}
-                  </span>
-                </h1>
-              </div>
-            </div>
-
-            {/* Right: Event details + CTA — pushed right */}
-            <div className="flex-shrink-0 lg:self-end space-y-8 lg:pb-6 lg:pl-8">
-              <div className="text-left">
-                <div className="mx-0 h-px w-24 section-divider mb-4" />
+            <div className="space-y-7">
+              <div className="space-y-1">
                 <p className="text-sm text-[var(--accent-soft)]">
                   {EVENT_DATA.event.title}
                 </p>
-                <p className="mt-3 text-xl sm:text-2xl font-body-serif leading-relaxed text-[var(--text-primary)]">
-                  <time dateTime={EVENT_DATA.event.startTime}>{formatDateTime(EVENT_DATA.event.startTime)}</time>
+                <p className="font-body-serif text-xl leading-relaxed text-[var(--text-primary)] sm:text-2xl">
+                  <time dateTime={EVENT_DATA.event.startTime}>
+                    {formatDateTime(EVENT_DATA.event.startTime)}
+                  </time>
                 </p>
               </div>
 
-              <div className="space-y-5">
-                <p className="text-sm text-[var(--accent-soft)]/70">
+              <div className="space-y-3">
+                <p className="text-sm text-[var(--accent-soft)]/90">
                   {EVENT_DATA.copy.hero.countdownLabel}
                 </p>
                 <CountdownTimer />
-                <a
-                  href="#rsvp"
-                  className="focus-ring-accent group inline-flex items-center gap-3 rounded-full border border-[var(--border-soft)] bg-[var(--surface)] px-8 py-4 font-body-serif text-lg tracking-[0.15em] text-[var(--accent)] shadow-[var(--glow-soft)] transition-colors duration-300 hover:border-[var(--accent-soft)] active:translate-y-px"
-                >
-                  {EVENT_DATA.copy.hero.rsvpLabel}
-                  <span aria-hidden="true" className="text-xl transition group-hover:translate-y-0.5">↓</span>
-                </a>
               </div>
+
+              <a
+                href="#rsvp"
+                className="focus-ring-accent group inline-flex min-h-12 items-center gap-3 rounded-full border border-[var(--border-soft)] bg-[var(--surface-strong)] px-8 py-3 font-body-serif text-lg text-[var(--accent)] transition-colors duration-300 hover:border-[var(--accent-soft)] active:translate-y-px"
+              >
+                {EVENT_DATA.copy.hero.rsvpLabel}
+                <span aria-hidden="true" className="text-xl transition group-hover:translate-y-0.5">↓</span>
+              </a>
             </div>
           </div>
         </div>

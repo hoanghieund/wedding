@@ -56,6 +56,21 @@ export default async function Home() {
   };
   const categories = await getGalleryData();
 
+  const japanPhoto = categories
+    .find((category) => category.slug === "nhat-ban")
+    ?.images.find((image) => image.src.endsWith("DSCF2149.JPG"));
+  const sapaPhoto = categories
+    .find((category) => category.slug === "sapa")
+    ?.images.find((image) => image.src.endsWith("HAR01571.jpg"));
+  const storyPhotos = {
+    departure: japanPhoto
+      ? { ...japanPhoto, alt: "Cô dâu chú rể trong trang phục truyền thống tại Nhật Bản" }
+      : undefined,
+    reunion: sapaPhoto
+      ? { ...sapaPhoto, alt: "Cô dâu chú rể trong trang phục truyền thống ở Sa Pa" }
+      : undefined,
+  };
+
   return (
     <>
       <script
@@ -72,16 +87,16 @@ export default async function Home() {
           className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-center gap-3 px-4 py-6 sm:px-6 lg:px-8"
         >
           <a
-            href="#schedule"
+            href="#information"
             className="focus-ring-accent inline-flex min-h-11 items-center rounded-full border border-[var(--border-soft)] bg-[var(--surface)] px-5 text-sm text-[var(--accent)] transition hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)]"
           >
-            Lịch trình
+            Thông tin
           </a>
           <a
-            href="#venue"
+            href="#story"
             className="focus-ring-accent inline-flex min-h-11 items-center rounded-full border border-[var(--border-soft)] bg-[var(--surface)] px-5 text-sm text-[var(--accent)] transition hover:border-[var(--accent-soft)] hover:bg-[var(--accent)] hover:text-[var(--bg)]"
           >
-            Địa điểm &amp; chỉ đường
+            Câu chuyện
           </a>
           <a
             href="#rsvp"
@@ -93,17 +108,26 @@ export default async function Home() {
         <FloatingControls />
 
         <main id="main-content" className="mx-auto w-full max-w-6xl space-y-20 px-4 py-20 sm:space-y-24 sm:px-6 sm:py-24 lg:space-y-32 lg:px-8 lg:py-32">
-          <LoveStorySection />
-          <ScheduleSection />
+          <section id="information" aria-labelledby="information-heading" className="space-y-12">
+            <div className="space-y-3 text-center">
+              <h2 id="information-heading" className="chapter-title text-4xl sm:text-5xl">
+                Thông Tin Ngày Vui
+              </h2>
+              <div className="mx-auto h-px w-24 section-divider" aria-hidden="true" />
+            </div>
+            <div className="space-y-20 md:space-y-24">
+              <ScheduleSection />
+              <VenueSection groomVenue={EVENT_DATA.venues.groom} brideVenue={EVENT_DATA.venues.bride} />
+              <div className="grid gap-12 lg:grid-cols-2">
+                <TravelSection />
+                <FaqSection />
+              </div>
+            </div>
+          </section>
+          <LoveStorySection photos={storyPhotos} />
           <GalleryTeaserSection categories={categories} />
           <WeddingPartySection />
           <GiftSection />
-          <VenueSection groomVenue={EVENT_DATA.venues.groom} brideVenue={EVENT_DATA.venues.bride} />
-
-          <div className="grid gap-12 lg:grid-cols-2">
-            <TravelSection />
-            <FaqSection />
-          </div>
         </main>
 
         <RsvpBand />

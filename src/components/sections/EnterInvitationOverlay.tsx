@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useMusic } from "@/hooks/useMusic";
 import { setPageModalIsolation } from "@/lib/modal-isolation";
 import { EVENT_DATA } from "@/lib/constants/event-data";
 
@@ -16,6 +17,7 @@ export default function EnterInvitationOverlay() {
   const [opened, setOpened] = useState(false);
   const [prefersReduced, setPrefersReduced] = useState(false);
   const openButtonRef = useRef<HTMLButtonElement>(null);
+  const { playing, toggle } = useMusic();
 
   // Isolate background page content while the invitation overlay is visible
   useEffect(() => {
@@ -56,11 +58,7 @@ export default function EnterInvitationOverlay() {
   }, [opened]);
 
   const handleOpen = () => {
-    const audio = document.getElementById("bg-music") as HTMLAudioElement | null;
-    if (audio) {
-      audio.play().catch(() => {});
-    }
-
+    if (!playing) toggle();
     setOpened(true);
     requestAnimationFrame(() => {
       document.getElementById("hero-heading")?.focus();

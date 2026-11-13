@@ -35,6 +35,7 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
   const images = activeCategory?.images ?? [];
   const total = images.length;
 
+
   const handlePrev = useCallback(() => {
     if (total === 0) return;
     setLightboxIndex((prev) => (prev !== null ? (prev - 1 + total) % total : null));
@@ -156,11 +157,11 @@ export default function GalleryTeaserSection({ categories }: GalleryTeaserSectio
       ref={sectionRef}
       id="gallery"
       role="region"
-      aria-label="Wedding Photo Gallery"
+      aria-labelledby="gallery-heading"
       className="space-y-12 py-8"
     >
       <div className={`space-y-3 text-center ${isInView ? "animate-fade-up" : "reveal-hidden"}`}>
-        <h2 className="chapter-title text-4xl sm:text-5xl">Khoảnh Khắc</h2>
+        <h2 id="gallery-heading" className="chapter-title text-4xl sm:text-5xl">Khoảnh Khắc</h2>
         <div className="mx-auto h-px w-24 section-divider" />
       </div>
 
